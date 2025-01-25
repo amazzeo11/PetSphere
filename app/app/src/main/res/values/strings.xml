@@ -2,4 +2,6 @@
     <string name="app_name">PetSphere</string>
     <string name="welcome">Benvenuto!</string>
     <string name="already_registered">Sei già registrato?</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
 </resources>
