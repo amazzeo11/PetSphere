@@ -30,6 +30,6 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:text="@string/already_registered"/>
 
-    
+
 
 </LinearLayout>
