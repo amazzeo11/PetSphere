@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PetSphere</string>
+    <string name="welcome">Benvenuto!</string>
+    <string name="already_registered">Sei già registrato?</string>
 </resources>
