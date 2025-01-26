@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">PetSphere</string>
-    <string name="welcome">Benvenuto!</string>
-    <string name="already_registered">Sei già registrato?</string>
+    <string name="welcome">Benvenut*!</string>
+    <string name="already_registered">Sei già registrat*?</string>
     <string name="email">E-mail</string>
     <string name="password">Password</string>
+    <string name="password_forgotten">Hai dimenticato la password?</string>
+    <string name="new_user">Nuovo utente</string>
+    <string name="new_user_question">Nuovo utente?</string>
+    <string name="sign_up">Registrati</string>
+    <string name="login">Accedi</string>
+    <string name="login_with_google">Accedi con Google</string>
+    <string name="login_with_fb">Accedi con Facebook</string>
+    <string name="or">oppure</string>
 </resources>

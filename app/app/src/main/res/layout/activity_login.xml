@@ -12,61 +12,191 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="@dimen/def_margin"
         app:srcCompat="@drawable/logo_tr_bg"
-        app:tint="#54a2d6" />
+        app:tint="@color/temp_main_color" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:layout_gravity="center"
-        android:text="@string/welcome"/>
+        android:gravity="center"
+        android:layout_marginStart="@dimen/def_margin"
+        android:layout_marginEnd="@dimen/def_margin"
+        android:layout_marginTop="@dimen/top_margin"
+        android:text="@string/welcome"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp" />
+    
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/def_margin"
+        android:layout_marginEnd="@dimen/def_margin"
+        android:layout_marginTop="@dimen/top_margin"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:text="@string/already_registered"/>
+        android:text="@string/already_registered"
+        />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/email"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin"
-        android:layout_marginTop="@dimen/margin"
+        android:layout_marginStart="@dimen/def_margin"
+        android:layout_marginEnd="@dimen/def_margin"
+        android:layout_marginTop="@dimen/top_margin"
         style="?attr/textInputOutlinedStyle"
-        android:background="#05002050"
-        app:startIconDrawable="@drawable/baseline_email_24"
-        >
+        android:background="#070020a0"
+        app:startIconDrawable="@drawable/baseline_email_24" >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#00000000"/>
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/password"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin"
-        android:layout_marginTop="@dimen/margin"
+        android:layout_marginStart="@dimen/def_margin"
+        android:layout_marginEnd="@dimen/def_margin"
+        android:layout_marginTop="@dimen/top_margin"
         style="?attr/textInputOutlinedStyle"
-        android:background="#05002050"
-        app:startIconDrawable="@drawable/baseline_password_24"
-        >
+        android:background="#070020a0"
+        app:startIconDrawable="@drawable/baseline_password_24" >
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:background="#00000000"/>
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:gravity="top|start"
+        android:text="@string/password_forgotten" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_button"
+        android:layout_marginEnd="@dimen/margin_button"
+        android:layout_gravity="center"
+        android:text="@string/login"
+        android:backgroundTint="@color/temp_main_color"
+        />
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp">
+
+        <View
+            android:layout_width="@dimen/margin_rel_layout"
+            android:layout_height="1dp"
+            android:layout_toStartOf="@id/text_or"
+            android:layout_marginEnd="@dimen/def_margin"
+            android:layout_centerInParent="true"
+            android:background="#555" />
+
+        <TextView
+            android:id="@+id/text_or"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/or" />
+
+        <View
+            android:layout_width="@dimen/margin_rel_layout"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/def_margin"
+            android:layout_toEndOf="@id/text_or"
+            android:layout_centerInParent="true"
+            android:background="#555"/>
+    </RelativeLayout>
+
+    <Button
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_button"
+        android:layout_marginEnd="@dimen/margin_button"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_gravity="center"
+        android:text="@string/login_with_google"
+        app:icon="@drawable/google_icon"
+        app:iconGravity="textStart"
+        app:iconPadding="15dp"
+        android:backgroundTint="@color/white"
+        />
+
+    <Button
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_button"
+        android:layout_marginEnd="@dimen/margin_button"
+        android:layout_gravity="center"
+        android:text="@string/login_with_fb"
+        app:icon="@drawable/baseline_menu_book_24"
+        app:iconGravity="textStart"
+        app:iconPadding="15dp"
+        android:backgroundTint="@color/white"
+        />
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp">
+
+        <View
+            android:layout_width="@dimen/margin_rel_layout"
+            android:layout_height="1dp"
+            android:layout_toStartOf="@id/text_new_user_question"
+            android:layout_marginEnd="@dimen/def_margin"
+            android:layout_centerInParent="true"
+            android:background="#555" />
+
+        <TextView
+            android:id="@+id/text_new_user_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/new_user_question" />
+
+        <View
+            android:layout_width="@dimen/margin_rel_layout"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/def_margin"
+            android:layout_toEndOf="@id/text_new_user_question"
+            android:layout_centerInParent="true"
+            android:background="#555"/>
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_button"
+        android:layout_marginEnd="@dimen/margin_button"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_gravity="center"
+        android:text="@string/sign_up"
+        android:backgroundTint="@color/temp_main_color"
+        />
 
 </LinearLayout>
