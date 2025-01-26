@@ -12,6 +12,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.apache.commons.validator.routines.EmailValidator;
+
 public class LoginActivity extends AppCompatActivity {
 
     public static final String TAG = LoginActivity.class.getName();
@@ -40,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isEmailOk(String email) {
-        return true;
+        return EmailValidator.getInstance().isValid(email);
     }
 
     private boolean isPasswordOk(String password) {
