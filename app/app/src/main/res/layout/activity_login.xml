@@ -10,22 +10,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="start|top"
+        android:gravity="center_horizontal|top"
         tools:context=".LoginActivity">
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/def_margin"
-            android:layout_marginTop="@dimen/def_margin"
+            android:layout_height="@dimen/margin_rel_layout"
+            android:layout_marginTop="@dimen/top_margin"
             />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginTop="@dimen/def_margin"
             app:srcCompat="@drawable/logo_tr_bg"
             app:tint="@color/main_color" />
 
