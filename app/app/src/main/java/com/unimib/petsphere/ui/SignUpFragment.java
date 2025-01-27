@@ -1,4 +1,4 @@
-package com.unimib.petsphere;
+package com.unimib.petsphere.ui;
 
 import android.os.Bundle;
 
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.unimib.petsphere.R;
 
 public class SignUpFragment extends Fragment {
 

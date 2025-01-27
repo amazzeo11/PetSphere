@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal|bottom"
-    tools:context=".LoginActivity">
+    tools:context=".ui.StartActivity">
 
     <!--
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/def_margin" />
-    -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/def_margin" />
+        -->
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputEmailLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/email"
         android:layout_marginStart="@dimen/def_margin"
         android:layout_marginEnd="@dimen/def_margin"
-        android:layout_marginTop="@dimen/def_margin"
+        android:layout_marginTop="@dimen/margin_rel_layout"
         style="?attr/textInputOutlinedStyle"
         app:startIconDrawable="@drawable/baseline_email_24"
         app:iconTint="@color/main_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -47,6 +51,9 @@
         app:startIconDrawable="@drawable/baseline_password_24"
         app:endIconMode="password_toggle"
         app:iconTint="@color/main_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputEmailLayout"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -93,7 +100,7 @@
             android:layout_marginEnd="@dimen/def_margin"
             android:layout_centerInParent="true"
             android:background="#555" />
-            <!--android:background="@color/text_color"-->
+        <!--android:background="@color/text_color"-->
 
         <TextView
             android:id="@+id/text_or"
@@ -102,7 +109,7 @@
             android:layout_centerInParent="true"
             android:text="@string/or"
             android:textColor="#555" />
-            <!--android:textColor="@color/text_color" />-->
+        <!--android:textColor="@color/text_color" />-->
 
         <View
             android:layout_width="@dimen/margin_rel_layout"
@@ -111,7 +118,7 @@
             android:layout_toEndOf="@id/text_or"
             android:layout_centerInParent="true"
             android:background="#555" />
-            <!--android:background="@color/text_color"/>-->
+        <!--android:background="@color/text_color"/>-->
     </RelativeLayout>
 
     <Button
@@ -154,7 +161,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/def_margin"
         android:layout_marginEnd="@dimen/def_margin"
-        android:layout_marginTop="@dimen/top_margin"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/new_user_question"
         android:textColor="@color/main_color" />
@@ -164,4 +170,4 @@
         android:layout_height="@dimen/margin_button"
         android:layout_marginTop="@dimen/margin_rel_layout"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
