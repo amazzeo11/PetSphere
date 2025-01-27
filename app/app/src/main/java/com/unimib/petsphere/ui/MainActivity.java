@@ -1,13 +1,12 @@
-package com.unimib.petsphere;
+package com.unimib.petsphere.ui;
 
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.NavController;
+
+import com.unimib.petsphere.R;
 
 public class MainActivity extends AppCompatActivity {
 
