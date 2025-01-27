@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="light_blue">#2196F3</color>
-    <color name="background">#B6DAF2</color>
-    <color name="dark_blue">#C32727A4</color>
-    <color name="background_gradient_start">#000000</color>
-    <color name="background_gradient_end">#DDDDDD</color>
-    <color name="fastlane_background">#0096a6</color>
-    <color name="search_opaque">#ffaa3f</color>
-    <color name="selected_background">#ffaa3f</color>
-    <color name="default_background">#3d3d3d</color>
+    <color name="text_color">#FF000000</color>
+    <color name="bg_color">#FFFFFFFF</color>
+    <color name="main_color">#2196F3</color>
+    <color name="temp_main_color">#54a2d6</color>
+    <color name="text_box_color">#3F8FBDE4</color>
+    <color name="text_box_bg_color">#070020a0</color>
+    <color name="dark_blue_color">#001321</color>
 </resources>

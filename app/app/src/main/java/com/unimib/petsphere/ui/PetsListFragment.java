@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.unimib.petsphere.R;
-import com.unimib.petsphere.ui.placeholder.PlaceholderContent;
 
 /**
  * A fragment representing a list of Items.
@@ -65,7 +64,7 @@ public class PetsListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new PetsRecyclerViewAdapter(PlaceholderContent.ITEMS));
+            //recyclerView.setAdapter(new PetsRecyclerViewAdapter(PlaceholderContent.ITEMS));
         }
         return view;
     }

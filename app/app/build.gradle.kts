@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId = "com.unimib.petsphere"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -40,11 +40,15 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation(libs.navigation.runtime)
-    implementation(libs.legacy.support.v4)
-    implementation(libs.recyclerview)
-    implementation(libs.leanback)
-    implementation(libs.glide)
+    implementation(libs.commons.validator)
+    implementation(libs.retrofit)
+    implementation(libs.annotation)
+    implementation(libs.lifecycle.livedata.ktx)
+    implementation(libs.lifecycle.viewmodel.ktx)
+    // navigation dependencies
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
