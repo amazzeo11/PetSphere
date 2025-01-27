@@ -10,6 +10,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -32,11 +33,18 @@ public class LoginActivity extends AppCompatActivity {
         Button loginButton = findViewById(R.id.loginButton);
 
         loginButton.setOnClickListener(view -> {
-            if (isEmailOk(editTextEmail.getText().toString()) && isPasswordOk(editTextPassword.getText().toString())) {
-                Log.d(TAG, "Launch new activity.");
-            }
-            else {
+            if (isPasswordOk(editTextPassword.getText().toString())) {
+                if (isPasswordOk(editTextPassword.getText().toString())) {
+                    Log.d(TAG, "Launch new activity.");
+                } else {
+                    Log.e(TAG, "Error, Ig");
+                    Snackbar.make(findViewById(android.R.id.content), "Check your password", Snackbar.LENGTH_SHORT)
+                            .show();
+                }
+            } else {
                 Log.e(TAG, "Error, Ig");
+                Snackbar.make(findViewById(android.R.id.content), "Check your email", Snackbar.LENGTH_SHORT)
+                        .show();
             }
         });
     }
@@ -46,6 +54,25 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isPasswordOk(String password) {
-        return (password.length() > 7);
+        int i = 0;
+        boolean num = false, maiusc = false;
+
+        if (password == null || password.length() <= 6) {
+            return false;
+        }
+
+        while (!num && i < password.length()) {
+            if (password.charAt(i) >= 48 && password.charAt(i) <= 57) {
+                num = true;
+            }
+            if (password.charAt(i) >= 65 && password.charAt(i) <= 90) {
+                maiusc = true;
+            }
+            i++;
+        }
+
+        if (!num || !maiusc)
+            return false;
+        return true;
     }
 }

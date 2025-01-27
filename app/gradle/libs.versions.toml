@@ -9,6 +9,9 @@ material = "1.12.0"
 activity = "1.10.0"
 constraintlayout = "2.2.0"
 retrofit = "2.11.0"
+annotation = "1.9.1"
+lifecycleLivedataKtx = "2.8.7"
+lifecycleViewmodelKtx = "2.8.7"
 
 [libraries]
 commons-validator = { module = "commons-validator:commons-validator", version.ref = "commonsValidator" }
@@ -20,6 +23,9 @@ material = { group = "com.google.android.material", name = "material", version.r
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
+lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

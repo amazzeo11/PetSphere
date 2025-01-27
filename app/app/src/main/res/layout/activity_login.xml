@@ -61,8 +61,7 @@
         style="?attr/textInputOutlinedStyle"
         android:background="#070020a0"
         app:startIconDrawable="@drawable/baseline_password_24"
-        app:endIconMode="password_toggle">
-        >
+        app:endIconMode="password_toggle" >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputPassword"
@@ -90,8 +89,7 @@
         android:layout_marginTop="@dimen/top_margin"
         android:layout_gravity="center"
         android:text="@string/login"
-        android:backgroundTint="@color/temp_main_color"
-        />
+        android:backgroundTint="@color/temp_main_color"         />
 
     <RelativeLayout
         android:layout_marginTop="@dimen/top_margin"
@@ -147,7 +145,7 @@
         android:layout_marginEnd="@dimen/margin_button"
         android:layout_gravity="center"
         android:text="@string/login_with_fb"
-        app:icon="@drawable/baseline_menu_book_24"
+        app:icon="@drawable/fb"
         app:iconGravity="textStart"
         app:iconPadding="15dp"
         android:backgroundTint="@color/white"
