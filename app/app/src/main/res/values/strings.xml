@@ -26,7 +26,7 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="lista_animali">listaAnimali</string>
-    <string name="clicker" />
-    <string name="profilo_utente" />
+    <string name="lista_animali">Lista Animali</string>
+    <string name="clicker">Clicker</string>
+    <string name="profilo_utente">Profilo</string>
 </resources>
