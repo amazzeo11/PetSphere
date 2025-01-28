@@ -1,5 +1,6 @@
 package com.unimib.petsphere.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -20,7 +22,10 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 public class LoginFragment extends Fragment {
 
-    private TextInputEditText editTextEmail, editTextPassword;
+    public static final String TAG = LoginFragment.class.getName();
+
+    private Button loginButton;
+    private EditText textInputEmail, textInputPassword;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -47,38 +52,23 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        editTextEmail = view.findViewById(R.id.textInputEmail);
-        editTextPassword = view.findViewById(R.id.textInputPassword);
+        loginButton = view.findViewById(R.id.loginButton);
+        textInputEmail = view.findViewById(R.id.textInputEmail);
+        textInputPassword = view.findViewById(R.id.textInputPassword);
 
-        Button loginButton = view.findViewById(R.id.loginButton);
-
-        Button signUpButton = view.findViewById(R.id.signUpButton);
-
-        // non sei registrato?
-        // passaggio da loginFragment a signUpFragment
-        signUpButton.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_signUpFragment);
-        });
-
-        // passaggio da loginFragment a MainActivity
         loginButton.setOnClickListener(v -> {
-            if (isEmailOk(editTextEmail.getText().toString())) {
-                if (isPasswordOk(editTextPassword.getText().toString())) {
-                    //Log.d(TAG, "Launch new activity.");
-                    //Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_mainActivity);
-                } else {
-                    //Log.e(TAG, "Error, Ig");
-                    Snackbar.make(view.findViewById(android.R.id.content), "Check your password", Snackbar.LENGTH_SHORT)
-                            .show();
-                }
+            if (true) {
+                Intent intent = new Intent(requireActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Chiude WelcomeActivity
+                startActivity(intent);
             } else {
-                //Log.e(TAG, "Error, Ig");
-                Snackbar.make(view.findViewById(android.R.id.content), "Check your email", Snackbar.LENGTH_SHORT)
-                        .show();
+                Snackbar.make(view, "Check your email and password", Snackbar.LENGTH_SHORT).show();
             }
         });
+
     }
 
+    /*
     private boolean isEmailOk(String email) {
         return EmailValidator.getInstance().isValid(email);
     }
@@ -105,5 +95,5 @@ public class LoginFragment extends Fragment {
             return false;
         return true;
     }
+    */
 }
-

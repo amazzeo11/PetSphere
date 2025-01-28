@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".ui.StartActivity">
+    android:id="@+id/main"
+    tools:context=".ui.WelcomeActivity">
 
     <LinearLayout
         android:id="@+id/logoLinearLayout"
@@ -14,7 +15,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="top"
-        tools:context=".ui.StartActivity">
+        tools:context=".ui.WelcomeActivity">
 
         <View
             android:layout_width="match_parent"
@@ -42,10 +43,10 @@
     </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        app:navGraph="@navigation/sign_up_nav_graph"
+        app:navGraph="@navigation/login_to_main_nav_graph"
         app:defaultNavHost="true"
-        android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom"

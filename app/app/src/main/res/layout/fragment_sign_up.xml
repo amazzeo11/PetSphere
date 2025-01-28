@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="bottom"
-    tools:context=".ui.StartActivity" >
+    tools:context=".ui.WelcomeActivity" >
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputFirstNameLayout"
