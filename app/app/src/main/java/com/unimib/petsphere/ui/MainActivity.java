@@ -2,12 +2,14 @@ package com.unimib.petsphere.ui;
 
 import android.os.Bundle;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
-
+import androidx.navigation.ui.AppBarConfiguration;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.unimib.petsphere.R;
 
@@ -18,15 +20,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        setSupportActionBar(findViewById(R.id.toolbar));
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().
+                findFragmentById(R.id.fragment_container);
 
-        // Trova il NavController
-        navController = Navigation.findNavController(this, R.id.fragment_container);
+        navController = navHostFragment.getNavController();
 
-        // Collega il NavController alla BottomNavigationView
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.clicker, R.id.petslistfragment, R.id.user
+        ).build();
+
+        NavigationUI.setupWithNavController(bottomNav, navController);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        return navController.navigateUp();
     }
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/main_nav_graph"
+app:startDestination="@id/petslistfragment">
+
+<fragment
+    android:id="@+id/petslistfragment"
+    android:name="com.unimib.petsphere.ui.PetsListFragment"
+    android:label="@string/lista_animali"
+    tools:layout="@layout/fragment_pets_list" />
+<fragment
+    android:id="@+id/clicker"
+    android:name="com.unimib.petsphere.ui.ClickerFragment"
+    android:label="@string/clicker"
+    tools:layout="@layout/fragment_clicker" >
+</fragment>
+<fragment
+    android:id="@+id/user"
+    android:name="com.unimib.petsphere.ui.UserFragment"
+    android:label="@string/profilo_utente"
+    tools:layout="@layout/fragment_user" />
+</navigation>
