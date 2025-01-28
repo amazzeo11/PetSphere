@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -24,11 +24,7 @@
         android:layout_marginTop="@dimen/margin_rel_layout"
         style="?attr/textInputOutlinedStyle"
         app:startIconDrawable="@drawable/baseline_email_24"
-        app:iconTint="@color/main_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:iconTint="@color/main_color" >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEmail"
@@ -41,6 +37,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordTextBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/password"
@@ -50,11 +47,7 @@
         style="?attr/textInputOutlinedStyle"
         app:startIconDrawable="@drawable/baseline_password_24"
         app:endIconMode="password_toggle"
-        app:iconTint="@color/main_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputEmailLayout"
-        >
+        app:iconTint="@color/main_color" >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputPassword"
@@ -66,6 +59,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        android:id="@+id/passwordForgottenButton"
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -84,9 +78,10 @@
         android:layout_gravity="center"
         android:text="@string/login"
         android:textColor="@color/bg_color"
-        android:backgroundTint="@color/main_color"         />
+        android:backgroundTint="@color/main_color" />
 
     <RelativeLayout
+        android:id="@+id/relLayoutOppure"
         android:layout_marginTop="@dimen/top_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -100,6 +95,7 @@
             android:layout_marginEnd="@dimen/def_margin"
             android:layout_centerInParent="true"
             android:background="#555" />
+
         <!--android:background="@color/text_color"-->
 
         <TextView
@@ -122,6 +118,7 @@
     </RelativeLayout>
 
     <Button
+        android:id="@+id/googleLoginButton"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -139,6 +136,7 @@
         />
 
     <Button
+        android:id="@+id/facebookLoginButton"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -163,11 +161,14 @@
         android:layout_marginEnd="@dimen/def_margin"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/new_user_question"
-        android:textColor="@color/main_color" />
+        android:textColor="@color/main_color"
+        />
 
     <View
+        android:id="@+id/bottomEmptyView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_button"
-        android:layout_marginTop="@dimen/margin_rel_layout"/>
+        android:layout_marginTop="@dimen/margin_rel_layout"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

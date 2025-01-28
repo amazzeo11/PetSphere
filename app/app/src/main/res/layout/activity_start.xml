@@ -9,6 +9,7 @@
     tools:context=".ui.StartActivity">
 
     <LinearLayout
+        android:id="@+id/logoLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -23,6 +24,7 @@
 
         <ImageView
             android:id="@+id/imageView"
+            android:contentDescription=""
             android:layout_width="match_parent"
             android:layout_height="150dp"
             app:srcCompat="@drawable/logo_tr_bg"
@@ -45,6 +47,9 @@
         app:defaultNavHost="true"
         android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_gravity="bottom"
+    />
 
 </FrameLayout>
