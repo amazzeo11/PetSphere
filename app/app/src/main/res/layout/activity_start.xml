@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal|top"
+        android:gravity="top"
         tools:context=".ui.StartActivity">
 
         <View
@@ -24,7 +24,7 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:contentDescription=""
+            android:contentDescription="@string/logo_descr"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             app:srcCompat="@drawable/logo_tr_bg"

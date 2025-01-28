@@ -23,7 +23,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 public class SignUpFragment extends Fragment {
 
-    private TextInputEditText editTextEmail, editTextPassword, editTextConfirmPassword;
+    private TextInputEditText editTextEmail, editTextPassword, editTextConfirmPassword, editTextFirstName, editTextLastName;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -50,6 +50,8 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        editTextFirstName = view.findViewById(R.id.textInputUserFirstName);
+        editTextLastName = view.findViewById(R.id.textInputUserLastName);
         editTextEmail = view.findViewById(R.id.textInputEmailInSignUp);
         editTextPassword = view.findViewById(R.id.textInputPasswordInSignUp);
         editTextConfirmPassword = view.findViewById(R.id.textInputConfirmPasswordInSignUp);
@@ -76,26 +78,51 @@ public class SignUpFragment extends Fragment {
         // passaggio da signUpFragment a mainActivity
         signUpButton.setOnClickListener(v -> {
 
-            if (isEmailOk(editTextEmail.getText().toString())) {
-                if (isPasswordOk(editTextPassword.getText().toString())) {
-                    if (isPasswordTheSame(editTextPassword.getText().toString(), editTextConfirmPassword.getText().toString())) {
-                        //Log.d(TAG, "Va <3");
-                        //Navigation.findNavController(v).navigate(R.id.action_signUpFragment_to_loginFragment);
+            if (isNameValid(editTextFirstName.getText().toString())) {
+                if (isNameValid(editTextLastName.getText().toString())) {
+                    if (isEmailOk(editTextEmail.getText().toString())) {
+                        if (isPasswordOk(editTextPassword.getText().toString())) {
+                            if (isPasswordTheSame(editTextPassword.getText().toString(), editTextConfirmPassword.getText().toString())) {
+                                //Log.d(TAG, "Va <3 registra l'utente");
+                                //Navigation.findNavController(v).navigate(R.id.action_signUpFragment_to_mainActivity);
+                            } else {
+                                Snackbar.make(requireView(), "The password isn't the same", Snackbar.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            //Log.e(TAG, "Error, Ig");
+                            Snackbar.make(requireView(), "The password should be at least 7 chars long and made by small and capital letters, numbers and symbols", Snackbar.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Snackbar.make(requireView(), "The password isn't the same", Snackbar.LENGTH_SHORT)
-                                .show();
+                        //Log.e(TAG, "Error, Ig");
+                        Snackbar.make(requireView(), "Check your email", Snackbar.LENGTH_SHORT).show();
                     }
                 } else {
-                    //Log.e(TAG, "Error, Ig");
-                    Snackbar.make(requireView(), "Check your password", Snackbar.LENGTH_SHORT)
-                            .show();
+                    Snackbar.make(requireView(), "Your first name should be made only of letters, and at least 3 chars long", Snackbar.LENGTH_SHORT).show();
                 }
             } else {
-                //Log.e(TAG, "Error, Ig");
-                Snackbar.make(requireView(), "Check your email", Snackbar.LENGTH_SHORT)
-                        .show();
+                Snackbar.make(requireView(), "Your last name should be made only of letters, and at least 3 chars long", Snackbar.LENGTH_SHORT).show();
             }
+
         });
+    }
+
+    private boolean isNameValid(String name) {
+        int i = 0;
+        boolean letters = false;
+
+        if (name == null || name.length() <= 2) {
+            return false;
+        }
+
+        // solo lettere maiuscole o minuscole + apostrofo (value 39)
+        while (!letters && i < name.length()) {
+            if (name.charAt(i) == 39 || name.charAt(i) >= 65 && name.charAt(i) <= 90 || name.charAt(i) >= 97 && name.charAt(i) <= 122) {
+                letters = true;
+            }
+            i++;
+        }
+
+        return letters;
     }
 
     private boolean isEmailOk(String email) {
