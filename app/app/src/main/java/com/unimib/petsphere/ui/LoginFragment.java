@@ -54,12 +54,13 @@ public class LoginFragment extends Fragment {
 
         Button signUpButton = view.findViewById(R.id.signUpButton);
 
-        // passaggio da fragment_login a fragment_sign_up
+        // non sei registrato?
+        // passaggio da loginFragment a signUpFragment
         signUpButton.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_signUpFragment);
         });
 
-        // passaggio da fragment_login a MainActivity
+        // passaggio da loginFragment a MainActivity
         loginButton.setOnClickListener(v -> {
             if (isEmailOk(editTextEmail.getText().toString())) {
                 if (isPasswordOk(editTextPassword.getText().toString())) {
