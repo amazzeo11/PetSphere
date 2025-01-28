@@ -43,7 +43,7 @@
         android:hint="@string/password"
         android:layout_marginStart="@dimen/def_margin"
         android:layout_marginEnd="@dimen/def_margin"
-        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginTop="@dimen/m_margin"
         style="?attr/textInputOutlinedStyle"
         app:startIconDrawable="@drawable/baseline_password_24"
         app:endIconMode="password_toggle"
@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_button"
         android:layout_marginEnd="@dimen/margin_button"
-        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginTop="@dimen/m_margin"
         android:layout_gravity="center"
         android:text="@string/login"
         android:textColor="@color/bg_color"
@@ -82,11 +82,11 @@
 
     <RelativeLayout
         android:id="@+id/relLayoutOppure"
-        android:layout_marginTop="@dimen/top_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp">
+        android:layout_marginEnd="100dp"
+        android:layout_marginTop="@dimen/def_margin" >
 
         <View
             android:layout_width="@dimen/margin_rel_layout"
@@ -124,7 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_button"
         android:layout_marginEnd="@dimen/margin_button"
-        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginTop="@dimen/def_margin"
         android:layout_gravity="center"
         android:text="@string/login_with_google"
         app:icon="@drawable/google_icon"
@@ -142,6 +142,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_button"
         android:layout_marginEnd="@dimen/margin_button"
+        android:layout_marginTop="5dp"
         android:layout_gravity="center"
         android:text="@string/login_with_fb"
         app:icon="@drawable/fb"
@@ -159,6 +160,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/def_margin"
         android:layout_marginEnd="@dimen/def_margin"
+        android:layout_marginTop="@dimen/s_margin"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/new_user_question"
         android:textColor="@color/main_color"
@@ -168,7 +170,7 @@
         android:id="@+id/bottomEmptyView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_button"
-        android:layout_marginTop="@dimen/margin_rel_layout"
+        android:layout_marginTop="@dimen/margin_button"
         />
 
 </LinearLayout>
