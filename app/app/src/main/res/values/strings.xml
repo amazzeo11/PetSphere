@@ -32,4 +32,6 @@
     <string name="benvenut">Benvenut*!</string>
     <string name="i_tuoi_animali">I tuoi animali:</string>
     <string name="inserisci_un_nuovo_animale">Inserisci un nuovo animale</string>
+    <string name="foto_pet">foto pet</string>
+    <string name="nome_pet">nome pet</string>
 </resources>
