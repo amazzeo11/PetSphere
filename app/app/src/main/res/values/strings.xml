@@ -29,4 +29,6 @@
     <string name="lista_animali">Lista Animali</string>
     <string name="clicker">Clicker</string>
     <string name="profilo_utente">Profilo</string>
+    <string name="benvenut">Benvenut*!</string>
+    <string name="i_tuoi_animali">I tuoi animali:</string>
 </resources>
