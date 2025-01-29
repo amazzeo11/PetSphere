@@ -5,13 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:focusableInTouchMode="false"
+    android:id="@+id/scroll_view_sign_up">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="bottom"
+        android:gravity="top"
         tools:context=".ui.WelcomeActivity" >
 
         <!-- Il primo box di testo, nome, aveva un marginTop di 50dp -->
@@ -23,9 +25,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/def_margin"
             android:layout_marginEnd="@dimen/def_margin"
-            android:layout_marginBottom="@dimen/m_margin"
+            android:layout_marginTop="@dimen/m_margin"
             android:hint="@string/user_first_name"
-            app:layout_constraintBottom_toTopOf="@id/textInputLastNameLayout"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -46,9 +48,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/def_margin"
             android:layout_marginEnd="@dimen/def_margin"
-            android:layout_marginBottom="@dimen/m_margin"
+            android:layout_marginTop="@dimen/m_margin"
             android:hint="@string/user_last_name"
-            app:layout_constraintBottom_toTopOf="@id/textInputEmailLayout"
+            app:layout_constraintTop_toBottomOf="@id/textInputFirstNameLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" >
 
@@ -69,9 +71,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/def_margin"
             android:layout_marginEnd="@dimen/def_margin"
-            android:layout_marginBottom="@dimen/m_margin"
+            android:layout_marginTop="@dimen/m_margin"
             android:hint="@string/email"
-            app:layout_constraintBottom_toTopOf="@id/textInputPasswordLayout"
+            app:layout_constraintTop_toBottomOf="@id/textInputLastNameLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"  >
 
@@ -92,10 +94,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/def_margin"
             android:layout_marginEnd="@dimen/def_margin"
-            android:layout_marginBottom="@dimen/m_margin"
+            android:layout_marginTop="@dimen/m_margin"
             android:hint="@string/password"
             app:endIconMode="password_toggle"
-            app:layout_constraintBottom_toTopOf="@id/textInputConfirmPasswordLayout"
+            app:layout_constraintTop_toBottomOf="@id/textInputEmailLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"  >
 
@@ -115,10 +117,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/def_margin"
             android:layout_marginEnd="@dimen/def_margin"
-            android:layout_marginBottom="@dimen/def_margin"
+            android:layout_marginTop="@dimen/def_margin"
             android:hint="@string/confirm_password"
             app:endIconMode="password_toggle"
-            app:layout_constraintBottom_toTopOf="@id/signUpButtonInSignUp"
+            app:layout_constraintTop_toBottomOf="@id/textInputPasswordLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" >
 
@@ -138,11 +140,11 @@
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/margin_button"
             android:layout_marginEnd="@dimen/margin_button"
-            android:layout_marginBottom="@dimen/xs_margin"
+            android:layout_marginTop="@dimen/def_margin"
             android:backgroundTint="@color/main_color"
             android:text="@string/sign_up"
             android:textColor="@color/bg_color"
-            app:layout_constraintBottom_toTopOf="@id/alreadySignedUpButton"
+            app:layout_constraintTop_toBottomOf="@id/textInputConfirmPasswordLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
@@ -152,25 +154,24 @@
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/def_margin"
+            android:layout_marginTop="@dimen/xs_margin"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/already_registered"
             android:textColor="@color/main_color"
-            app:layout_constraintBottom_toTopOf="@id/bottomEmptyViewSignUp"
+            app:layout_constraintTop_toBottomOf="@id/signUpButtonInSignUp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <View
             android:id="@+id/bottomEmptyViewSignUp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/def_margin"
-            android:layout_marginTop="@dimen/def_margin"
-            android:layout_marginBottom="@dimen/xs_margin"
+            android:layout_height="@dimen/margin_rel_layout"
+            android:layout_marginTop="@dimen/margin_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/alreadySignedUpButton"
         />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </ScrollView>

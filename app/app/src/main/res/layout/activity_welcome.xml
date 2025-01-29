@@ -49,7 +49,6 @@
         android:gravity="bottom"
         android:layout_gravity="bottom"
         app:layout_constraintTop_toBottomOf="@id/appName"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
     />
