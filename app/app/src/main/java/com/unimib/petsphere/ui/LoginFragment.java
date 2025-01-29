@@ -6,8 +6,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +27,7 @@ public class LoginFragment extends Fragment {
 
     public static final String TAG = LoginFragment.class.getName();
 
-    private Button loginButton;
+    private Button loginButton, signUpButton;
     private EditText textInputEmail, textInputPassword;
 
     public LoginFragment() {
@@ -53,6 +56,7 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         loginButton = view.findViewById(R.id.loginButton);
+        signUpButton = view.findViewById(R.id.signUpButton);
         textInputEmail = view.findViewById(R.id.textInputEmail);
         textInputPassword = view.findViewById(R.id.textInputPassword);
 
@@ -63,6 +67,22 @@ public class LoginFragment extends Fragment {
                 startActivity(intent);
             } else {
                 Snackbar.make(view, "Check your email and password", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
+        View navHost = requireActivity().findViewById(R.id.nav_host_fragment);
+        if (navHost == null) {
+            Log.e("LoginFragment", "Il nav_host_fragment non è stato trovato!");
+        }
+
+        signUpButton.setOnClickListener(v -> {
+            try {
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+                navController.navigate(R.id.action_loginFragment_to_signUpFragment);
+
+                //Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_signUpFragment);
+            } catch (Exception e) {
+                Log.e("LoginFragment", "Errore nella navigazione al SignUpFragment", e);
             }
         });
 

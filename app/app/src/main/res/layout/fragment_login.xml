@@ -169,8 +169,9 @@
     <View
         android:id="@+id/bottomEmptyView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_button"
-        android:layout_marginTop="@dimen/margin_button"
+        android:layout_height="@dimen/def_margin"
+        android:layout_marginTop="@dimen/def_margin"
         />
+    <!--android:layout_marginTop="@dimen/margin_button"-->
 
 </LinearLayout>

@@ -19,8 +19,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_rel_layout"
-            android:layout_marginTop="@dimen/m_margin"
+            android:layout_height="@dimen/margin_button"
+            android:layout_marginTop="@dimen/xs_margin"
             />
 
         <ImageView
@@ -45,7 +45,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        app:navGraph="@navigation/login_to_main_nav_graph"
+        app:navGraph="@navigation/login_nav_graph"
         app:defaultNavHost="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
