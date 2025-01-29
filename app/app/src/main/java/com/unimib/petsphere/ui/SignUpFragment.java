@@ -77,7 +77,6 @@ public class SignUpFragment extends Fragment {
 
         // passaggio da signUpFragment a mainActivity
         signUpButton.setOnClickListener(v -> {
-
             if (isNameValid(editTextFirstName.getText().toString())) {
                 if (isNameValid(editTextLastName.getText().toString())) {
                     if (isEmailOk(editTextEmail.getText().toString())) {
@@ -86,21 +85,21 @@ public class SignUpFragment extends Fragment {
                                 //Log.d(TAG, "Va <3 registra l'utente");
                                 //Navigation.findNavController(v).navigate(R.id.action_signUpFragment_to_mainActivity);
                             } else {
-                                Snackbar.make(requireView(), "The password isn't the same", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(requireView(), "The password should be the same", Snackbar.LENGTH_SHORT).show();
                             }
                         } else {
                             //Log.e(TAG, "Error, Ig");
-                            Snackbar.make(requireView(), "The password should be at least 7 chars long and made by small and capital letters, numbers and symbols", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(requireView(), "The password is not valid", Snackbar.LENGTH_SHORT).show();
                         }
                     } else {
                         //Log.e(TAG, "Error, Ig");
                         Snackbar.make(requireView(), "Check your email", Snackbar.LENGTH_SHORT).show();
                     }
                 } else {
-                    Snackbar.make(requireView(), "Your first name should be made only of letters, and at least 3 chars long", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(requireView(), "Please don't leave the last name blank", Snackbar.LENGTH_SHORT).show();
                 }
             } else {
-                Snackbar.make(requireView(), "Your last name should be made only of letters, and at least 3 chars long", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(requireView(), "Please don't leave the name blank", Snackbar.LENGTH_SHORT).show();
             }
 
         });
@@ -123,9 +122,7 @@ public class SignUpFragment extends Fragment {
         }
 
         return letters;*/
-        if (name == null)
-            return false;
-        return true;
+        return name != null;
     }
 
     private boolean isEmailOk(String email) {
@@ -140,7 +137,7 @@ public class SignUpFragment extends Fragment {
             return false;
         }
 
-        while (!num && i < password.length()) {
+        while (i < password.length()) {
             if (password.charAt(i) >= 48 && password.charAt(i) <= 57) {
                 num = true;
             }

@@ -7,32 +7,36 @@
     android:orientation="vertical"
     android:gravity="center"
     android:id="@+id/main"
-    tools:context=".ui.WelcomeActivity">
+    tools:context=".ui.WelcomeActivity"
+
+    android:backgroundTint="@color/bg_color" >
 
     <ImageView
         android:id="@+id/imageView"
         android:contentDescription="@string/logo_descr"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginTop="@dimen/def_margin"
+        android:layout_marginTop="@dimen/margin_button"
         android:layout_marginBottom="@dimen/m_margin"
         app:srcCompat="@drawable/logo_app_azzurro"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"  />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/appName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginStart="@dimen/def_margin"
         android:layout_marginEnd="@dimen/def_margin"
+        android:layout_marginBottom="@dimen/def_margin"
         android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView"
-        />
+    />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
@@ -41,8 +45,10 @@
         app:defaultNavHost="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/def_margin"
         android:gravity="bottom"
         android:layout_gravity="bottom"
+        app:layout_constraintTop_toBottomOf="@id/appName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
