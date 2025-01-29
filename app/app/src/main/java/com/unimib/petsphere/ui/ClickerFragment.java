@@ -48,7 +48,7 @@ public class ClickerFragment extends Fragment {
                 mediaPlayer.release();
             }
 
-            mediaPlayer = MediaPlayer.create(getContext(), R.raw.provaclicker);
+            mediaPlayer = MediaPlayer.create(getContext(), R.raw.clicker_sound);
             mediaPlayer.start();
 
             mediaPlayer.setOnCompletionListener(mp -> {
