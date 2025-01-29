@@ -107,7 +107,7 @@ public class SignUpFragment extends Fragment {
     }
 
     private boolean isNameValid(String name) {
-        int i = 0;
+        /*int i = 0;
         boolean letters = false;
 
         if (name == null || name.length() <= 2) {
@@ -122,7 +122,10 @@ public class SignUpFragment extends Fragment {
             i++;
         }
 
-        return letters;
+        return letters;*/
+        if (name == null)
+            return false;
+        return true;
     }
 
     private boolean isEmailOk(String email) {
