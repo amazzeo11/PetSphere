@@ -107,7 +107,7 @@ public class SignUpFragment extends Fragment {
                                                             Log.d(TAG, "createUserWithEmail:success");
                                                             FirebaseUser user = mAuth.getCurrentUser();
                                                             //updateUI(user);
-                                                            //Navigation.findNavController(v).navigate(R.id.action_signUpFragment_to_mainActivity);
+                                                            Navigation.findNavController(v).navigate(R.id.action_signUpFragment_to_loginFragment);
                                                         } else {
                                                             // If sign in fails, display a message to the user.
                                                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
