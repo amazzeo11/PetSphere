@@ -165,7 +165,7 @@
         <View
             android:id="@+id/bottomEmptyViewSignUp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_rel_layout"
+            android:layout_height="500dp"
             android:layout_marginTop="@dimen/margin_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
