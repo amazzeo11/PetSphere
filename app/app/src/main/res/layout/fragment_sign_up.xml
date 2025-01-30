@@ -18,6 +18,17 @@
 
         <!-- Il primo box di testo, nome, aveva un marginTop di 50dp -->
 
+        <TextView
+            android:id="@+id/text_mandatory_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/def_margin"
+            android:layout_marginTop="@dimen/m_margin"
+            android:paddingStart="@dimen/xs_margin"
+            android:paddingEnd="@dimen/xs_margin"
+            android:text="@string/mandatory_input"
+            android:textColor="@color/warning_red" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputFirstNameLayout"
             style="?attr/textInputOutlinedStyle"
@@ -25,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/def_margin"
             android:layout_marginEnd="@dimen/def_margin"
-            android:layout_marginTop="@dimen/m_margin"
+            android:layout_marginTop="@dimen/xs_margin"
             android:hint="@string/user_first_name"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"

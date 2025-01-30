@@ -7,4 +7,5 @@
     <color name="text_box_color">#3F8FBDE4</color>
     <color name="text_box_bg_color">#070020a0</color>
     <color name="dark_blue_color">#001321</color>
+    <color name="warning_red">#5F0500</color>
 </resources>

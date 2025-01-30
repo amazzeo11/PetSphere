@@ -25,14 +25,18 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="lista_animali">listaAnimali</string>
+    <string name="clicker" />
+    <string name="profilo_utente" />
+
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="user_first_name_invalid">Nome non valido</string>
     <string name="user_last_name_invalid">Cognome non valido</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="lista_animali">listaAnimali</string>
-    <string name="clicker" />
-    <string name="profilo_utente" />
+
+    <!-- Strings related to sign up -->
+    <string name="mandatory_input">Campi obbligatori *</string>
+
 </resources>
