@@ -79,9 +79,13 @@ public class LoginFragment extends Fragment {
                                 Log.d(TAG, "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 //updateUI(user);
+
                                 Intent intent = new Intent(requireActivity(), MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
+                                //NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+                                //navController.navigate(R.id.action_loginFragment_to_mainActivity);
+
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
