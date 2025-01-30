@@ -42,7 +42,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Soprannome: "
+                    android:text="@string/soprannome"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?android:attr/textColorSecondary"/>
                 <TextView
@@ -61,7 +61,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Numero di microchip: "
+                    android:text="@string/numero_di_microchip"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?android:attr/textColorSecondary"/>
                 <TextView
@@ -80,7 +80,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Età: "
+                    android:text="@string/et"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?android:attr/textColorSecondary"/>
                 <TextView
@@ -99,7 +99,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Compleanno: "
+                    android:text="@string/compleanno"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?android:attr/textColorSecondary"/>
                 <TextView
@@ -115,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Colore:"
+                android:text="@string/colore"
                 android:textAppearance="?attr/textAppearanceBodyMedium"/>
             <Spinner
                 android:id="@+id/spinner_colore"
@@ -127,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Tipo di animale:"
+                android:text="@string/tipo_di_animale"
                 android:textAppearance="?attr/textAppearanceBodyMedium"/>
             <Spinner
                 android:id="@+id/spinner_tipo"
@@ -146,7 +146,7 @@
                 android:id="@+id/edit_allergie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Inserisci allergie"
+                android:hint="@string/inserisci_allergie"
                 android:inputType="text"/>
 
 
@@ -154,13 +154,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Note:"
+                android:text="@string/note"
                 android:textAppearance="?attr/textAppearanceBodyMedium"/>
             <EditText
                 android:id="@+id/edit_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Inserisci note"
+                android:hint="@string/inserisci_note"
                 android:inputType="textMultiLine"
                 android:minLines="2"/>
 
@@ -191,7 +191,7 @@
                 android:id="@+id/btn_modifica_profilo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Modifica Profilo"
+                android:text="@string/modifica_profilo"
                 style="?attr/borderlessButtonStyle"/>
         </LinearLayout>
 

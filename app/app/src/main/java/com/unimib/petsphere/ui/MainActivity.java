@@ -31,12 +31,9 @@ public class MainActivity extends AppCompatActivity {
         navController = navHostFragment.getNavController();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-       /* AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.clicker, R.id.petslistfragment, R.id.user
-        ).build();*/
 
         NavigationUI.setupWithNavController(bottomNav, navController);
-        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
     }
     @Override
     public boolean onSupportNavigateUp() {

@@ -34,4 +34,14 @@
     <string name="inserisci_un_nuovo_animale">Inserisci un nuovo animale</string>
     <string name="foto_pet">foto pet</string>
     <string name="nome_pet">nome pet</string>
+    <string name="modifica_profilo">Modifica Profilo</string>
+    <string name="inserisci_note">Inserisci note</string>
+    <string name="note">Note:</string>
+    <string name="inserisci_allergie">Inserisci allergie</string>
+    <string name="tipo_di_animale">Tipo di animale:</string>
+    <string name="colore">Colore:</string>
+    <string name="compleanno">Compleanno:</string>
+    <string name="et">Età:</string>
+    <string name="numero_di_microchip">Numero di microchip:</string>
+    <string name="soprannome">Soprannome:</string>
 </resources>
