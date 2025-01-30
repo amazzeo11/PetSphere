@@ -89,14 +89,31 @@ public class SignUpFragment extends Fragment {
         signUpButton.setOnClickListener(v -> {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             FirebaseUser user = mAuth.getCurrentUser();
-            /*
+
             if (isNameValid(editTextFirstName.getText().toString())) {
                 if (isNameValid(editTextLastName.getText().toString())) {
                     if (isEmailOk(editTextEmail.getText().toString())) {
                         if (isPasswordOk(editTextPassword.getText().toString())) {
                             if (isPasswordTheSame(editTextPassword.getText().toString(), editTextConfirmPassword.getText().toString())) {
                                 //Log.d(TAG, "Va <3 registra l'utente");
-                                //Navigation.findNavController(v).navigate(R.id.action_signUpFragment_to_mainActivity);
+                                mAuth.createUserWithEmailAndPassword(editTextEmail.getText().toString(), editTextPassword.getText().toString())
+                                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+                                                    // Sign in success, update UI with the signed-in user's information
+                                                    Log.d(TAG, "createUserWithEmail:success");
+                                                    FirebaseUser user = mAuth.getCurrentUser();
+                                                    //updateUI(user);
+                                                    //Navigation.findNavController(v).navigate(R.id.action_signUpFragment_to_mainActivity);
+                                                } else {
+                                                    // If sign in fails, display a message to the user.
+                                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                                    //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                                    //updateUI(null);
+                                                }
+                                            }
+                                        });
                             } else {
                                 Snackbar.make(requireView(), "The password should be the same", Snackbar.LENGTH_SHORT).show();
                             }
@@ -113,47 +130,15 @@ public class SignUpFragment extends Fragment {
                 }
             } else {
                 Snackbar.make(requireView(), "Please don't leave the name blank", Snackbar.LENGTH_SHORT).show();
-            }*/
+            }
 
-            mAuth.createUserWithEmailAndPassword(editTextEmail.getText().toString(), editTextPassword.getText().toString())
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "createUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                //updateUI(user);
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                                //updateUI(null);
-                            }
-                        }
-                    });
+
 
         });
     }
 
     private boolean isNameValid(String name) {
-        /*int i = 0;
-        boolean letters = false;
-
-        if (name == null || name.length() <= 2) {
-            return false;
-        }
-
-        // solo lettere maiuscole o minuscole + apostrofo (value 39)
-        while (!letters && i < name.length()) {
-            if (name.charAt(i) == 39 || name.charAt(i) >= 65 && name.charAt(i) <= 90 || name.charAt(i) >= 97 && name.charAt(i) <= 122) {
-                letters = true;
-            }
-            i++;
-        }
-
-        return letters;*/
-        return name != null;
+        return name != null && !name.isEmpty();
     }
 
     private boolean isEmailOk(String email) {

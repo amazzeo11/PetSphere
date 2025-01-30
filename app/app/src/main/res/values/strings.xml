@@ -3,8 +3,10 @@
     <string name="welcome">Benvenut*!</string>
     <string name="already_registered">Sei già un utente?</string>
     <string name="email">E-mail</string>
+    <string name="email_sign_up">E-mail *</string>
     <string name="password">Password</string>
-    <string name="confirm_password">Conferma Password</string>
+    <string name="password_sign_up">Password *</string>
+    <string name="confirm_password_sign_up">Conferma Password *</string>
     <string name="password_forgotten">Hai dimenticato la password?</string>
     <string name="new_user">Nuovo utente</string>
     <string name="new_user_question">Nuovo utente?</string>
@@ -13,8 +15,8 @@
     <string name="login_with_google">Accedi con Google</string>
     <string name="login_with_fb">Accedi con Facebook</string>
     <string name="or">oppure</string>
-    <string name="user_first_name">Nome</string>
-    <string name="user_last_name">Cognome</string>
+    <string name="user_first_name">Nome *</string>
+    <string name="user_last_name">Cognome *</string>
     <string name="logo_descr">Logo app, rappresentante animali stilizzati</string>
 
 
