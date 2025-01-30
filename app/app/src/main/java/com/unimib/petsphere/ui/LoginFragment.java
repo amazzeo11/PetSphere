@@ -19,6 +19,8 @@ import android.widget.EditText;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.unimib.petsphere.R;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -63,16 +65,17 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(v -> {
             if (true) {
                 Intent intent = new Intent(requireActivity(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Chiude WelcomeActivity
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             } else {
+                // messaggio di errore
                 Snackbar.make(view, "Check your email and password", Snackbar.LENGTH_SHORT).show();
             }
         });
 
         View navHost = requireActivity().findViewById(R.id.nav_host_fragment);
         if (navHost == null) {
-            Log.e("LoginFragment", "Il nav_host_fragment non è stato trovato!");
+            Log.e("LoginFragment", "lil debug per nav host");
         }
 
         signUpButton.setOnClickListener(v -> {
@@ -85,6 +88,12 @@ public class LoginFragment extends Fragment {
                 Log.e("LoginFragment", "Errore nella navigazione al SignUpFragment", e);
             }
         });
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        // per ottenere l'utente corrnete
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        Log.i(TAG, user + "");
 
     }
 

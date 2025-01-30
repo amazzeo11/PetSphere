@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "312115728845",
+    "project_id": "pdmpetsphere",
+    "storage_bucket": "pdmpetsphere.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312115728845:android:9114312d23ab7f4d31f484",
+        "android_client_info": {
+          "package_name": "com.unimib.petsphere"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHQeBjigmyLs6t7bLyTh-Gckw5Q0S6p8k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
