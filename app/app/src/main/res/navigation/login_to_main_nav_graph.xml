@@ -18,6 +18,7 @@
     <activity
         android:id="@+id/mainActivity"
         android:name="com.unimib.petsphere.ui.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
+        android:label="activity_main" />
+        <!--tools:layout="@layout/activity_main"-->
+
 </navigation>
