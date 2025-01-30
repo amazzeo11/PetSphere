@@ -16,9 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.unimib.petsphere.R;
@@ -31,6 +35,9 @@ public class LoginFragment extends Fragment {
 
     private Button loginButton, signUpButton;
     private EditText textInputEmail, textInputPassword;
+
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = mAuth.getCurrentUser();
 
     public LoginFragment() {
         // Required empty public constructor
@@ -63,14 +70,33 @@ public class LoginFragment extends Fragment {
         textInputPassword = view.findViewById(R.id.textInputPassword);
 
         loginButton.setOnClickListener(v -> {
+            mAuth.signInWithEmailAndPassword(textInputEmail.getText().toString(), textInputPassword.getText().toString())
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                //updateUI(user);
+                                Intent intent = new Intent(requireActivity(), MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                Toast.makeText(requireContext(), "Autenticazione fallita",
+                                        Toast.LENGTH_SHORT).show();
+                                //updateUI(null);
+                            }
+                        }
+                    });
+            /*
             if (true) {
-                Intent intent = new Intent(requireActivity(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
             } else {
                 // messaggio di errore
-                Snackbar.make(view, "Check your email and password", Snackbar.LENGTH_SHORT).show();
-            }
+                Snackbar.make(view, "Autenticazione fallita, controlla mail e password inserite", Snackbar.LENGTH_SHORT).show();
+            }*/
         });
 
         View navHost = requireActivity().findViewById(R.id.nav_host_fragment);

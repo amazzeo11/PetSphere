@@ -35,6 +35,9 @@ public class SignUpFragment extends Fragment {
 
     private TextInputEditText editTextEmail, editTextPassword, editTextConfirmPassword, editTextFirstName, editTextLastName;
 
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = mAuth.getCurrentUser();
+
     public SignUpFragment() {
         // Required empty public constructor
     }
@@ -87,9 +90,6 @@ public class SignUpFragment extends Fragment {
 
         // passaggio da signUpFragment a mainActivity
         signUpButton.setOnClickListener(v -> {
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            FirebaseUser user = mAuth.getCurrentUser();
-
             if (isNameValid(editTextFirstName.getText().toString())) {
                 if (isNameValid(editTextLastName.getText().toString())) {
                     if (isEmailOk(editTextEmail.getText().toString())) {
@@ -183,4 +183,7 @@ public class SignUpFragment extends Fragment {
         return password.equals(confirmPassword);
     }
 
+    public String getNomeUtente() {
+        return editTextFirstName.getText().toString();
+    }
 }
