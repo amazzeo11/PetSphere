@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.unimib.petsphere.R;
 
@@ -111,6 +112,7 @@ public class SignUpFragment extends Fragment {
                                                         } else {
                                                             // If sign in fails, display a message to the user.
                                                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                                            Snackbar.make(requireView(), task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
                                                             //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                                             //updateUI(null);
                                                         }
