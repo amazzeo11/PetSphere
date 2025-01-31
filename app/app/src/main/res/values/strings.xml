@@ -46,4 +46,5 @@
     <string name="soprannome">Soprannome:</string>
     <string name="nome">Nome</string>
     <string name="tipo_animale">Tipo animale</string>
+    <string name="salva">Salva</string>
 </resources>

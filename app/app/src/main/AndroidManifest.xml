@@ -13,15 +13,17 @@
         android:theme="@style/Theme.PetSphere"
         tools:targetApi="31">
         <activity
+            android:name=".ui.CreatePetActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.StartActivity"
-            android:exported="true" >
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

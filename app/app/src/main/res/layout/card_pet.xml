@@ -180,15 +180,17 @@
 
                 style="?attr/borderlessButtonStyle"/>
 
+
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/save_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:text="@string/salva"
+                android:visibility="gone"
                 style="?attr/borderlessButtonStyle"/>
 
-
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_modifica_profilo"
+                android:id="@+id/edit_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/modifica_profilo"
