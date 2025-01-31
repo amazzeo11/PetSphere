@@ -44,4 +44,6 @@
     <string name="et">Età:</string>
     <string name="numero_di_microchip">Numero di microchip:</string>
     <string name="soprannome">Soprannome:</string>
+    <string name="nome">Nome</string>
+    <string name="tipo_animale">Tipo animale</string>
 </resources>

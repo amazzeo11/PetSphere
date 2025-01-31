@@ -13,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.unimib.petsphere.R;
-import com.unimib.petsphere.ui.placeholder.PlaceholderContent;
+import com.unimib.petsphere.data.model.PetModel;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -32,8 +35,6 @@ public class PetListFragment extends Fragment {
     public PetListFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static PetListFragment newInstance(int columnCount) {
         PetListFragment fragment = new PetListFragment();
         Bundle args = new Bundle();
@@ -56,7 +57,8 @@ public class PetListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pets_list, container, false);
 
-        // Set the adapter
+        List<PetModel> petList = Collections.emptyList(); //DA CAMBIARE CON METODO CHE PESCA I DATI DA ROOM
+
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
@@ -65,7 +67,7 @@ public class PetListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new PetRecyclerViewAdapter(PlaceholderContent.ITEMS));
+            recyclerView.setAdapter(new PetRecyclerViewAdapter(R.layout.preview_pet_card,petList));
         }
         return view;
     }

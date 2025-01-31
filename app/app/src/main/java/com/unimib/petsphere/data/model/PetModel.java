@@ -1,8 +1,14 @@
-package com.unimib.petsphere.data;
+package com.unimib.petsphere.data.model;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.Date;
-
+@Entity
 public class PetModel {
+    @PrimaryKey
+    public int uid;
+
     private String animal_type;
     private String microchip;
     private String name;
