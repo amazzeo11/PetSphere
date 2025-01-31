@@ -13,25 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.unimib.petsphere.R;
+import com.unimib.petsphere.data.PetRoomDatabase;
 import com.unimib.petsphere.data.model.PetModel;
 
 import java.util.Collections;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- */
+
 public class PetListFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public PetListFragment() {
     }
 
@@ -57,7 +50,7 @@ public class PetListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pets_list, container, false);
 
-        List<PetModel> petList = Collections.emptyList(); //DA CAMBIARE CON METODO CHE PESCA I DATI DA ROOM
+        List<PetModel> petList = PetRoomDatabase.getDatabase(getContext()).PetDAO().getAll();
 
         if (view instanceof RecyclerView) {
             Context context = view.getContext();

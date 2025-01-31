@@ -2,9 +2,11 @@ package com.unimib.petsphere.ui;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.unimib.petsphere.R;
@@ -14,13 +16,11 @@ import com.unimib.petsphere.databinding.PreviewPetCardBinding;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link PlaceholderItem}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class PetRecyclerViewAdapter extends RecyclerView.Adapter<PetRecyclerViewAdapter.ViewHolder> {
     private int layout;
     private List<PetModel> petList;
+    private Context context;
+
 
     public PetRecyclerViewAdapter(int layout, List<PetModel> petList) {
         this.layout=layout;
@@ -30,7 +30,12 @@ public class PetRecyclerViewAdapter extends RecyclerView.Adapter<PetRecyclerView
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
-        return new ViewHolder(PreviewPetCardBinding.inflate(LayoutInflater.from(layout), viewGroup, false));
+        View view = LayoutInflater.from(viewGroup.getContext())
+                .inflate(layout, viewGroup, false);
+
+        if (this.context == null) this.context = viewGroup.getContext();
+
+        return new ViewHolder(view);
 
     }
 
@@ -38,6 +43,8 @@ public class PetRecyclerViewAdapter extends RecyclerView.Adapter<PetRecyclerView
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.getTextViewNome().setText(petList.get(position).getName());
         holder.getTextViewTipoAnimale().setText(petList.get(position).getAnimal_type());
+
+
     }
 
     @Override

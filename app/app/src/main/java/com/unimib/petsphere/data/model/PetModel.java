@@ -15,11 +15,11 @@ public class PetModel {
     private String nickname;
     private float weight;
     private int age;
-    private Date birthday;
+    private String birthday;
     private String notes;
     private String allergies;
 
-    public PetModel(String animalType, String microchip, String name, String nickname, float weight, int age, Date birthday, String notes, String allergies){
+    public PetModel(String animalType, String microchip, String name, String nickname, float weight, int age, String birthday, String notes, String allergies){
         animal_type = animalType;
         this.microchip = microchip;
         this.name = name;
@@ -29,6 +29,10 @@ public class PetModel {
         this.birthday = birthday;
         this.notes = notes;
         this.allergies = allergies;
+    }
+
+    public PetModel() {
+
     }
 
 
@@ -82,11 +86,11 @@ public class PetModel {
         this.age = age;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
