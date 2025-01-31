@@ -12,7 +12,20 @@
           "package_name": "com.unimib.petsphere"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "312115728845-hgfoq5h454hbts6rtt5koohsej6cptqj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unimib.petsphere",
+            "certificate_hash": "fc8d717348cede36d3d9082d4943af5f4e73e7e4"
+          }
+        },
+        {
+          "client_id": "312115728845-r9156lf22kc7f78d9rqf9hog6rvera9m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDHQeBjigmyLs6t7bLyTh-Gckw5Q0S6p8k"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312115728845-r9156lf22kc7f78d9rqf9hog6rvera9m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

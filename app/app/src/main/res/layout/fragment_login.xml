@@ -147,11 +147,11 @@
         app:iconTint="@color/main_color"
         android:textColor="@color/main_color"
         android:backgroundTint="@color/bg_color"
-        app:layout_constraintBottom_toTopOf="@id/facebookLoginButton"
+        app:layout_constraintBottom_toTopOf="@id/signUpButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
-
+<!--
     <Button
         android:id="@+id/facebookLoginButton"
         style="?attr/materialButtonOutlinedStyle"
@@ -172,7 +172,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
-
+-->
     <Button
         android:id="@+id/signUpButton"
         style="@style/Widget.Material3.Button.TextButton"

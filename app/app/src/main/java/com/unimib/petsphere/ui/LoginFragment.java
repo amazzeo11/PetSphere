@@ -1,11 +1,17 @@
 package com.unimib.petsphere.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.IntentSenderRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -18,7 +24,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.BeginSignInResult;
+import com.google.android.gms.auth.api.identity.Identity;
+import com.google.android.gms.auth.api.identity.SignInClient;
+import com.google.android.gms.auth.api.identity.SignInCredential;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -33,8 +47,15 @@ public class LoginFragment extends Fragment {
 
     public static final String TAG = LoginFragment.class.getName();
 
-    private Button loginButton, signUpButton;
+    private Button loginButton, signUpButton, loginGoogleButton;
     private EditText textInputEmail, textInputPassword;
+
+    private SignInClient oneTapClient;
+    private BeginSignInRequest signInRequest;
+    //risultato activity: account google che sto cercando; intent perché dialoga con s.o.
+    private ActivityResultLauncher<IntentSenderRequest> activityResultLauncher;
+    private ActivityResultContracts.StartIntentSenderForResult startIntentSenderForResult;
+
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
@@ -48,9 +69,68 @@ public class LoginFragment extends Fragment {
         return fragment;
     }
 
+    //da doc
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+/*
+        oneTapClient = Identity.getSignInClient(requireActivity());
+        //da doc
+        signInRequest = BeginSignInRequest.builder()
+                .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
+                        .setSupported(true)
+                        .build())
+                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                        .setSupported(true)
+                        // Your server's client ID, not your Android client ID.
+                        .setServerClientId(getString(R.string.default_web_client_id))
+                        // Only show accounts previously used to sign in.
+                        .setFilterByAuthorizedAccounts(false)
+                        .build())
+                // Automatically sign in when exactly one credential is retrieved.
+                .setAutoSelectEnabled(true)
+                .build();
+
+        startIntentSenderForResult = new ActivityResultContracts.StartIntentSenderForResult();
+
+        //come da lezione, richiesta con lambda
+        activityResultLauncher = registerForActivityResult(startIntentSenderForResult, activityResult -> {
+            if (activityResult.getResultCode() == Activity.RESULT_OK) {
+                Log.d(TAG, "result.getResultCode() == Activity.RESULT_OK");
+                try {
+                    SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(activityResult.getData());
+                    String idToken = credential.getGoogleIdToken();
+                    if (idToken !=  null) {
+                        // prendo un ID token da Google lo uso per autenticazione con Firebase
+                        /*userViewModel.getGoogleUserMutableLiveData(idToken).observe(getViewLifecycleOwner(), authenticationResult -> {
+                            if (authenticationResult.isSuccess()) {
+                                User user = ((Result.UserSuccess) authenticationResult).getData();
+                                //saveLoginData(user.getEmail(), null, user.getIdToken());
+                                Log.i(TAG, "Logged as: " + user.getEmail());
+                                userViewModel.setAuthenticationError(false);
+                                retrieveUserInformationAndStartActivity(user, getView());
+                            } else {
+                                userViewModel.setAuthenticationError(true);
+                                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                        getErrorMessage(((Result.Error) authenticationResult).getMessage()),
+                                        Snackbar.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                } catch (ApiException e) {
+                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                            requireActivity().getString(R.string.error_unexpected),
+                            Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });*/
     }
 
     @Override
@@ -124,8 +204,32 @@ public class LoginFragment extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
 
         Log.i(TAG, user + "");
+/*
+        loginGoogleButton.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
+                .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
+                    @Override
+                    public void onSuccess(BeginSignInResult result) {
+                        Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
+                        IntentSenderRequest intentSenderRequest =
+                                new IntentSenderRequest.Builder(result.getPendingIntent()).build();
+                        activityResultLauncher.launch(intentSenderRequest);
+                    }
+                })
+                .addOnFailureListener(requireActivity(), new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // No saved credentials found. Launch the One Tap sign-up flow, or
+                        // do nothing and continue presenting the signed-out UI.
+                        Log.d(TAG, e.getLocalizedMessage());
 
+                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                requireActivity().getString(R.string.error_unexpected),
+                                Snackbar.LENGTH_SHORT).show();
+                    }
+                }));*/
     }
+
+
 
     /*
     private boolean isEmailOk(String email) {
