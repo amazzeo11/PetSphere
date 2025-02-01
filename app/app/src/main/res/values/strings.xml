@@ -24,7 +24,7 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="login_failed">"Login fallito"</string>
     <string name="lista_animali">listaAnimali</string>
     <string name="clicker" />
     <string name="profilo_utente" />
@@ -34,6 +34,7 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="user_first_name_invalid">Nome non valido</string>
     <string name="user_last_name_invalid">Cognome non valido</string>
+    <string name="sign_out">Sign out</string>
 
     <!-- Strings related to sign up -->
     <string name="mandatory_input">Campi obbligatori *</string>

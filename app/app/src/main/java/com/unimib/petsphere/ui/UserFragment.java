@@ -47,5 +47,11 @@ public class UserFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String nome = user.getDisplayName();
+            //String cognome = user.getDisplayLastName(); devo capire
+            String email = user.getEmail();
+        }
     }
 }
