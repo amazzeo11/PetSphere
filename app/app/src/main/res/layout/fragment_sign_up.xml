@@ -23,50 +23,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/def_margin"
-            android:layout_marginTop="@dimen/m_margin"
+            android:layout_marginTop="@dimen/def_margin"
             android:paddingStart="@dimen/xs_margin"
             android:paddingEnd="@dimen/xs_margin"
+            android:paddingTop="@dimen/s_margin"
             android:text="@string/mandatory_input"
             android:textColor="@color/warning_red" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputFirstNameLayout"
+            android:id="@+id/textInputUserNameLayout"
             style="?attr/textInputOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/def_margin"
             android:layout_marginEnd="@dimen/def_margin"
-            android:layout_marginTop="@dimen/xs_margin"
-            android:hint="@string/user_first_name"
+            android:layout_marginTop="@dimen/s_margin"
+            android:hint="@string/user_name_sign_up"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputUserFirstName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/text_box_color"
-                android:inputType="textPersonName"
-                android:textColor="@color/dark_blue_color" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLastNameLayout"
-            style="?attr/textInputOutlinedStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/def_margin"
-            android:layout_marginEnd="@dimen/def_margin"
-            android:layout_marginTop="@dimen/m_margin"
-            android:hint="@string/user_last_name"
-            app:layout_constraintTop_toBottomOf="@id/textInputFirstNameLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputUserLastName"
+                android:id="@+id/textInputUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/text_box_color"
@@ -84,7 +62,7 @@
             android:layout_marginEnd="@dimen/def_margin"
             android:layout_marginTop="@dimen/m_margin"
             android:hint="@string/email_sign_up"
-            app:layout_constraintTop_toBottomOf="@id/textInputLastNameLayout"
+            app:layout_constraintTop_toBottomOf="@id/textInputUserNameLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"  >
 

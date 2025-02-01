@@ -34,7 +34,7 @@ public class SignUpFragment extends Fragment {
 
     public static final String TAG = LoginFragment.class.getName();
 
-    private TextInputEditText editTextEmail, editTextPassword, editTextConfirmPassword, editTextFirstName, editTextLastName;
+    private TextInputEditText editTextEmail, editTextPassword, editTextConfirmPassword, editTextUserName;
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
@@ -64,8 +64,7 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        editTextFirstName = view.findViewById(R.id.textInputUserFirstName);
-        editTextLastName = view.findViewById(R.id.textInputUserLastName);
+        editTextUserName = view.findViewById(R.id.textInputUserName);
         editTextEmail = view.findViewById(R.id.textInputEmailInSignUp);
         editTextPassword = view.findViewById(R.id.textInputPasswordInSignUp);
         editTextConfirmPassword = view.findViewById(R.id.textInputConfirmPasswordInSignUp);
@@ -91,53 +90,49 @@ public class SignUpFragment extends Fragment {
 
         // passaggio da signUpFragment a mainActivity
         signUpButton.setOnClickListener(v -> {
-            if (isNameValid(editTextFirstName.getText().toString())) {
-                if (isNameValid(editTextLastName.getText().toString())) {
-                    if (isEmailOk(editTextEmail.getText().toString())) {
-                        if (isPasswordLongEnough(editTextPassword.getText().toString())) {
-                            if (isPasswordWithNum(editTextPassword.getText().toString())) {
-                                if (isPasswordWithMaiusc(editTextPassword.getText().toString())) {
-                                    if (isPasswordTheSame(editTextPassword.getText().toString(), editTextConfirmPassword.getText().toString())) {
-                                        //Log.d(TAG, "Va <3 registra l'utente");
-                                        mAuth.createUserWithEmailAndPassword(editTextEmail.getText().toString(), editTextPassword.getText().toString())
-                                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                                        if (task.isSuccessful()) {
-                                                            // Sign in success, update UI with the signed-in user's information
-                                                            Log.d(TAG, "createUserWithEmail:success");
-                                                            FirebaseUser user = mAuth.getCurrentUser();
-                                                            //updateUI(user);
-                                                            Navigation.findNavController(v).navigate(R.id.action_signUpFragment_to_loginFragment);
-                                                        } else {
-                                                            // If sign in fails, display a message to the user.
-                                                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                                            Snackbar.make(requireView(), task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
-                                                            //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                                                            //updateUI(null);
-                                                        }
+            if (isNameValid(editTextUserName.getText().toString())) {
+                if (isEmailOk(editTextEmail.getText().toString())) {
+                    if (isPasswordLongEnough(editTextPassword.getText().toString())) {
+                        if (isPasswordWithNum(editTextPassword.getText().toString())) {
+                            if (isPasswordWithMaiusc(editTextPassword.getText().toString())) {
+                                if (isPasswordTheSame(editTextPassword.getText().toString(), editTextConfirmPassword.getText().toString())) {
+                                    //Log.d(TAG, "Va <3 registra l'utente");
+                                    mAuth.createUserWithEmailAndPassword(editTextEmail.getText().toString(), editTextPassword.getText().toString())
+                                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                                    if (task.isSuccessful()) {
+                                                        // Sign in success, update UI with the signed-in user's information
+                                                        Log.d(TAG, "createUserWithEmail:success");
+                                                        FirebaseUser user = mAuth.getCurrentUser();
+                                                        //updateUI(user);
+                                                        Navigation.findNavController(v).navigate(R.id.action_signUpFragment_to_loginFragment);
+                                                    } else {
+                                                        // If sign in fails, display a message to the user.
+                                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                                        Snackbar.make(requireView(), task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
+                                                        //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                                        //updateUI(null);
                                                     }
-                                                });
-                                    } else {
-                                        Snackbar.make(requireView(), "Conferma password non valida, dovrebbe essere uguale alla tua password", Snackbar.LENGTH_SHORT).show();
-                                    }
+                                                }
+                                            });
                                 } else {
-                                    Snackbar.make(requireView(), "Password non valida, dovrebbe contenere almeno una lettera maiuscola", Snackbar.LENGTH_SHORT).show();
+                                    Snackbar.make(requireView(), "Conferma password non valida, dovrebbe essere uguale alla tua password", Snackbar.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Snackbar.make(requireView(), "Password non valida, dovrebbe contenere almeno un numero", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(requireView(), "Password non valida, dovrebbe contenere almeno una lettera maiuscola", Snackbar.LENGTH_SHORT).show();
                             }
                         } else {
-                            Snackbar.make(requireView(), "Password non valida, dovrebbe essere lunga almeno 7 caratteri", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(requireView(), "Password non valida, dovrebbe contenere almeno un numero", Snackbar.LENGTH_SHORT).show();
                         }
                     } else {
-                        Snackbar.make(requireView(), "Email non valida", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(requireView(), "Password non valida, dovrebbe essere lunga almeno 7 caratteri", Snackbar.LENGTH_SHORT).show();
                     }
                 } else {
-                    Snackbar.make(requireView(), "Per favore non lasciare il cognome in bianco", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(requireView(), "Email non valida", Snackbar.LENGTH_SHORT).show();
                 }
             } else {
-                Snackbar.make(requireView(), "Per favore non lasciare il nome in bianco", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(requireView(), "Per favore non lasciare il nome utente in bianco", Snackbar.LENGTH_SHORT).show();
             }
         });
     }
@@ -185,7 +180,4 @@ public class SignUpFragment extends Fragment {
         return password.equals(confirmPassword);
     }
 
-    public String getNomeUtente() {
-        return editTextFirstName.getText().toString();
-    }
 }
