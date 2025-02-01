@@ -51,6 +51,8 @@ public class PetListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pets_list, container, false);
+        View recycler= view.findViewById(R.id.list);
+
 
         Button newPetButton = view.findViewById(R.id.new_pet_btn);
         newPetButton.setOnClickListener(v -> {
@@ -60,9 +62,9 @@ public class PetListFragment extends Fragment {
 
         List<PetModel> petList = PetRoomDatabase.getDatabase(getContext()).PetDAO().getAll();
 
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+        if (recycler instanceof RecyclerView) {
+            Context context = recycler.getContext();
+            RecyclerView recyclerView = (RecyclerView) recycler;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {

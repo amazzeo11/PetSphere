@@ -16,7 +16,7 @@ import com.unimib.petsphere.util.constants;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {PetModel.class}, version = DATABASE_VERSION, exportSchema = false)
+@Database(entities = {PetModel.class}, version = DATABASE_VERSION, exportSchema = true)
 public abstract class PetRoomDatabase extends RoomDatabase {
 
     public abstract PetDAO PetDAO();

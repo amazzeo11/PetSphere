@@ -47,4 +47,12 @@
     <string name="nome">Nome</string>
     <string name="tipo_animale">Tipo animale</string>
     <string name="salva">Salva</string>
+    <string name="peso">Peso</string>
+    <string name="inserisci_eta">Inserisci età</string>
+    <string name="inserisci_nome">Inserisci nome</string>
+    <string name="inserisci_data_di_nascita">Inserisci data di nascita</string>
+    <string name="allergie">Allergie:</string>
+    <string name="inserisci_microchip">Inserisci microchip</string>
+    <string name="inserisci_soprannome">Inserisci soprannome</string>
+    <string name="inserisci_peso">Inserisci peso</string>
 </resources>

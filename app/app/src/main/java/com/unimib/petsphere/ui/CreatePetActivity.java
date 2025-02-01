@@ -10,42 +10,53 @@ import com.unimib.petsphere.data.PetRoomDatabase;
 import com.unimib.petsphere.data.model.PetModel;
 
 public class CreatePetActivity extends AppCompatActivity {
-    private EditText editNome, editSoprannome, editMicrochip, editEta, editCompleanno, editAllergie, editNote;
-    private Spinner spinnerTipo, spinnerColore;
-    private Button btnSalva;
+    private EditText editNome, editSoprannome, editMicrochip, editEta, editCompleanno, editAllergie, editNote, editWeight;
+    private String spinnerTipo, spinnerColore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_pet); // Usa la card come layout
+        setContentView(R.layout.activity_create_pet);
 
 
         editNome = findViewById(R.id.edit_nome);
         editSoprannome = findViewById(R.id.edit_soprannome);
         editMicrochip = findViewById(R.id.edit_microchip);
         editEta = findViewById(R.id.edit_eta);
+        editWeight = findViewById(R.id.edit_weight);
         editCompleanno = findViewById(R.id.edit_compleanno);
-        spinnerTipo = findViewById(R.id.spinner_tipo);
-        spinnerColore = findViewById(R.id.spinner_colore);
+        spinnerTipo = "cane";
+        spinnerColore = "blu";
         editAllergie = findViewById(R.id.edit_allergie);
         editNote = findViewById(R.id.edit_note);
-        btnSalva = findViewById(R.id.btn_salva);
+        Button saveButton = findViewById(R.id.btn_salva);
 
 
-        btnSalva.setOnClickListener(v -> {
+        saveButton.setOnClickListener(v -> {
+            PetModel newPet = new PetModel();
+            newPet.setName(editNome.getText().toString());
+            newPet.setNickname(editSoprannome.getText().toString());
+            newPet.setMicrochip(editMicrochip.getText().toString());
+            newPet.setWeight(editWeight.getText().toString());
+            newPet.setAge( editEta.getText().toString());
+            newPet.setBirthday(editCompleanno.getText().toString());
+            newPet.setAllergies(editAllergie.getText().toString());
+            newPet.setNotes(editNote.getText().toString());
+           /*
             PetModel pet = new PetModel(
-                    spinnerTipo.getSelectedItem().toString(),
+                    spinnerTipo,
                     editMicrochip.getText().toString(),
                     editNome.getText().toString(),
                     editSoprannome.getText().toString(),
-                    0, // Peso non gestito
-                    Integer.parseInt(editEta.getText().toString()),
+                    editWeight.getText().toString(),
+                    editEta.getText().toString(),
                     editCompleanno.getText().toString(),
+                    spinnerColore,
                     editNote.getText().toString(),
                     editAllergie.getText().toString()
             );
-
-            PetRoomDatabase.getDatabase(getApplicationContext()).PetDAO().insertAll(pet);
+*/
+            PetRoomDatabase.getDatabase(getApplicationContext()).PetDAO().insertAll(newPet);
             finish();
         });
     }
