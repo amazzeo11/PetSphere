@@ -1,4 +1,4 @@
-package com.unimib.petsphere.ui;
+package com.unimib.petsphere.ui.Main.pet;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -6,13 +6,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.unimib.petsphere.R;
 import com.unimib.petsphere.data.model.PetModel;
-import com.unimib.petsphere.ui.placeholder.PlaceholderContent.PlaceholderItem;
-import com.unimib.petsphere.databinding.PreviewPetCardBinding;
+
 
 import java.util.List;
 
@@ -21,8 +19,11 @@ public class PetRecyclerViewAdapter extends RecyclerView.Adapter<PetRecyclerView
     private List<PetModel> petList;
     private Context context;
 
+    public interface OnItemClickListener {
+        void onPetItemClick(PetModel pet);
+    }
 
-    public PetRecyclerViewAdapter(int layout, List<PetModel> petList) {
+    public PetRecyclerViewAdapter(int layout, List<PetModel> petList, OnItemClickListener onItemClickListener) {
         this.layout=layout;
         this.petList=petList;
     }

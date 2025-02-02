@@ -16,8 +16,7 @@
     <string name="user_first_name">Nome</string>
     <string name="user_last_name">Cognome</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -55,4 +54,6 @@
     <string name="inserisci_microchip">Inserisci microchip</string>
     <string name="inserisci_soprannome">Inserisci soprannome</string>
     <string name="inserisci_peso">Inserisci peso</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

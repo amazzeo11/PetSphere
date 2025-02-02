@@ -7,18 +7,18 @@ app:startDestination="@id/petslistfragment">
 
 <fragment
     android:id="@+id/petslistfragment"
-    android:name="com.unimib.petsphere.ui.PetListFragment"
+    android:name="com.unimib.petsphere.ui.Main.pet.PetListFragment"
     android:label="@string/lista_animali"
     tools:layout="@layout/fragment_pets_list" />
 <fragment
     android:id="@+id/clicker"
-    android:name="com.unimib.petsphere.ui.ClickerFragment"
+    android:name="com.unimib.petsphere.ui.Main.ClickerFragment"
     android:label="@string/clicker"
     tools:layout="@layout/fragment_clicker" >
 </fragment>
 <fragment
     android:id="@+id/user"
-    android:name="com.unimib.petsphere.ui.UserFragment"
+    android:name="com.unimib.petsphere.ui.user.UserFragment"
     android:label="@string/profilo_utente"
     tools:layout="@layout/fragment_user" />
 </navigation>

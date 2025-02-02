@@ -1,12 +1,12 @@
-package com.unimib.petsphere.ui;
+package com.unimib.petsphere.ui.Main.pet;
 
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.unimib.petsphere.R;
-import com.unimib.petsphere.data.PetRoomDatabase;
+import com.unimib.petsphere.data.database.PetRoomDatabase;
 import com.unimib.petsphere.data.model.PetModel;
 
 public class CreatePetActivity extends AppCompatActivity {

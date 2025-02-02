@@ -1,4 +1,4 @@
-package com.unimib.petsphere.data;
+package com.unimib.petsphere.data.database;
 
 import static com.unimib.petsphere.util.constants.DATABASE_VERSION;
 

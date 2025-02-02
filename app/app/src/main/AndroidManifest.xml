@@ -6,20 +6,20 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_azzurro_ns"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PetSphere"
         tools:targetApi="31">
         <activity
-            android:name=".ui.CreatePetActivity"
+            android:name=".ui.Main.pet.CreatePetActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.StartActivity"
+            android:name=".ui.welcome.StartActivity"
             android:exported="true"></activity>
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.Main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

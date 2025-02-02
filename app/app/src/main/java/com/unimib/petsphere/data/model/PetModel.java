@@ -121,4 +121,11 @@ public class PetModel {
     public void setColore(String colore) {
         this.colore = colore;
     }
+
+    public long getUid() {
+        return uid;
+    }
+
+    public void setUid(Long uid) { this.uid=uid;
+    }
 }
