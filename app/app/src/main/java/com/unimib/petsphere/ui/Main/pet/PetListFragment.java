@@ -93,8 +93,7 @@ public class PetListFragment extends Fragment {
                         int initialSize = this.petList.size();
                         this.petList.clear();
                         this.petList.addAll(((Result.PetSuccess) result).getData().getPets());
-                        adapter.notifyItemRangeInserted(initialSize, this.petList.size());
-                        recyclerView.setVisibility(View.VISIBLE);
+
                     } else {
                         Snackbar.make(view,
                                 "error",
