@@ -9,28 +9,29 @@ import java.util.Date;
 public class PetModel implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public long uid;
-
+    private byte[] image;
     private String animal_type;
     private String microchip;
     private String name;
     private String nickname;
-    private String weight;
+    private double weight;
     private String age;
     private String birthday;
-    private String colore;
+    private String color;
     private String notes;
     private String allergies;
 
 
-    public PetModel(String animalType, String microchip, String name, String nickname, String weight, String age, String birthday, String colore, String notes, String allergies){
-        animal_type = animalType;
+    public PetModel(byte[] image, String animalType, String microchip, String name, String nickname, double weight, String age, String birthday, String color, String notes, String allergies){
+        this.image=image;
+        this.animal_type = animalType;
         this.microchip = microchip;
         this.name = name;
         this.nickname = nickname;
         this.weight = weight;
         this.age = age;
         this.birthday = birthday;
-        this.colore=colore;
+        this.color=color;
         this.notes = notes;
         this.allergies = allergies;
     }
@@ -74,11 +75,11 @@ public class PetModel implements Serializable {
         this.nickname = nickname;
     }
 
-    public String getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(String weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
@@ -115,12 +116,12 @@ public class PetModel implements Serializable {
     }
 
 
-    public String getColore() {
-        return colore;
+    public String getColor() {
+        return color;
     }
 
-    public void setColore(String colore) {
-        this.colore = colore;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public long getUid() {
@@ -128,5 +129,13 @@ public class PetModel implements Serializable {
     }
 
     public void setUid(Long uid) { this.uid=uid;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

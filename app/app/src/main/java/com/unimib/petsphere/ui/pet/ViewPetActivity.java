@@ -1,6 +1,8 @@
 package com.unimib.petsphere.ui.pet;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,7 +33,7 @@ public class ViewPetActivity extends AppCompatActivity {
         microchip = findViewById(R.id.text_microchip);
         eta = findViewById(R.id.text_eta);
         compleanno = findViewById(R.id.text_compleanno);
-        //peso.findViewById(R.id.text_peso);
+        peso = findViewById(R.id.text_peso);
         colore = findViewById(R.id.colore);
         tipo = findViewById(R.id.tipo);
         allergie = findViewById(R.id.allergie);
@@ -47,12 +49,20 @@ public class ViewPetActivity extends AppCompatActivity {
             microchip.setText("Numero di microchip: " + pet.getMicrochip());
             eta.setText("Età: " + pet.getAge());
             compleanno.setText("Compleanno: " + pet.getBirthday());
-            //peso.setText("Peso: " + pet.getWeight().toString() + "kg");
-            colore.setText("Colore: " + pet.getColore());
+            peso.setText(String.format("Peso: %.2f kg", pet.getWeight()));
+            colore.setText("Colore: " + pet.getColor());
             tipo.setText("Tipo animale: " + pet.getAnimal_type());
             allergie.setText("Allergie: " + pet.getAllergies());
             note.setText("Note: " + pet.getNotes());
 
         }
+
+/*
+        Button newPetButton = view.findViewById(R.id.new_pet_btn);
+        newPetButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), CreatePetActivity.class);
+            startActivity(intent);
+        });
+*/
     }
 }
