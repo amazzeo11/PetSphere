@@ -1,4 +1,4 @@
-package com.unimib.petsphere.ui;
+package com.unimib.petsphere.ui.welcome;
 
 import android.os.Bundle;
 

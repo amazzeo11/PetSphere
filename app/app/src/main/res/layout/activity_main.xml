@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.Main.MainActivity"
+    android:background="@color/bg_color">
 
 
     <androidx.appcompat.widget.Toolbar

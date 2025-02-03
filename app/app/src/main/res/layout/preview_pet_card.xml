@@ -32,10 +32,10 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/titleTextView"
+                android:id="@+id/nomePet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nome"
+                android:text="@string/nome"
                 android:textSize="18sp"
                 android:textColor="#000000"
                 android:textStyle="bold"
@@ -43,10 +43,10 @@
                 android:maxLines="1" />
 
             <TextView
-                android:id="@+id/subtitleTextView"
+                android:id="@+id/tipoAnimale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tipo animale"
+                android:text="@string/tipo_animale"
                 android:textSize="14sp"
                 android:textColor="#666666"
                 android:ellipsize="end"

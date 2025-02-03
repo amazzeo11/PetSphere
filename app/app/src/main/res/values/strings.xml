@@ -16,8 +16,7 @@
     <string name="user_first_name">Nome</string>
     <string name="user_last_name">Cognome</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -29,4 +28,32 @@
     <string name="lista_animali">Lista Animali</string>
     <string name="clicker">Clicker</string>
     <string name="profilo_utente">Profilo</string>
+    <string name="benvenut">Benvenut*!</string>
+    <string name="i_tuoi_animali">I tuoi animali:</string>
+    <string name="inserisci_un_nuovo_animale">Inserisci un nuovo animale</string>
+    <string name="foto_pet">foto pet</string>
+    <string name="nome_pet">nome pet</string>
+    <string name="modifica_profilo">Modifica Profilo</string>
+    <string name="inserisci_note">Inserisci note</string>
+    <string name="note">Note:</string>
+    <string name="inserisci_allergie">Inserisci allergie</string>
+    <string name="tipo_di_animale">Tipo di animale:</string>
+    <string name="colore">Colore:</string>
+    <string name="compleanno">Compleanno:</string>
+    <string name="et">Età:</string>
+    <string name="numero_di_microchip">Numero di microchip:</string>
+    <string name="soprannome">Soprannome:</string>
+    <string name="nome">Nome</string>
+    <string name="tipo_animale">Tipo animale</string>
+    <string name="salva">Salva</string>
+    <string name="peso">Peso</string>
+    <string name="inserisci_eta">Inserisci età</string>
+    <string name="inserisci_nome">Inserisci nome</string>
+    <string name="inserisci_data_di_nascita">Inserisci data di nascita</string>
+    <string name="allergie">Allergie:</string>
+    <string name="inserisci_microchip">Inserisci microchip</string>
+    <string name="inserisci_soprannome">Inserisci soprannome</string>
+    <string name="inserisci_peso">Inserisci peso</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

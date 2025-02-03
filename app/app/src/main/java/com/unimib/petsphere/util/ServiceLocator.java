@@ -1,0 +1,60 @@
+package com.unimib.petsphere.util;
+
+
+import android.app.Application;
+
+
+import com.unimib.petsphere.data.BasePetDataSource;
+import com.unimib.petsphere.data.PetDataSource;
+import com.unimib.petsphere.data.database.PetRoomDatabase;
+import com.unimib.petsphere.data.repository.PetRepository;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+
+
+
+public class ServiceLocator {
+
+    private static volatile ServiceLocator INSTANCE = null;
+
+    private ServiceLocator() {}
+
+
+    public static ServiceLocator getInstance() {
+        if (INSTANCE == null) {
+            synchronized(ServiceLocator.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new ServiceLocator();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
+    OkHttpClient client = new OkHttpClient.Builder()
+            .addInterceptor(chain -> {
+                Request request = chain.request().newBuilder()
+                        .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+                        .build();
+                return chain.proceed(request);
+            })
+            .build();
+
+
+
+    public PetRoomDatabase getNewsDao(Application application) {
+        return PetRoomDatabase.getDatabase(application);
+    }
+
+
+    public PetRepository getPetsRepository(Application application, boolean debugMode) {
+        BasePetDataSource petsDataSource;
+
+        petsDataSource = new PetDataSource(getNewsDao(application));
+
+        return new PetRepository(petsDataSource);
+    }
+
+
+}

@@ -1,19 +1,27 @@
-package com.unimib.petsphere.data;
+package com.unimib.petsphere.data.model;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.Date;
-
+@Entity
 public class PetModel {
+    @PrimaryKey(autoGenerate = true)
+    public long uid;
+
     private String animal_type;
     private String microchip;
     private String name;
     private String nickname;
-    private float weight;
-    private int age;
-    private Date birthday;
+    private String weight;
+    private String age;
+    private String birthday;
+    private String colore;
     private String notes;
     private String allergies;
 
-    public PetModel(String animalType, String microchip, String name, String nickname, float weight, int age, Date birthday, String notes, String allergies){
+
+    public PetModel(String animalType, String microchip, String name, String nickname, String weight, String age, String birthday, String colore, String notes, String allergies){
         animal_type = animalType;
         this.microchip = microchip;
         this.name = name;
@@ -21,8 +29,13 @@ public class PetModel {
         this.weight = weight;
         this.age = age;
         this.birthday = birthday;
+        this.colore=colore;
         this.notes = notes;
         this.allergies = allergies;
+    }
+
+    public PetModel() {
+
     }
 
 
@@ -60,27 +73,27 @@ public class PetModel {
         this.nickname = nickname;
     }
 
-    public float getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -101,5 +114,18 @@ public class PetModel {
     }
 
 
+    public String getColore() {
+        return colore;
+    }
 
+    public void setColore(String colore) {
+        this.colore = colore;
+    }
+
+    public long getUid() {
+        return uid;
+    }
+
+    public void setUid(Long uid) { this.uid=uid;
+    }
 }
