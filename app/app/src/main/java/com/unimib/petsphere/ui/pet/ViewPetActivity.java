@@ -11,7 +11,7 @@ import com.unimib.petsphere.R;
 import com.unimib.petsphere.data.model.PetModel;
 
 public class ViewPetActivity extends AppCompatActivity {
-    private TextView nome, soprannome, microchip, eta, compleanno, colore, tipo, allergie, note;
+    private TextView nome, soprannome, microchip, eta, compleanno, peso, colore, tipo, allergie, note;
     private ImageView petImageView;
 
     @Override
@@ -31,6 +31,7 @@ public class ViewPetActivity extends AppCompatActivity {
         microchip = findViewById(R.id.text_microchip);
         eta = findViewById(R.id.text_eta);
         compleanno = findViewById(R.id.text_compleanno);
+        //peso.findViewById(R.id.text_peso);
         colore = findViewById(R.id.colore);
         tipo = findViewById(R.id.tipo);
         allergie = findViewById(R.id.allergie);
@@ -42,14 +43,15 @@ public class ViewPetActivity extends AppCompatActivity {
         if (pet != null) {
 
             nome.setText(pet.getName());
-            soprannome.setText("@string/soprannome" + pet.getNickname());
-            microchip.setText("@string/numero_di_microchip" + pet.getMicrochip());
-            eta.setText("@string/numero_di_microchip" + pet.getAge());
-            compleanno.setText("@string/compleanno" + pet.getBirthday());
-            colore.setText("@string/colore" + pet.getColore());
-            tipo.setText("@string/tipo_animale" + pet.getAnimal_type());
-            allergie.setText("@string/allergie" + pet.getAllergies());
-            note.setText("@string/note" + pet.getNotes());
+            soprannome.setText("Soprannome: " + pet.getNickname());
+            microchip.setText("Numero di microchip: " + pet.getMicrochip());
+            eta.setText("Età: " + pet.getAge());
+            compleanno.setText("Compleanno: " + pet.getBirthday());
+            //peso.setText("Peso: " + pet.getWeight().toString() + "kg");
+            colore.setText("Colore: " + pet.getColore());
+            tipo.setText("Tipo animale: " + pet.getAnimal_type());
+            allergie.setText("Allergie: " + pet.getAllergies());
+            note.setText("Note: " + pet.getNotes());
 
         }
     }
