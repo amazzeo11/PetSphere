@@ -28,9 +28,9 @@
 
 
             <TextView
+                android:id="@+id/text_nome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/nome_pet"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
 
@@ -40,16 +40,9 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="16dp">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/soprannome"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="?android:attr/textColorSecondary"/>
-                <TextView
                     android:id="@+id/text_soprannome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="coso"
                     android:textAppearance="?attr/textAppearanceBodyMedium"/>
             </LinearLayout>
 
@@ -58,17 +51,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="8dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/numero_di_microchip"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="?android:attr/textColorSecondary"/>
                 <TextView
                     android:id="@+id/text_microchip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="123456789"
                     android:textAppearance="?attr/textAppearanceBodyMedium"/>
             </LinearLayout>
 
@@ -78,16 +64,9 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="8dp">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/et"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="?android:attr/textColorSecondary"/>
-                <TextView
                     android:id="@+id/text_eta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5 anni"
                     android:textAppearance="?attr/textAppearanceBodyMedium"/>
             </LinearLayout>
 
@@ -112,6 +91,7 @@
 
 
             <TextView
+                android:id="@+id/colore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -124,6 +104,7 @@
                 android:entries="@array/colori_animali"/>
 
             <TextView
+                android:id="@+id/tipo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -137,10 +118,11 @@
 
 
             <TextView
+                android:id="@+id/allergie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Allergie:"
+                android:text="@string/allergie"
                 android:textAppearance="?attr/textAppearanceBodyMedium"/>
             <EditText
                 android:id="@+id/edit_allergie"
@@ -151,10 +133,10 @@
 
 
             <TextView
+                android:id="@+id/note"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/note"
                 android:textAppearance="?attr/textAppearanceBodyMedium"/>
             <EditText
                 android:id="@+id/edit_note"

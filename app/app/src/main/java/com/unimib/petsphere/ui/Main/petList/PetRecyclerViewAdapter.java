@@ -1,4 +1,4 @@
-package com.unimib.petsphere.ui.Main.pet;
+package com.unimib.petsphere.ui.Main.petList;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +18,7 @@ public class PetRecyclerViewAdapter extends RecyclerView.Adapter<PetRecyclerView
     private int layout;
     private List<PetModel> petList;
     private Context context;
+    private OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {
         void onPetItemClick(PetModel pet);
@@ -26,6 +27,7 @@ public class PetRecyclerViewAdapter extends RecyclerView.Adapter<PetRecyclerView
     public PetRecyclerViewAdapter(int layout, List<PetModel> petList, OnItemClickListener onItemClickListener) {
         this.layout=layout;
         this.petList=petList;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -45,7 +47,12 @@ public class PetRecyclerViewAdapter extends RecyclerView.Adapter<PetRecyclerView
         holder.getTextViewNome().setText(petList.get(position).getName());
         holder.getTextViewTipoAnimale().setText(petList.get(position).getAnimal_type());
 
+        holder.itemView.setOnClickListener(v -> {
 
+            if (onItemClickListener != null) {
+                onItemClickListener.onPetItemClick(petList.get(position));
+            }
+        });
     }
 
     @Override

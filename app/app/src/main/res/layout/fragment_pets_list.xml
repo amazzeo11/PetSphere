@@ -66,7 +66,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/new_pet_btn"
-        tools:context=".ui.Main.pet.PetListFragment"
+        tools:context=".ui.Main.petList.PetListFragment"
         tools:listitem="@layout/preview_pet_card" />
 
 

@@ -1,4 +1,4 @@
-package com.unimib.petsphere.ui.Main.pet;
+package com.unimib.petsphere.ui.pet;
 
 import android.os.Bundle;
 import android.widget.Button;
