@@ -52,17 +52,16 @@ public class ViewPetActivity extends AppCompatActivity {
             peso.setText(String.format("Peso: %.2f kg", pet.getWeight()));
             colore.setText("Colore: " + pet.getColor());
             tipo.setText("Tipo animale: " + pet.getAnimal_type());
-            allergie.setText("Allergie: " + pet.getAllergies());
-            note.setText("Note: " + pet.getNotes());
+            allergie.setText(pet.getAllergies());
+            note.setText(pet.getNotes());
 
         }
 
-/*
-        Button newPetButton = view.findViewById(R.id.new_pet_btn);
+
+        Button newPetButton = findViewById(R.id.delete_btn);
         newPetButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), CreatePetActivity.class);
-            startActivity(intent);
+
         });
-*/
+
     }
 }

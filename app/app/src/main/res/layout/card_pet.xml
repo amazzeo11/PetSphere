@@ -110,18 +110,19 @@
                 android:textAppearance="?attr/textAppearanceBodyMedium"/>
 
 
+            <TextView
+                android:id="@+id/allergietext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/allergie"
+                android:textAppearance="?attr/textAppearanceBodyMedium" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp">
-                <TextView
-                    android:id="@+id/allergietext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/allergie"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"/>
+
                 <TextView
                     android:id="@+id/allergie"
                     android:layout_width="wrap_content"
@@ -130,22 +131,24 @@
                     android:textAppearance="?attr/textAppearanceBodyMedium"/>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/notetext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/note"
+                android:textAppearance="?attr/textAppearanceBodyMedium" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp">
-                <TextView
-                    android:id="@+id/notetext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/note"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"/>
+
                 <TextView
                     android:id="@+id/note"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+
                     android:textAppearance="?attr/textAppearanceBodyMedium"/>
             </LinearLayout>
 
@@ -165,7 +168,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-
                 style="?attr/borderlessButtonStyle"/>
 
 
