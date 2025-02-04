@@ -107,7 +107,7 @@ public class SignUpFragment extends Fragment {
                             if (isPasswordWithMaiusc(password)) {
                                 if (isPasswordTheSame(password, confirmPassword)) {
                                     Log.d(TAG, "Va <3 registra l'utente");
-                                    userViewModel.signUpWithEmailAndPassword(email, password, userName);
+                                    userViewModel.signUpWithEmailAndPassword(userName, email, password);
                                     goToMainPage();
                                 } else {
                                     Snackbar.make(requireView(), "Conferma password non valida, dovrebbe essere uguale alla tua password", Snackbar.LENGTH_SHORT).show();

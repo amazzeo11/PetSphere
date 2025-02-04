@@ -90,13 +90,13 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
         return userMutableLiveData;
     }
 
-    public void signUp(String email, String password, String userName) {
+    public void signUp(String userName, String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                     if (firebaseUser != null) {
-                        saveUserData(firebaseUser.getUid(), email, userName);
+                        saveUserData(userName, email, firebaseUser.getUid());
                     }
                 } else {
                     signUpResult.setValue(new Result.Error(task.getException().getMessage()));
@@ -108,9 +108,9 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
         return signUpResult;
     }
 
-    private void saveUserData(String uid, String email, String userName) {
+    private void saveUserData(String userName, String email, String uid) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
-        User user = new User(uid, userName, email);
+        User user = new User(userName, email, uid);
         databaseReference.child(uid).setValue(user);
     }
 

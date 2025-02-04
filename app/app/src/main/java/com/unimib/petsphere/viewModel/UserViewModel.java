@@ -85,8 +85,8 @@ public class UserViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void signUpWithEmailAndPassword(String email, String password, String userName) {
-        userRepository.signUp(email, password, userName);
+    public void signUpWithEmailAndPassword(String userName, String email, String password) {
+        userRepository.signUp(userName, email, password);
     }
 
     public MutableLiveData<Result> logout() {
