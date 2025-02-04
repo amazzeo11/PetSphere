@@ -17,11 +17,13 @@ public class PetRepository implements PetResponseCallback {
     private final MutableLiveData<Result> allPetsMutableLiveData;
     private final MutableLiveData<Result> petsMutableLiveData;
     private final BasePetDataSource petDataSource;
+    private MutableLiveData<String> deleteMsg;
 
     public PetRepository(BasePetDataSource petDataSource) {
 
         allPetsMutableLiveData = new MutableLiveData<>();
         petsMutableLiveData = new MutableLiveData<>();
+        deleteMsg = new MutableLiveData<>();
         this.petDataSource = petDataSource;
         this.petDataSource.setArticleCallback(this);
     }
@@ -40,8 +42,8 @@ public class PetRepository implements PetResponseCallback {
         petDataSource.updatePet(pet);
     }
 
-    public void deletePet() {
-        petDataSource.deletePet();
+    public void deletePet(PetModel pet) {
+        petDataSource.deletePet(pet);
     }
 
 
@@ -56,26 +58,13 @@ public class PetRepository implements PetResponseCallback {
         petsMutableLiveData.postValue(resultError);
     }
 
-
-
-    public void onDeletePetSuccess(List<PetModel> petList) {
-        Result allNewsResult = allPetsMutableLiveData.getValue();
-
-        if (allNewsResult != null && allNewsResult.isSuccess()) {
-            List<PetModel> oldPets = ((Result.PetSuccess)allNewsResult).getData().getPets();
-            for (PetModel pet : petList) {
-                if (oldPets.contains(pet)) {
-                    oldPets.set(oldPets.indexOf(pet), pet);
-                }
-            }
-            allPetsMutableLiveData.postValue(allNewsResult);
-        }
-
-        if (petsMutableLiveData.getValue() != null &&
-                petsMutableLiveData.getValue().isSuccess()) {
-            petList.clear();
-            Result.PetSuccess result = new Result.PetSuccess(new PetResponseModel(petList));
-            petsMutableLiveData.postValue(result);
-        }
+    @Override
+    public void onDeletePetSuccess() {
+    String deletemessage = "Pet eliminato con successo";
+        deleteMsg.postValue(deletemessage);
     }
+    public MutableLiveData<String> getDeleteMsg() {
+        return deleteMsg;
+    }
+
 }

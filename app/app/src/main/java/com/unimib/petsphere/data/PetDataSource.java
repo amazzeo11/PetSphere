@@ -41,18 +41,20 @@ public class PetDataSource extends BasePetDataSource {
         });
     }
 
-    @Override
-    public void deletePet() {
+
+
+    public void deletePet(PetModel pet) {
         PetRoomDatabase.databaseWriteExecutor.execute(() -> {
-            List<PetModel> petList = petDAO.getAll();
+            try {
+                int deletedRows = petDAO.deletePet(pet);
 
-            int updatedRowsNumber = petDAO.updatePetList(petList);
-
-
-            if (updatedRowsNumber == petList.size()) {
-                petCallback.onDeletePetSuccess(petList);
-            } else {
-                petCallback.onFailure(new Exception(UNEXPECTED_ERROR));
+                if (deletedRows > 0) {
+                    petCallback.onDeletePetSuccess();
+                } else {
+                    petCallback.onFailure(new Exception("Errore: eliminazione non riuscita"));
+                }
+            } catch (Exception e) {
+               petCallback.onFailure(e);
             }
         });
     }
