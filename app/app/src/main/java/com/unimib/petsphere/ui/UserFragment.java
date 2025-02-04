@@ -33,6 +33,7 @@ public class UserFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+
         }
     }
 
@@ -50,7 +51,6 @@ public class UserFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String nome = user.getDisplayName();
-            //String cognome = user.getDisplayLastName(); devo capire
             String email = user.getEmail();
         }
     }

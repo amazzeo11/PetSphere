@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import androidx.navigation.ui.AppBarConfiguration;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.FirebaseDatabase;
 import com.unimib.petsphere.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(bottomNav, navController);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+        FirebaseDatabase.getInstance().goOffline();
+        FirebaseDatabase.getInstance().goOnline();
+
     }
     @Override
     public boolean onSupportNavigateUp() {

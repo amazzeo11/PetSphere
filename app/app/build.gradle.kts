@@ -49,9 +49,12 @@ dependencies {
     // navigation dependencies
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    // firebase dependencies
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.play.services.auth)
+    implementation(libs.firebase.database)
+    // junit dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

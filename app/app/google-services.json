@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "312115728845",
+    "firebase_url": "https://pdmpetsphere-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "pdmpetsphere",
     "storage_bucket": "pdmpetsphere.firebasestorage.app"
   },

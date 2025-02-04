@@ -1,10 +1,12 @@
 package com.unimib.petsphere.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -25,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.unimib.petsphere.R;
+import com.unimib.petsphere.viewModel.UserViewModel;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -38,6 +41,7 @@ public class SignUpFragment extends Fragment {
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
+    private UserViewModel userViewModel;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -88,34 +92,23 @@ public class SignUpFragment extends Fragment {
             }
         });
 
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+
         // passaggio da signUpFragment a mainActivity
         signUpButton.setOnClickListener(v -> {
-            if (isNameValid(editTextUserName.getText().toString())) {
-                if (isEmailOk(editTextEmail.getText().toString())) {
-                    if (isPasswordLongEnough(editTextPassword.getText().toString())) {
-                        if (isPasswordWithNum(editTextPassword.getText().toString())) {
-                            if (isPasswordWithMaiusc(editTextPassword.getText().toString())) {
-                                if (isPasswordTheSame(editTextPassword.getText().toString(), editTextConfirmPassword.getText().toString())) {
-                                    //Log.d(TAG, "Va <3 registra l'utente");
-                                    mAuth.createUserWithEmailAndPassword(editTextEmail.getText().toString(), editTextPassword.getText().toString())
-                                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                                    if (task.isSuccessful()) {
-                                                        // Sign in success, update UI with the signed-in user's information
-                                                        Log.d(TAG, "createUserWithEmail:success");
-                                                        FirebaseUser user = mAuth.getCurrentUser();
-                                                        //updateUI(user);
-                                                        Navigation.findNavController(v).navigate(R.id.action_signUpFragment_to_loginFragment);
-                                                    } else {
-                                                        // If sign in fails, display a message to the user.
-                                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                                        Snackbar.make(requireView(), task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
-                                                        //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                                                        //updateUI(null);
-                                                    }
-                                                }
-                                            });
+            String userName = editTextUserName.getText().toString();
+            String email = editTextEmail.getText().toString();
+            String password = editTextPassword.getText().toString();
+            String confirmPassword = editTextConfirmPassword.getText().toString();
+            if (isNameValid(userName)) {
+                if (isEmailOk(email)) {
+                    if (isPasswordLongEnough(password)) {
+                        if (isPasswordWithNum(password)) {
+                            if (isPasswordWithMaiusc(password)) {
+                                if (isPasswordTheSame(password, confirmPassword)) {
+                                    Log.d(TAG, "Va <3 registra l'utente");
+                                    userViewModel.signUpWithEmailAndPassword(email, password, userName);
+                                    goToMainPage();
                                 } else {
                                     Snackbar.make(requireView(), "Conferma password non valida, dovrebbe essere uguale alla tua password", Snackbar.LENGTH_SHORT).show();
                                 }
@@ -180,4 +173,9 @@ public class SignUpFragment extends Fragment {
         return password.equals(confirmPassword);
     }
 
+    private void goToMainPage() {
+        Intent intent = new Intent(requireActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
 }
