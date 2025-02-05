@@ -49,4 +49,10 @@
     <string name="user_dati_password">Password:</string>
     <string name="stringa_vuota">Non impostato</string>
 
+    <!-- Errors -->
+    <string name="error_email_login">Email non valida</string>
+    <string name="error_password_login">Password non valida</string>
+
+    <!-- Google sign in -->
+    <string name="default_web_client_id">312115728845-r9156lf22kc7f78d9rqf9hog6rvera9m.apps.googleusercontent.com</string>
 </resources>

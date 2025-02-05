@@ -1,5 +1,9 @@
 package com.unimib.petsphere.ui;
 
+import static com.unimib.petsphere.util.Constants.INVALID_CREDENTIALS_ERROR;
+import static com.unimib.petsphere.util.Constants.INVALID_USER_ERROR;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -22,11 +26,24 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.BeginSignInResult;
+import com.google.android.gms.auth.api.identity.Identity;
 import com.google.android.gms.auth.api.identity.SignInClient;
+import com.google.android.gms.auth.api.identity.SignInCredential;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.unimib.petsphere.R;
 import com.unimib.petsphere.model.Result;
+import com.unimib.petsphere.model.User;
 import com.unimib.petsphere.repository.user.IUserRepository;
 import com.unimib.petsphere.util.ServiceLocator;
 import com.unimib.petsphere.viewModel.UserViewModel;
@@ -36,11 +53,15 @@ public class LoginFragment extends Fragment {
 
     public static final String TAG = LoginFragment.class.getName();
 
-    private Button loginButton, signUpButton, loginGoogleButton;
+    private Button loginButton, signUpButton, googleLoginButton;
     private EditText textInputEmail, textInputPassword;
 
+    private static final int RC_SIGN_IN = 9001;
     private SignInClient oneTapClient;
     private BeginSignInRequest signInRequest;
+    private static final int REQ_ONE_TAP = 2;
+    private boolean showOneTapUI = true;
+
     //risultato activity: account google che sto cercando; intent perché dialoga con s.o.
     private ActivityResultLauncher<IntentSenderRequest> activityResultLauncher;
     private ActivityResultContracts.StartIntentSenderForResult startIntentSenderForResult;
@@ -87,6 +108,55 @@ public class LoginFragment extends Fragment {
                 requireActivity(),
                 new UserViewModelFactory(userRepository)
         ).get(UserViewModel.class);
+
+        // effettiva richiesta
+        oneTapClient = Identity.getSignInClient(requireContext());
+        signInRequest = BeginSignInRequest.builder()
+            .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
+                    .setSupported(true)
+                    .build())
+            .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                    .setSupported(true)
+                    // Your server's client ID, not your Android client ID.
+                    .setServerClientId(getString(R.string.default_web_client_id))
+                    // Only show accounts previously used to sign in.
+                    .setFilterByAuthorizedAccounts(false)
+                    .build())
+            // Automatically sign in when exactly one credential is retrieved: provo a false per lasciar scegliere al'utente
+            .setAutoSelectEnabled(false)
+            .build();
+
+        // gestisce risultato intent
+        startIntentSenderForResult = new ActivityResultContracts.StartIntentSenderForResult();
+        activityResultLauncher = registerForActivityResult(startIntentSenderForResult, activityResult -> {
+            if (activityResult.getResultCode() == Activity.RESULT_OK) {
+                Log.d(TAG, "result.getResultCode() == Activity.RESULT_OK");
+                try {
+                    SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(activityResult.getData());
+                    String idToken = credential.getGoogleIdToken();
+                    if (idToken !=  null) {
+                        // Got an ID token from Google. Use it to authenticate with Firebase.
+                        userViewModel.getGoogleUserMutableLiveData(idToken).observe(getViewLifecycleOwner(), authenticationResult -> {
+                            if (authenticationResult.isSuccess()) {
+                                User user = ((Result.UserSuccess) authenticationResult).getData();
+                                //saveLoginData(user.getEmail(), null, user.getIdToken());
+                                Log.i(TAG, "Logged as: " + user.getEmail());
+                                userViewModel.setAuthenticationError(false);
+                            } else {
+                                userViewModel.setAuthenticationError(true);
+                                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                        getErrorMessage(((Result.Error) authenticationResult).getMessage()),
+                                        Snackbar.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                } catch (ApiException e) {
+                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                            requireActivity().getString(R.string.error_unexpected),
+                            Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -108,6 +178,7 @@ public class LoginFragment extends Fragment {
         //userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
         loginButton = view.findViewById(R.id.loginButton);
+        googleLoginButton = view.findViewById(R.id.googleLoginButton);
         signUpButton = view.findViewById(R.id.signUpButton);
         textInputEmail = view.findViewById(R.id.textInputEmail);
         textInputPassword = view.findViewById(R.id.textInputPassword);
@@ -140,5 +211,41 @@ public class LoginFragment extends Fragment {
                 Log.e("LoginFragment", "Errore nella navigazione al SignUpFragment", e);
             }
         });
+
+        googleLoginButton.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
+                .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
+                    @Override
+                    public void onSuccess(BeginSignInResult result) {
+                        Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
+                        IntentSenderRequest intentSenderRequest =
+                                new IntentSenderRequest.Builder(result.getPendingIntent()).build();
+                        activityResultLauncher.launch(intentSenderRequest);
+                        goToMainPage();
+                    }
+                })
+                .addOnFailureListener(requireActivity(), new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // No saved credentials found. Launch the One Tap sign-up flow, or
+                        // do nothing and continue presenting the signed-out UI.
+                        Log.d(TAG, e.getLocalizedMessage());
+
+                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                requireActivity().getString(R.string.error_unexpected),
+                                Snackbar.LENGTH_SHORT).show();
+                    }
+        }));
     }
+
+    private String getErrorMessage(String errorType) {
+        switch (errorType) {
+            case INVALID_CREDENTIALS_ERROR:
+                return requireActivity().getString(R.string.error_password_login);
+            case INVALID_USER_ERROR:
+                return requireActivity().getString(R.string.error_email_login);
+            default:
+                return requireActivity().getString(R.string.error_unexpected);
+        }
+    }
+
 }

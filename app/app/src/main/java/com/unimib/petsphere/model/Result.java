@@ -20,9 +20,9 @@ public abstract class Result {
         public User getUser() {
             return user;
         }
-        //public User getData() {
-        //    return user;
-        //}
+        public User getData() {
+            return user;
+        }
     }
 
     /**

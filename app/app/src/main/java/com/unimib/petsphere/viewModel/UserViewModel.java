@@ -28,6 +28,13 @@ public class UserViewModel extends ViewModel {
         return userMutableLiveData;
     }
 
+    public MutableLiveData<Result> getGoogleUserMutableLiveData(String token) {
+        if (userMutableLiveData == null) {
+            getUserData(token);
+        }
+        return userMutableLiveData;
+    }
+
     public void getUser(String email, String password, boolean isUserRegistered) {
         userRepository.getUser(email, password, isUserRegistered);
     }
