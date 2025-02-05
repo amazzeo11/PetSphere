@@ -17,6 +17,7 @@ navigationUi = "2.8.5"
 legacySupportV4 = "1.0.0"
 recyclerview = "1.4.0"
 roomRuntime = "2.6.1"
+roomCommon = "2.6.1"
 
 [libraries]
 commons-validator = { module = "commons-validator:commons-validator", version.ref = "commonsValidator" }
@@ -37,6 +38,7 @@ legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", ver
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

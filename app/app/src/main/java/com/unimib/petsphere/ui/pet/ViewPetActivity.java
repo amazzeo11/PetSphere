@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -114,7 +115,9 @@ public class ViewPetActivity extends AppCompatActivity {
         note.setText(pet.getNotes());
 
         if (pet.getImage() != null) {
-            petImageView.setImageBitmap(BitmapFactory.decodeByteArray(pet.getImage(), 0, pet.getImage().length));
+            String image = pet.getImage();
+            byte[] imageBytes = Base64.decode(image, Base64.DEFAULT);
+            petImageView.setImageBitmap(BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length));
         }
     }
 

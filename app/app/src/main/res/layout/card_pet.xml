@@ -13,6 +13,7 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/pet_image"
             android:layout_width="match_parent"
             android:layout_height="194dp"
             app:srcCompat="@drawable/paw_icon"
@@ -29,7 +30,8 @@
                 android:id="@+id/text_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nome" />
+                android:hint="Nome"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/text_soprannome"

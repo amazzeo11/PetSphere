@@ -23,6 +23,11 @@
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/paw_icon"
             android:contentDescription="@string/foto_pet"/>
+        <Button
+            android:id="@+id/image_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="carica immagine" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -144,6 +149,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/salva"/>
         </LinearLayout>
+
+
     </LinearLayout>
 </ScrollView>
 </com.google.android.material.card.MaterialCardView>
