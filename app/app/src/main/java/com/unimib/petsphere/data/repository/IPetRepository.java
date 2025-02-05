@@ -7,9 +7,8 @@ import java.util.List;
 
 public interface IPetRepository {
     void getAllPet(List<PetModel> petlist);
-    void getPet(PetModel pet);
-    void onFailure(Exception exception);
-    void deletePet(List<PetModel> petlist);
-    void insertPet(List<PetModel> petlist);
+    void getPets(PetModel pet);
+    void deletePet(PetModel pet);
+    void insertPet(PetModel pet);
     void updatePet(PetModel pet);
 }

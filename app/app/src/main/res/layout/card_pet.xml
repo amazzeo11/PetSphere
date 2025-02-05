@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="194dp"
@@ -26,137 +25,66 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-
-            <TextView
+            <EditText
                 android:id="@+id/text_nome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="16dp">
-                <TextView
-                    android:id="@+id/text_soprannome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"/>
-            </LinearLayout>
+                android:hint="Nome" />
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/text_soprannome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp">
-                <TextView
-                    android:id="@+id/text_microchip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"/>
-            </LinearLayout>
+                android:hint="Soprannome" />
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/text_microchip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp">
-                <TextView
-                    android:id="@+id/text_eta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"/>
-            </LinearLayout>
+                android:hint="Numero di microchip" />
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/text_eta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp">
-                <TextView
-                    android:id="@+id/text_compleanno"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"/>
-            </LinearLayout>
+                android:hint="Età" />
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/text_compleanno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp">
-                <TextView
-                    android:id="@+id/text_peso"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"/>
-            </LinearLayout>
+                android:hint="Compleanno" />
 
-            <TextView
+            <EditText
+                android:id="@+id/text_peso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Peso" />
+
+            <EditText
                 android:id="@+id/colore"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textAppearance="?attr/textAppearanceBodyMedium"/>
+                android:hint="Colore" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tipo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/tipo_di_animale"
-                android:textAppearance="?attr/textAppearanceBodyMedium"/>
-
-
-            <TextView
-                android:id="@+id/allergietext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/allergie"
-                android:textAppearance="?attr/textAppearanceBodyMedium" />
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:hint="Tipo di animale" />
 
-                <TextView
-                    android:id="@+id/allergie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"/>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/notetext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/note"
-                android:textAppearance="?attr/textAppearanceBodyMedium" />
-
-            <LinearLayout
+            <EditText
+                android:id="@+id/allergie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:hint="Allergie" />
 
-                <TextView
-                    android:id="@+id/note"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:textAppearance="?attr/textAppearanceBodyMedium"/>
-            </LinearLayout>
-
-
-
-
+            <EditText
+                android:id="@+id/note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Note" />
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -165,27 +93,23 @@
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/save_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                style="?attr/borderlessButtonStyle"/>
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/delete_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/elimina"
-                style="?attr/borderlessButtonStyle"/>
+                android:text="Salva"
+                android:visibility="gone" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/edit_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/modifica"
-                style="?attr/borderlessButtonStyle"/>
+                android:text="Modifica" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/delete_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Elimina" />
         </LinearLayout>
-
     </LinearLayout>
-
 </com.google.android.material.card.MaterialCardView>

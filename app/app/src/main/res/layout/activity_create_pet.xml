@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <EditText
-                android:id="@+id/edit_weight"
+                android:id="@+id/edit_peso"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:hint="@string/inserisci_peso"
@@ -99,8 +99,8 @@
             <TextView android:text="@string/tipo_di_animale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <Spinner
-                android:id="@+id/spinner_tipo"
+            <EditText
+                android:id="@+id/edit_tipo"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:entries="@array/tipi_animali"/>
@@ -109,8 +109,8 @@
             <TextView android:text="@string/colore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <Spinner
-                android:id="@+id/spinner_colore"
+            <EditText
+                android:id="@+id/edit_colore"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:entries="@array/colori_animali"/>

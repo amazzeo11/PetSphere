@@ -7,10 +7,11 @@ import com.unimib.petsphere.data.model.PetModel;
 import com.unimib.petsphere.data.model.PetResponseModel;
 import com.unimib.petsphere.data.model.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class PetRepository implements PetResponseCallback {
+public class PetRepository implements PetResponseCallback , IPetRepository{
 
     private static final String TAG = PetRepository.class.getSimpleName();
 
@@ -38,7 +39,7 @@ public class PetRepository implements PetResponseCallback {
         return petsMutableLiveData;
     }
 
-    public void updateArticle(PetModel pet) {
+    public void updatePet(PetModel pet) {
         petDataSource.updatePet(pet);
     }
 
@@ -52,10 +53,29 @@ public class PetRepository implements PetResponseCallback {
         allPetsMutableLiveData.postValue(result);
     }
 
+    @Override
+    public void getAllPet(List<PetModel> petlist) {
+
+    }
+
+    @Override
+    public void getPets(PetModel pet) {
+
+    }
+
+
     public void onFailure(Exception exception) {
         Result.Error resultError = new Result.Error(exception.getMessage());
         allPetsMutableLiveData.postValue(resultError);
         petsMutableLiveData.postValue(resultError);
+    }
+
+
+    @Override
+    public void insertPet(PetModel pet) {
+        List<PetModel> pets = new ArrayList<PetModel>();
+        pets.add(pet);
+        petDataSource.insertPets(pets);
     }
 
     @Override
