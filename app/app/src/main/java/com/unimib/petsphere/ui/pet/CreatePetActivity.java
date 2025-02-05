@@ -89,7 +89,7 @@ public class CreatePetActivity extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                 petImageView.setImageBitmap(bitmap);
                 petImage = convertBitmapToByteArray(bitmap);
-                encodedfile = new String(Base64.encode(petImage, Base64.DEFAULT));
+                encodedfile = encodeImageToBase64(bitmap);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -118,5 +118,11 @@ public class CreatePetActivity extends AppCompatActivity {
                 note.getText().toString(),
                 allergie.getText().toString()
         );
+    }
+    public String encodeImageToBase64(Bitmap image) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 }
