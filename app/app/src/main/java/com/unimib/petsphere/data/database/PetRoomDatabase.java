@@ -31,7 +31,7 @@ public abstract class PetRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                    PetRoomDatabase.class, constants.PET_DATABASE)
-                            .allowMainThreadQueries().build();
+                            .allowMainThreadQueries().fallbackToDestructiveMigration().build();
                 }
             }
         }

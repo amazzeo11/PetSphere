@@ -7,7 +7,7 @@ app:startDestination="@id/petslistfragment">
 
 <fragment
     android:id="@+id/petslistfragment"
-    android:name="com.unimib.petsphere.ui.Main.pet.PetListFragment"
+    android:name="com.unimib.petsphere.ui.Main.petList.PetListFragment"
     android:label="@string/lista_animali"
     tools:layout="@layout/fragment_pets_list" />
 <fragment

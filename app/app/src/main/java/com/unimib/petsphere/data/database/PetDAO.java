@@ -37,7 +37,7 @@ public interface PetDAO {
     int updatePetList(List<PetModel> petList);
 
     @Delete
-    void delete(PetModel pet); //user?
+    int deletePet(PetModel pet);
 
     @Query("DELETE from PetModel")
     void deleteAll();

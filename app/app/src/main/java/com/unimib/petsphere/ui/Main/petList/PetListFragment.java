@@ -1,4 +1,4 @@
-package com.unimib.petsphere.ui.Main.pet;
+package com.unimib.petsphere.ui.Main.petList;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,8 @@ import com.unimib.petsphere.data.database.PetRoomDatabase;
 import com.unimib.petsphere.data.model.PetModel;
 import com.unimib.petsphere.data.model.Result;
 import com.unimib.petsphere.data.repository.PetRepository;
+import com.unimib.petsphere.ui.pet.CreatePetActivity;
+import com.unimib.petsphere.ui.pet.ViewPetActivity;
 import com.unimib.petsphere.util.ServiceLocator;
 import com.unimib.petsphere.viewModel.PetViewModel;
 import com.unimib.petsphere.viewModel.PetViewModelFactory;
@@ -80,7 +81,9 @@ public class PetListFragment extends Fragment {
                 new PetRecyclerViewAdapter(R.layout.preview_pet_card,petList,  new PetRecyclerViewAdapter.OnItemClickListener() {
                             @Override
                             public void onPetItemClick(PetModel pet) {
-
+                                Intent intent = new Intent(getActivity(), ViewPetActivity.class);
+                                intent.putExtra("pet", pet);
+                                startActivity(intent);
                             }
 
                         });
@@ -93,7 +96,6 @@ public class PetListFragment extends Fragment {
                         int initialSize = this.petList.size();
                         this.petList.clear();
                         this.petList.addAll(((Result.PetSuccess) result).getData().getPets());
-
                     } else {
                         Snackbar.make(view,
                                 "error",

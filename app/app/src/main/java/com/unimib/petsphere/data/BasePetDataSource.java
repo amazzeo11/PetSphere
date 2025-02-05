@@ -17,7 +17,7 @@ public abstract class BasePetDataSource {
 
     public abstract void updatePet(PetModel pet);
 
-    public abstract void deletePet();
+    public abstract void deletePet(PetModel pet);
 
     public abstract void insertPets(List<PetModel> petList);
 }

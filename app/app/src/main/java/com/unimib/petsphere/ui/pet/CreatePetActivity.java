@@ -1,4 +1,4 @@
-package com.unimib.petsphere.ui.Main.pet;
+package com.unimib.petsphere.ui.pet;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -37,7 +37,7 @@ public class CreatePetActivity extends AppCompatActivity {
             newPet.setName(editNome.getText().toString());
             newPet.setNickname(editSoprannome.getText().toString());
             newPet.setMicrochip(editMicrochip.getText().toString());
-            newPet.setWeight(editWeight.getText().toString());
+            newPet.setWeight(Double.parseDouble(editWeight.getText().toString()));
             newPet.setAge( editEta.getText().toString());
             newPet.setBirthday(editCompleanno.getText().toString());
             newPet.setAllergies(editAllergie.getText().toString());
