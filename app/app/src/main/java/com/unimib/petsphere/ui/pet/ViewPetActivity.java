@@ -93,9 +93,15 @@ public class ViewPetActivity extends AppCompatActivity {
             petViewModel.deletePet(pet);
             finish();
         });
+
+        petViewModel.getDeleteMsg().observe(this, message -> {
+            if (message != null) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private void populateFields() {
+        private void populateFields() {
         nome.setText(pet.getName());
         soprannome.setText(pet.getNickname());
         microchip.setText(pet.getMicrochip());

@@ -47,7 +47,7 @@ public class CreatePetActivity extends AppCompatActivity {
 
 
         saveButton.setOnClickListener(v -> {
-            PetModel newPet = createPetFromInput();
+            PetModel newPet = newPet();
             petViewModel.createPet(newPet);
         });
 
@@ -58,7 +58,7 @@ public class CreatePetActivity extends AppCompatActivity {
         });
     }
 
-    private PetModel createPetFromInput() {
+    private PetModel newPet() {
         return new PetModel(
                 null,
                 tipo.getText().toString(),

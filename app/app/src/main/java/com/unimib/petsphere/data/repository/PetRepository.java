@@ -53,15 +53,6 @@ public class PetRepository implements PetResponseCallback , IPetRepository{
         allPetsMutableLiveData.postValue(result);
     }
 
-    @Override
-    public void getAllPet(List<PetModel> petlist) {
-
-    }
-
-    @Override
-    public void getPets(PetModel pet) {
-
-    }
 
 
     public void onFailure(Exception exception) {
@@ -83,6 +74,7 @@ public class PetRepository implements PetResponseCallback , IPetRepository{
     String deletemessage = "Pet eliminato con successo";
         deleteMsg.postValue(deletemessage);
     }
+
     public MutableLiveData<String> getDeleteMsg() {
         return deleteMsg;
     }
