@@ -9,6 +9,7 @@ public class User implements Parcelable {
     private String userName;
     private String email;
     private String uid;
+    private String idToken;
 
     public User() {
         // costrutture vuoto
@@ -43,6 +44,11 @@ public class User implements Parcelable {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    @Exclude
+    public String getIdToken() {
+        return idToken;
     }
 
     @Override

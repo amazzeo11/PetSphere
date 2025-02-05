@@ -34,8 +34,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
@@ -68,7 +70,6 @@ public class LoginFragment extends Fragment {
     private UserViewModel userViewModel;
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseUser user = mAuth.getCurrentUser();
 
     public LoginFragment() {
         // Required empty public constructor
@@ -79,35 +80,14 @@ public class LoginFragment extends Fragment {
         return fragment;
     }
 
-    //da doc, aggiunto controllo su utente, se già loggato va alla main page
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            // Se l'utente è loggato, carica i dati utente tramite ViewModel
-            userViewModel.getUser(currentUser.getEmail(), "", true);
-            // naviga direttamente alla schermata successiva
-            goToMainPage();
-        }
-    }
-
-    private void goToMainPage() {
-        Intent intent = new Intent(requireActivity(), MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        // chiudo il login così che l'utente non possa tornarci andando indietro
-        requireActivity().finish();
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        IUserRepository userRepository = ServiceLocator.getInstance().getUserRepository(requireActivity().getApplication());
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(requireActivity().getApplication());
         userViewModel = new ViewModelProvider(
                 requireActivity(),
-                new UserViewModelFactory(userRepository)
-        ).get(UserViewModel.class);
+                new UserViewModelFactory(userRepository)).get(UserViewModel.class);
 
         // effettiva richiesta
         oneTapClient = Identity.getSignInClient(requireContext());
@@ -138,10 +118,10 @@ public class LoginFragment extends Fragment {
                         // Got an ID token from Google. Use it to authenticate with Firebase.
                         userViewModel.getGoogleUserMutableLiveData(idToken).observe(getViewLifecycleOwner(), authenticationResult -> {
                             if (authenticationResult.isSuccess()) {
-                                User user = ((Result.UserSuccess) authenticationResult).getData();
-                                //saveLoginData(user.getEmail(), null, user.getIdToken());
+                                FirebaseUser user = mAuth.getCurrentUser();
                                 Log.i(TAG, "Logged as: " + user.getEmail());
                                 userViewModel.setAuthenticationError(false);
+                                goToMainPage();
                             } else {
                                 userViewModel.setAuthenticationError(true);
                                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
@@ -167,6 +147,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d("LoginFragment", "onViewCreated chiamato");
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         // per ottenere l'utente corrnete
         FirebaseUser user = mAuth.getCurrentUser();
@@ -175,22 +156,30 @@ public class LoginFragment extends Fragment {
             goToMainPage();
         }
 
-        //userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+
+        Log.d("LoginFragment", "Before navHost check");
+        View navHost = requireActivity().findViewById(R.id.nav_host_fragment);
+        if (navHost == null) {
+            Log.e("LoginFragment", "lil debug per nav host, null");
+        } else {
+            Log.e("LoginFragment", "lil debug per nav host, NON null");
+        }
 
         loginButton = view.findViewById(R.id.loginButton);
-        googleLoginButton = view.findViewById(R.id.googleLoginButton);
         signUpButton = view.findViewById(R.id.signUpButton);
         textInputEmail = view.findViewById(R.id.textInputEmail);
         textInputPassword = view.findViewById(R.id.textInputPassword);
 
-        View navHost = requireActivity().findViewById(R.id.nav_host_fragment);
-        if (navHost == null) {
-            Log.e("LoginFragment", "lil debug per nav host");
-        }
-
         loginButton.setOnClickListener(v -> {
             String email = textInputEmail.getText().toString();
             String password = textInputPassword.getText().toString();
+            if (email.isEmpty() || password.isEmpty()) {
+                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                        "Email e password non validi",
+                        Snackbar.LENGTH_SHORT).show();
+                return;
+            }
             userViewModel.loginWithEmailAndPassword(email, password);
         });
 
@@ -212,6 +201,12 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        googleLoginButton = view.findViewById(R.id.googleLoginButton);
+        if (googleLoginButton == null) {
+            Log.e("LoginFragment", "googleLoginButton è null");
+        } else {
+            Log.e("LoginFragment", "googleLoginButton non è null");
+        }
         googleLoginButton.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
                 .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
                     @Override
@@ -220,7 +215,7 @@ public class LoginFragment extends Fragment {
                         IntentSenderRequest intentSenderRequest =
                                 new IntentSenderRequest.Builder(result.getPendingIntent()).build();
                         activityResultLauncher.launch(intentSenderRequest);
-                        goToMainPage();
+                        //goToMainPage();  spostato dentro activityResultLauncher
                     }
                 })
                 .addOnFailureListener(requireActivity(), new OnFailureListener() {
@@ -235,6 +230,49 @@ public class LoginFragment extends Fragment {
                                 Snackbar.LENGTH_SHORT).show();
                     }
         }));
+/*
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            // L'utente è loggato, possiamo procedere
+            String email = currentUser.getEmail();
+
+            if (email != null && !email.isEmpty()) {
+                mAuth.sendPasswordResetEmail(email)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "Email inviata");
+                                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                            "Controlla la tua email",
+                                            Snackbar.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            } else {
+                Log.e(TAG, "Errore: l'email dell'utente è null");
+                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                        "Errore: l'email è assente", Snackbar.LENGTH_SHORT).show();
+            }
+        } else {
+            Log.e(TAG, "Errore: nessun utente loggato");
+            Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                    "Devi essere loggato per recuperare la password", Snackbar.LENGTH_SHORT).show();
+        }
+
+        // reset password dimenticata
+        mAuth.sendPasswordResetEmail(textInputEmail.getText().toString())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Email inviata");
+                            Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                    "Controlla la tua email",
+                                    Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                });*/
     }
 
     private String getErrorMessage(String errorType) {
@@ -246,6 +284,27 @@ public class LoginFragment extends Fragment {
             default:
                 return requireActivity().getString(R.string.error_unexpected);
         }
+    }
+
+    //da doc, aggiunto controllo su utente, se già loggato va alla main page
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            // Se l'utente è loggato, carica i dati utente tramite ViewModel
+            userViewModel.getUser(currentUser.getEmail(), "", true);
+            // naviga direttamente alla schermata successiva
+            goToMainPage();
+        }
+    }
+
+    private void goToMainPage() {
+        Intent intent = new Intent(requireActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        // chiudo il login così che l'utente non possa tornarci andando indietro
+        requireActivity().finish();
     }
 
 }
