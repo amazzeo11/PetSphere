@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "312115728845-ns0s29n4532o1ko3tmb2c0n9d3oo4qjv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unimib.petsphere",
+            "certificate_hash": "381bb3362edf6a5c7d4b234b5fc9355e5382efd7"
+          }
+        },
+        {
           "client_id": "312115728845-r9156lf22kc7f78d9rqf9hog6rvera9m.apps.googleusercontent.com",
           "client_type": 3
         }
