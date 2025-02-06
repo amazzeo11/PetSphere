@@ -11,6 +11,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.unimib.petsphere.R;
+import com.unimib.petsphere.data.database.PetRoomDatabase;
 
 public class MainActivity extends AppCompatActivity {
 

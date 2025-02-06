@@ -87,7 +87,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:hint="@string/inserisci_peso"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal"
+                android:text="0"/>
 
 
             <TextView android:text="@string/compleanno"
