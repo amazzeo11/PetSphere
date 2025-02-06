@@ -30,19 +30,12 @@ import com.google.android.gms.auth.api.identity.BeginSignInResult;
 import com.google.android.gms.auth.api.identity.Identity;
 import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.identity.SignInCredential;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.unimib.petsphere.R;
 import com.unimib.petsphere.model.Result;
 import com.unimib.petsphere.model.User;
@@ -114,6 +107,7 @@ public class LoginFragment extends Fragment {
                 try {
                     SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(activityResult.getData());
                     String idToken = credential.getGoogleIdToken();
+                    Log.d(TAG, "l'idToken è:" + idToken);
                     if (idToken !=  null) {
                         // Got an ID token from Google. Use it to authenticate with Firebase.
                         userViewModel.getGoogleUserMutableLiveData(idToken).observe(getViewLifecycleOwner(), authenticationResult -> {
@@ -185,6 +179,11 @@ public class LoginFragment extends Fragment {
 
         userViewModel.getLoginResult().observe(getViewLifecycleOwner(), result -> {
             if (result.isSuccess()) {
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                if (firebaseUser != null) {
+                    User utente = new User(firebaseUser.getDisplayName(), firebaseUser.getEmail(), firebaseUser.getUid());
+                    userViewModel.saveUser(utente);
+                }
                 goToMainPage();
             } else {
                 String errorMessage = ((Result.Error) result).getMessage();
@@ -230,6 +229,15 @@ public class LoginFragment extends Fragment {
                                 Snackbar.LENGTH_SHORT).show();
                     }
         }));
+        /*userViewModel.getGoogleUserMutableLiveData(token).observe(getViewLifecycleOwner(), result -> {
+            if(result.isSuccess()) {
+                Log.d(TAG, "Utente autenticato e registrato con successo");
+                goToMainPage();
+            } else {
+                String errorMessage = ((Result.Error) result).getMessage();
+                Toast.makeText(requireContext(), "Errore: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });*/
 /*
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {

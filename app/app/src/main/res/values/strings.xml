@@ -50,6 +50,7 @@
     <string name="stringa_vuota">Non impostato</string>
 
     <!-- Errors -->
+    <string name="error_unknown">Errore sconosciuto </string>
     <string name="error_email_login">Email non valida</string>
     <string name="error_password_login">Password non valida</string>
 

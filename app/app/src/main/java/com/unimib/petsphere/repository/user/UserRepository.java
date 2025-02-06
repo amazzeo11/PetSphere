@@ -46,16 +46,14 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
         mDatabase.child(user.getUid()).setValue(user)
             .addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    // VERY VERY GOOD
                     Log.d("Firebase", "Dati dell'utente salvati con successo");
                     userMutableLiveData.setValue(new Result.UserSuccess(user));
                 } else {
-                    // VERY VERY BAD
                     String errorMessage;
                     if (task.getException() != null) {
                         errorMessage = task.getException().getMessage();
                     } else {
-                        errorMessage = "errore boh";
+                        errorMessage = "Errore sconosciuto";
                     }
                     Log.e("Firebase", "Errore nel salvataggio dei dati dell'utente: " + errorMessage);
                     userMutableLiveData.setValue(new Result.Error(errorMessage));

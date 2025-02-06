@@ -5,7 +5,9 @@ import static com.unimib.petsphere.util.Constants.*;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 
+import com.unimib.petsphere.model.Result;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -24,6 +26,7 @@ public class UserAuthenticationFirebaseDataSource extends BaseUserAuthentication
 
     private final FirebaseAuth firebaseAuth;
     private final UserFirebaseDataSource userDataRemoteDataSource;
+    private final MutableLiveData<Result> userMutableLiveData = new MutableLiveData<>();
 
     public UserAuthenticationFirebaseDataSource(UserFirebaseDataSource userDataRemoteDataSource) {
         this.userDataRemoteDataSource = userDataRemoteDataSource;
@@ -110,11 +113,14 @@ public class UserAuthenticationFirebaseDataSource extends BaseUserAuthentication
                     Log.d(TAG, "signInWithCredential:success");
                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                     if (firebaseUser != null) {
-                        userResponseCallback.onSuccessFromAuthentication(
-                                new User(firebaseUser.getDisplayName(), firebaseUser.getEmail(), firebaseUser.getUid())
-                        );
+                        User user = new User(firebaseUser.getDisplayName(), firebaseUser.getEmail(), firebaseUser.getUid());
+                        userMutableLiveData.postValue(new Result.UserSuccess(user));
+                        userResponseCallback.onSuccessFromAuthentication(user);
                     } else {
-                        userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+                        String errorMessage = getErrorMessage(task.getException());
+                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        userMutableLiveData.postValue(new Result.Error(errorMessage));
+                        userResponseCallback.onFailureFromAuthentication(errorMessage);
                     }
                 } else {
                     // If sign in fails, display a message to the user.
