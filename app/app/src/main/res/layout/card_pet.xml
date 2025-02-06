@@ -12,6 +12,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
         <ImageView
             android:id="@+id/pet_image"
             android:layout_width="match_parent"
@@ -19,6 +22,19 @@
             app:srcCompat="@drawable/paw_icon"
             android:scaleType="centerCrop"
             android:contentDescription="@string/foto_pet"/>
+
+    <Button
+        android:id="@+id/edit_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="modifica immagine"
+        app:icon="@drawable/baseline_mode_edit_24"
+        app:iconGravity="end"
+        android:visibility="gone"/>
+
+</FrameLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,5 +129,13 @@
                 android:layout_height="wrap_content"
                 android:text="Elimina" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

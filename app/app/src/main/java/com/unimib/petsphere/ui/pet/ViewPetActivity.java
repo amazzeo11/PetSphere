@@ -1,8 +1,12 @@
 package com.unimib.petsphere.ui.pet;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -12,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,15 +29,17 @@ import com.unimib.petsphere.viewModel.PetViewModel;
 import com.unimib.petsphere.viewModel.PetViewModelFactory;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class ViewPetActivity extends AppCompatActivity {
     private EditText nome, soprannome, microchip, eta, compleanno, peso, colore, tipo, allergie, note;
     private ImageView petImageView;
     private PetViewModel petViewModel;
-    private Button editPetButton, savePetButton;
+    private Button editPetButton, savePetButton, editImageButton, deletePetButton;
     private boolean isEditing = false;
     private PetModel pet;
-
+    String petImagePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +76,8 @@ public class ViewPetActivity extends AppCompatActivity {
 
         editPetButton = findViewById(R.id.edit_btn);
         savePetButton = findViewById(R.id.save_btn);
+        deletePetButton = findViewById(R.id.delete_btn);
+        editImageButton = findViewById(R.id.edit_image);
 
         pet = (PetModel) getIntent().getSerializableExtra("pet");
 
@@ -82,6 +91,7 @@ public class ViewPetActivity extends AppCompatActivity {
             setEditable(isEditing);
             editPetButton.setVisibility(View.GONE);
             savePetButton.setVisibility(isEditing ? View.VISIBLE : View.GONE);
+            editImageButton.setVisibility(isEditing ? View.VISIBLE : View.GONE);
         });
 
         savePetButton.setOnClickListener(v -> {
@@ -92,7 +102,6 @@ public class ViewPetActivity extends AppCompatActivity {
             Toast.makeText(this, "Modifiche salvate", Toast.LENGTH_SHORT).show();
         });
 
-        Button deletePetButton = findViewById(R.id.delete_btn);
         deletePetButton.setOnClickListener(v -> {
             petViewModel.deletePet(pet);
             finish();
@@ -103,6 +112,8 @@ public class ViewPetActivity extends AppCompatActivity {
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             }
         });
+
+        editImageButton.setOnClickListener(v -> openImageChooser());
     }
 
         private void populateFields() {
@@ -151,8 +162,54 @@ public class ViewPetActivity extends AppCompatActivity {
         pet.setAnimal_type(tipo.getText().toString());
         pet.setAllergies(allergie.getText().toString());
         pet.setNotes(note.getText().toString());
-
+        pet.setImage(petImagePath);
         petViewModel.updatePet(pet);
     }
+    private void openImageChooser() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, 1);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            Uri imageUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                petImageView.setImageBitmap(bitmap);
 
+
+                String imagePath = saveImageToInternalStorage(bitmap);
+
+                if (imagePath != null) {
+                    petImagePath = imagePath;
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Errore nel caricamento dell'immagine", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+    private String saveImageToInternalStorage(Bitmap bitmap) {
+        File directory = new File(getFilesDir(), "pet_images");
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        String fileName = "img_" + System.currentTimeMillis() + ".jpg";
+        File imageFile = new File(directory, fileName);
+
+        try (FileOutputStream fos = new FileOutputStream(imageFile)) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+            fos.flush();
+            return imageFile.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

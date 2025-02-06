@@ -57,8 +57,6 @@ public class PetRecyclerViewAdapter extends RecyclerView.Adapter<PetRecyclerView
 
         String imagePath = pet.getImage();
         if (imagePath != null) {
-
-
         File imgFile = new File(imagePath);
 
         if (imgFile.exists()) {
