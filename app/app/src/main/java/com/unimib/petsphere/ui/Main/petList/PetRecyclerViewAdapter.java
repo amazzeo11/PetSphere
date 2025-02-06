@@ -56,12 +56,18 @@ public class PetRecyclerViewAdapter extends RecyclerView.Adapter<PetRecyclerView
         holder.getTextViewTipoAnimale().setText(pet.getAnimal_type());
 
         String imagePath = pet.getImage();
+        if (imagePath != null) {
+
+
         File imgFile = new File(imagePath);
 
         if (imgFile.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             holder.getImageView().setImageBitmap(bitmap);
         } else {
+            holder.getImageView().setImageResource(R.drawable.paw_icon);
+        }
+        }else{
             holder.getImageView().setImageResource(R.drawable.paw_icon);
         }
 
