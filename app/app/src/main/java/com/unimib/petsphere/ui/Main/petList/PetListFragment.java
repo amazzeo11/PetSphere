@@ -1,5 +1,6 @@
 package com.unimib.petsphere.ui.Main.petList;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -35,7 +36,6 @@ public class PetListFragment extends Fragment {
     private List<PetModel> petList;
     private PetRecyclerViewAdapter adapter;
     private PetViewModel petViewModel;
-
 
     public PetListFragment() {
     }

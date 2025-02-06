@@ -23,6 +23,11 @@
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/paw_icon"
             android:contentDescription="@string/foto_pet"/>
+        <Button
+            android:id="@+id/image_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="carica immagine" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,11 +83,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <EditText
-                android:id="@+id/edit_weight"
+                android:id="@+id/edit_peso"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:hint="@string/inserisci_peso"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal"
+                android:text="0"/>
 
 
             <TextView android:text="@string/compleanno"
@@ -99,8 +105,8 @@
             <TextView android:text="@string/tipo_di_animale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <Spinner
-                android:id="@+id/spinner_tipo"
+            <EditText
+                android:id="@+id/edit_tipo"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:entries="@array/tipi_animali"/>
@@ -109,8 +115,8 @@
             <TextView android:text="@string/colore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <Spinner
-                android:id="@+id/spinner_colore"
+            <EditText
+                android:id="@+id/edit_colore"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:entries="@array/colori_animali"/>
@@ -144,6 +150,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/salva"/>
         </LinearLayout>
+
+
     </LinearLayout>
 </ScrollView>
 </com.google.android.material.card.MaterialCardView>

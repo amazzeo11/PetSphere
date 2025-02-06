@@ -8,9 +8,7 @@ import androidx.lifecycle.ViewModel;
 import com.unimib.petsphere.data.model.PetModel;
 import com.unimib.petsphere.data.model.Result;
 import com.unimib.petsphere.data.repository.PetRepository;
-import com.unimib.petsphere.data.repository.PetResponseCallback;
 
-import java.util.List;
 
 
 public class PetViewModel extends ViewModel {
@@ -21,6 +19,7 @@ public class PetViewModel extends ViewModel {
 
     private MutableLiveData<Result> petsListLiveData;
     private MutableLiveData<String> deleteMsg;
+    private MutableLiveData<String> createPetMsg = new MutableLiveData<>();
 
     public PetViewModel(PetRepository petRepository) {
         this.petRepository = petRepository;
@@ -37,7 +36,7 @@ public class PetViewModel extends ViewModel {
 
 
     public void updatePet(PetModel pet) {
-        petRepository.updateArticle(pet);
+        petRepository.updatePet(pet);
     }
 
     private void fetchPets() {
@@ -48,6 +47,14 @@ public class PetViewModel extends ViewModel {
         petRepository.deletePet(pet);
     }
 
+    public void createPet(PetModel pet) {
+        petRepository.insertPet(pet);
+        createPetMsg.setValue("Pet creato con successo!");
+    }
+
+    public LiveData<String> getCreatePetMsg() {
+        return createPetMsg;
+    }
 
     public LiveData<String> getDeleteMsg() {
         return deleteMsg;

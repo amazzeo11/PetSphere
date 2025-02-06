@@ -9,7 +9,7 @@ import java.util.Date;
 public class PetModel implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public long uid;
-    private byte[] image;
+    private String image;
     private String animal_type;
     private String microchip;
     private String name;
@@ -22,7 +22,7 @@ public class PetModel implements Serializable {
     private String allergies;
 
 
-    public PetModel(byte[] image, String animalType, String microchip, String name, String nickname, double weight, String age, String birthday, String color, String notes, String allergies){
+    public PetModel(String image, String animalType, String microchip, String name, String nickname, double weight, String age, String birthday, String color, String notes, String allergies){
         this.image=image;
         this.animal_type = animalType;
         this.microchip = microchip;
@@ -131,11 +131,11 @@ public class PetModel implements Serializable {
     public void setUid(Long uid) { this.uid=uid;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }
