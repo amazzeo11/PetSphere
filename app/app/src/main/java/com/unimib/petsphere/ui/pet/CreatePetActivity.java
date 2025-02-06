@@ -26,6 +26,8 @@ import com.unimib.petsphere.viewModel.PetViewModel;
 import com.unimib.petsphere.viewModel.PetViewModelFactory;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class CreatePetActivity extends AppCompatActivity {
@@ -34,8 +36,8 @@ public class CreatePetActivity extends AppCompatActivity {
     private Button saveButton, uploadImageButton;
     private ImageView petImageView;
     private PetViewModel petViewModel;
-    private byte[] petImage;
-    private String encodedfile;
+    private String petImagePath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,8 +90,13 @@ public class CreatePetActivity extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                 petImageView.setImageBitmap(bitmap);
-                petImage = convertBitmapToByteArray(bitmap);
-                encodedfile = encodeImageToBase64(bitmap);
+
+
+                String imagePath = saveImageToInternalStorage(bitmap);
+
+                if (imagePath != null) {
+                    petImagePath = imagePath;
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -98,15 +105,30 @@ public class CreatePetActivity extends AppCompatActivity {
         }
     }
 
-    private byte[] convertBitmapToByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        return stream.toByteArray();
+
+    private String saveImageToInternalStorage(Bitmap bitmap) {
+        File directory = new File(getFilesDir(), "pet_images");
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        String fileName = "img_" + System.currentTimeMillis() + ".jpg";
+        File imageFile = new File(directory, fileName);
+
+        try (FileOutputStream fos = new FileOutputStream(imageFile)) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+            fos.flush();
+            return imageFile.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
+
 
     private PetModel newPet() {
         return new PetModel(
-                encodedfile,
+                petImagePath,
                 tipo.getText().toString(),
                 microchip.getText().toString(),
                 nome.getText().toString(),
@@ -119,10 +141,5 @@ public class CreatePetActivity extends AppCompatActivity {
                 allergie.getText().toString()
         );
     }
-    public String encodeImageToBase64(Bitmap image) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
-    }
 }
+

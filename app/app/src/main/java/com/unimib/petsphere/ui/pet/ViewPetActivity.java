@@ -1,5 +1,6 @@
 package com.unimib.petsphere.ui.pet;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,6 +22,8 @@ import com.unimib.petsphere.data.repository.PetRepository;
 import com.unimib.petsphere.util.ServiceLocator;
 import com.unimib.petsphere.viewModel.PetViewModel;
 import com.unimib.petsphere.viewModel.PetViewModelFactory;
+
+import java.io.File;
 
 public class ViewPetActivity extends AppCompatActivity {
     private EditText nome, soprannome, microchip, eta, compleanno, peso, colore, tipo, allergie, note;
@@ -114,10 +117,13 @@ public class ViewPetActivity extends AppCompatActivity {
         allergie.setText(pet.getAllergies());
         note.setText(pet.getNotes());
 
+
+
         if (pet.getImage() != null) {
             String image = pet.getImage();
-            byte[] imageBytes = Base64.decode(image, Base64.DEFAULT);
-            petImageView.setImageBitmap(BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length));
+            File imgFile = new File(image);
+            Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            petImageView.setImageBitmap(bitmap);
         }
     }
 

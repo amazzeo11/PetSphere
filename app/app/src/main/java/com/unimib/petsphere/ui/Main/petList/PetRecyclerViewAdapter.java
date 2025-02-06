@@ -17,6 +17,7 @@ import com.unimib.petsphere.R;
 import com.unimib.petsphere.data.model.PetModel;
 
 
+import java.io.File;
 import java.util.List;
 
 public class PetRecyclerViewAdapter extends RecyclerView.Adapter<PetRecyclerViewAdapter.ViewHolder> {
@@ -54,12 +55,12 @@ public class PetRecyclerViewAdapter extends RecyclerView.Adapter<PetRecyclerView
         holder.getTextViewNome().setText(pet.getName());
         holder.getTextViewTipoAnimale().setText(pet.getAnimal_type());
 
-        String image = pet.getImage();
-        byte[] imageBytes = Base64.decode(image, Base64.DEFAULT);
+        String imagePath = pet.getImage();
+        File imgFile = new File(imagePath);
 
-        if (imageBytes != null && imageBytes.length > 0) {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-           holder.getImageView().setImageBitmap(bitmap);
+        if (imgFile.exists()) {
+            Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            holder.getImageView().setImageBitmap(bitmap);
         } else {
             holder.getImageView().setImageResource(R.drawable.paw_icon);
         }
