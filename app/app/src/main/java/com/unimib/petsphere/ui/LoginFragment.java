@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.BuildConfig;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.unimib.petsphere.R;
@@ -76,6 +78,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         IUserRepository userRepository = ServiceLocator.getInstance().
                 getUserRepository(requireActivity().getApplication());
         userViewModel = new ViewModelProvider(
@@ -112,7 +115,9 @@ public class LoginFragment extends Fragment {
                         // Got an ID token from Google. Use it to authenticate with Firebase.
                         userViewModel.getGoogleUserMutableLiveData(idToken).observe(getViewLifecycleOwner(), authenticationResult -> {
                             if (authenticationResult.isSuccess()) {
-                                FirebaseUser user = mAuth.getCurrentUser();
+                                User user = ((Result.UserSuccess) authenticationResult).getData();
+                                //FirebaseUser user = mAuth.getCurrentUser();
+                                //saveLoginData(user.getEmail(), user.getPassword(), user.getUid());
                                 Log.i(TAG, "Logged as: " + user.getEmail());
                                 userViewModel.setAuthenticationError(false);
                                 goToMainPage();
@@ -298,6 +303,19 @@ public class LoginFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        if (BuildConfig.DEBUG) {
+            FirebaseAuth.getInstance().signOut();
+        } else {
+            // Solo in modalità release, stampa nei log se l'utente è già loggato
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                Log.d("DEBUG", "Utente loggato: " + user.getEmail());
+            } else {
+                Log.d("DEBUG", "Nessun utente loggato");
+            }
+        }
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             // Se l'utente è loggato, carica i dati utente tramite ViewModel
@@ -314,5 +332,11 @@ public class LoginFragment extends Fragment {
         // chiudo il login così che l'utente non possa tornarci andando indietro
         requireActivity().finish();
     }
-
+    /*
+    private void goToSignUpPage() {
+        NavController navController = NavHostFragment.findNavController(LoginFragment.this);
+        Log.d("NAVIGATION", "Current destination: " + navController.getCurrentDestination().getId());
+        navController.navigate(R.id.action_loginFragment_to_signUpFragment);
+    }
+    */
 }

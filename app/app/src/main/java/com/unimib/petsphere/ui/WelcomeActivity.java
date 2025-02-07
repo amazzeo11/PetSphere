@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.unimib.petsphere.R;
@@ -43,10 +44,13 @@ public class WelcomeActivity extends AppCompatActivity {
         // dalla doc di Firebase: Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
-
         myRef.setValue("Hello, World!");
-
         Log.e(TAG, "Entra nella Welcome Activity, tutto ok fin qua");
+
+
+
+        // debug, da cancellare
+        FirebaseAuth.getInstance().signOut();
     }
 
 

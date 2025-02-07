@@ -85,21 +85,25 @@ public class UserAuthenticationFirebaseDataSource extends BaseUserAuthentication
 
     @Override
     public void signIn(String email, String password) {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                    if (firebaseUser != null) {
-                        userResponseCallback.onSuccessFromAuthentication(
-                                new User(firebaseUser.getDisplayName(), email, firebaseUser.getUid())
-                        );
-                    } else {
-                        userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
-                    }
-                } else {
-                    userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
-                }
-        });
+        if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
+            Log.e(TAG, "Email e password vuote");
+        } else {
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                            if (firebaseUser != null) {
+                                userResponseCallback.onSuccessFromAuthentication(
+                                        new User(firebaseUser.getDisplayName(), email, firebaseUser.getUid())
+                                );
+                            } else {
+                                userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+                            }
+                        } else {
+                            userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+                        }
+                    });
+        }
     }
 
     @Override
