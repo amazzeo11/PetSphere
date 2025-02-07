@@ -85,11 +85,14 @@
                 android:layout_height="wrap_content"
                 android:hint="Colore" />
 
-            <EditText
-                android:id="@+id/tipo"
+            <TextView android:text="@string/tipo_di_animale"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <Spinner
+                android:id="@+id/tipo"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Tipo di animale" />
+                android:entries="@array/tipi_animali"/>
 
             <EditText
                 android:id="@+id/allergie"
