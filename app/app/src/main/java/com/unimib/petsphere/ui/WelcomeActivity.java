@@ -45,6 +45,8 @@ public class WelcomeActivity extends AppCompatActivity {
         DatabaseReference myRef = database.getReference("message");
 
         myRef.setValue("Hello, World!");
+
+        Log.e(TAG, "Entra nella Welcome Activity, tutto ok fin qua");
     }
 
 
