@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="colori_animali">blu, rosso, giallo</string-array>
-    <string-array name="tipi_animali">cane, gatto, cavallo, coniglio, pappagallo</string-array>
+
+    <string-array name="tipi_animali">
+        <item>Cane</item>
+        <item>Gatto</item>
+        <item>Coniglio</item>
+        <item>Cavallo</item>
+        <item>Pappagallo</item>
+        <item>Tartaruga</item>
+    </string-array>
+
 </resources>
