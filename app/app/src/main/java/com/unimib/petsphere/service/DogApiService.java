@@ -1,7 +1,5 @@
 package com.unimib.petsphere.service;
 
-
-
 import com.unimib.petsphere.data.model.DogFact;
 
 import retrofit2.Call;
