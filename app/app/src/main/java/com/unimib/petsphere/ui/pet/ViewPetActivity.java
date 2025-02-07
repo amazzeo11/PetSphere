@@ -92,6 +92,7 @@ public class ViewPetActivity extends AppCompatActivity {
             editPetButton.setVisibility(View.GONE);
             savePetButton.setVisibility(isEditing ? View.VISIBLE : View.GONE);
             editImageButton.setVisibility(isEditing ? View.VISIBLE : View.GONE);
+            petImagePath=pet.getImage();
         });
 
         savePetButton.setOnClickListener(v -> {
@@ -165,6 +166,7 @@ public class ViewPetActivity extends AppCompatActivity {
         pet.setImage(petImagePath);
         petViewModel.updatePet(pet);
     }
+
     private void openImageChooser() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
