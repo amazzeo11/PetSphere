@@ -7,6 +7,7 @@ import android.app.Application;
 import com.unimib.petsphere.data.BasePetDataSource;
 import com.unimib.petsphere.data.PetDataSource;
 import com.unimib.petsphere.data.database.PetRoomDatabase;
+import com.unimib.petsphere.data.repository.CatFactRepository;
 import com.unimib.petsphere.data.repository.DogFactRepository;
 import com.unimib.petsphere.data.repository.PetRepository;
 
@@ -60,5 +61,9 @@ public class ServiceLocator {
 
     public DogFactRepository getDogFactRepository(Application application, boolean debugMode) {
         return new DogFactRepository();
+    }
+
+    public CatFactRepository getCatFactRepository(Application application, boolean debugMode) {
+        return new CatFactRepository();
     }
 }

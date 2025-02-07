@@ -7,7 +7,7 @@ import com.unimib.petsphere.data.model.DogFact;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
-public interface ApiService {
+public interface DogApiService {
     @GET("api/facts")
     Call<DogFact> getRandomFact();
 }

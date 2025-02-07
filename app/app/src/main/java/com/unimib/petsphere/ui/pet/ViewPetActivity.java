@@ -26,9 +26,12 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.snackbar.Snackbar;
 import com.unimib.petsphere.R;
 import com.unimib.petsphere.data.model.PetModel;
+import com.unimib.petsphere.data.repository.CatFactRepository;
 import com.unimib.petsphere.data.repository.DogFactRepository;
 import com.unimib.petsphere.data.repository.PetRepository;
 import com.unimib.petsphere.util.ServiceLocator;
+import com.unimib.petsphere.viewModel.CatFactViewModel;
+import com.unimib.petsphere.viewModel.CatFactViewModelFactory;
 import com.unimib.petsphere.viewModel.DogFactViewModel;
 import com.unimib.petsphere.viewModel.DogFactViewModelFactory;
 import com.unimib.petsphere.viewModel.PetViewModel;
@@ -46,6 +49,7 @@ public class ViewPetActivity extends AppCompatActivity {
     private ImageView petImageView;
     private PetViewModel petViewModel;
     private DogFactViewModel dogFactViewModel;
+    private CatFactViewModel catFactViewModel;
     private Button editPetButton, savePetButton, editImageButton, deletePetButton, factButton;
     private boolean isEditing = false;
     private PetModel pet;
@@ -74,6 +78,10 @@ tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
                 this.getApplication(),
                 this.getApplication().getResources().getBoolean(R.bool.debug_mode)
         );
+        CatFactRepository catFactRepository =  ServiceLocator.getInstance().getCatFactRepository(
+                this.getApplication(),
+                this.getApplication().getResources().getBoolean(R.bool.debug_mode)
+        );
 
         petViewModel = new ViewModelProvider(
                 this,
@@ -81,6 +89,9 @@ tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
         dogFactViewModel = new ViewModelProvider(
                 this,
                 new DogFactViewModelFactory(dogFactRepository)).get(DogFactViewModel.class);
+        catFactViewModel = new ViewModelProvider(
+                this,
+                new CatFactViewModelFactory(catFactRepository)).get(CatFactViewModel.class);
 
         nome = findViewById(R.id.text_nome);
         soprannome = findViewById(R.id.text_soprannome);
@@ -143,6 +154,11 @@ tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
             dogFactViewModel.getDogFact().observe(this, fact ->
                     Snackbar.make(view, fact, Snackbar.LENGTH_LONG).show()
             );
+            }else if(pet.getAnimal_type().equals("Gatto")){
+                catFactViewModel.refreshFact();
+                catFactViewModel.getCatFact().observe(this, fact ->
+                        Snackbar.make(view, fact, Snackbar.LENGTH_LONG).show()
+                );
             }
         });
 
