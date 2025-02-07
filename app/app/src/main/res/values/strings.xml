@@ -54,8 +54,8 @@
     <string name="inserisci_microchip">Inserisci microchip</string>
     <string name="inserisci_soprannome">Inserisci soprannome</string>
     <string name="inserisci_peso">Inserisci peso</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="elimina">Elimina</string>
     <string name="modifica">Modifica</string>
+    <string name="inserisci_compleanno">Inserisci compleanno</string>
+    <string name="peso_in_kg">Peso (Kg):</string>
 </resources>

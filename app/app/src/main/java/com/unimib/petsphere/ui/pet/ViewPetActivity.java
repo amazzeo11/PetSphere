@@ -104,10 +104,13 @@ tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
         });
 
         savePetButton.setOnClickListener(v -> {
+            isEditing = !isEditing;
             updatePetData();
             petViewModel.updatePet(pet);
             setEditable(false);
             savePetButton.setVisibility(View.GONE);
+            editPetButton.setVisibility(View.VISIBLE);
+            editImageButton.setVisibility(View.GONE);
             Toast.makeText(this, "Modifiche salvate", Toast.LENGTH_SHORT).show();
         });
 
