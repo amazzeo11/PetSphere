@@ -130,7 +130,13 @@
                 android:id="@+id/delete_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Elimina" />
+                android:text="Elimina"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fact_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/random_fact" />
         </LinearLayout>
 
 

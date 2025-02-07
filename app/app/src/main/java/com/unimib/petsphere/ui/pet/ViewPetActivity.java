@@ -23,10 +23,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.unimib.petsphere.R;
 import com.unimib.petsphere.data.model.PetModel;
+import com.unimib.petsphere.data.repository.DogFactRepository;
 import com.unimib.petsphere.data.repository.PetRepository;
 import com.unimib.petsphere.util.ServiceLocator;
+import com.unimib.petsphere.viewModel.DogFactViewModel;
+import com.unimib.petsphere.viewModel.DogFactViewModelFactory;
 import com.unimib.petsphere.viewModel.PetViewModel;
 import com.unimib.petsphere.viewModel.PetViewModelFactory;
 
@@ -41,7 +45,8 @@ public class ViewPetActivity extends AppCompatActivity {
     private Spinner tipo;
     private ImageView petImageView;
     private PetViewModel petViewModel;
-    private Button editPetButton, savePetButton, editImageButton, deletePetButton;
+    private DogFactViewModel dogFactViewModel;
+    private Button editPetButton, savePetButton, editImageButton, deletePetButton, factButton;
     private boolean isEditing = false;
     private PetModel pet;
     String petImagePath;
@@ -65,10 +70,17 @@ tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
                         this.getApplication(),
                         this.getApplication().getResources().getBoolean(R.bool.debug_mode)
                 );
+        DogFactRepository dogFactRepository =  ServiceLocator.getInstance().getDogFactRepository(
+                this.getApplication(),
+                this.getApplication().getResources().getBoolean(R.bool.debug_mode)
+        );
 
         petViewModel = new ViewModelProvider(
                 this,
                 new PetViewModelFactory(petRepository)).get(PetViewModel.class);
+        dogFactViewModel = new ViewModelProvider(
+                this,
+                new DogFactViewModelFactory(dogFactRepository)).get(DogFactViewModel.class);
 
         nome = findViewById(R.id.text_nome);
         soprannome = findViewById(R.id.text_soprannome);
@@ -86,6 +98,7 @@ tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
         savePetButton = findViewById(R.id.save_btn);
         deletePetButton = findViewById(R.id.delete_btn);
         editImageButton = findViewById(R.id.edit_image);
+        factButton = findViewById(R.id.fact_btn);
 
         pet = (PetModel) getIntent().getSerializableExtra("pet");
 
@@ -123,6 +136,16 @@ tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
         });
 
         editImageButton.setOnClickListener(v -> openImageChooser());
+
+        factButton.setOnClickListener(view -> {
+            if(pet.getAnimal_type().equals("Cane")){
+            dogFactViewModel.refreshFact();
+            dogFactViewModel.getDogFact().observe(this, fact ->
+                    Snackbar.make(view, fact, Snackbar.LENGTH_LONG).show()
+            );
+            }
+        });
+
     }
 
         private void populateFields() {
