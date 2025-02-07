@@ -1,6 +1,7 @@
 package com.unimib.petsphere.ui.pet;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -31,20 +33,26 @@ import com.unimib.petsphere.viewModel.PetViewModelFactory;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class ViewPetActivity extends AppCompatActivity {
-    private EditText nome, soprannome, microchip, eta, compleanno, peso, colore, tipo, allergie, note;
+    private EditText nome, soprannome, microchip, eta, compleanno, peso, colore, allergie, note;
+    private Spinner tipo;
     private ImageView petImageView;
     private PetViewModel petViewModel;
     private Button editPetButton, savePetButton, editImageButton, deletePetButton;
     private boolean isEditing = false;
     private PetModel pet;
     String petImagePath;
+    String[] tipi ;
+    int selected;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pet);
-
+tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -125,9 +133,10 @@ public class ViewPetActivity extends AppCompatActivity {
         compleanno.setText(pet.getBirthday());
         peso.setText(String.valueOf(pet.getWeight()));
         colore.setText(pet.getColor());
-        tipo.setText(pet.getAnimal_type());
         allergie.setText(pet.getAllergies());
         note.setText(pet.getNotes());
+        selected=Arrays.asList(tipi).indexOf(pet.getAnimal_type());
+        tipo.setSelection(selected);
 
 
 
@@ -160,7 +169,7 @@ public class ViewPetActivity extends AppCompatActivity {
         pet.setBirthday(compleanno.getText().toString());
         pet.setWeight(Double.parseDouble(peso.getText().toString()));
         pet.setColor(colore.getText().toString());
-        pet.setAnimal_type(tipo.getText().toString());
+        pet.setAnimal_type(tipo.getSelectedItem().toString());
         pet.setAllergies(allergie.getText().toString());
         pet.setNotes(note.getText().toString());
         pet.setImage(petImagePath);

@@ -105,10 +105,10 @@
             <TextView android:text="@string/tipo_di_animale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <EditText
-                android:id="@+id/edit_tipo"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
+            <Spinner
+                android:id="@+id/spinnerTipo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:entries="@array/tipi_animali"/>
 
 

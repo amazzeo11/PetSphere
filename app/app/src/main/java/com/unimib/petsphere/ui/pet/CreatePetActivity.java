@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -32,7 +33,8 @@ import java.io.IOException;
 
 public class CreatePetActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
-    private EditText nome, soprannome, microchip, eta, compleanno, peso, colore, tipo, allergie, note;
+    private EditText nome, soprannome, microchip, eta, compleanno, peso, colore, allergie, note;
+    private Spinner tipo;
     private Button saveButton, uploadImageButton;
     private ImageView petImageView;
     private PetViewModel petViewModel;
@@ -56,7 +58,7 @@ public class CreatePetActivity extends AppCompatActivity {
         compleanno = findViewById(R.id.edit_compleanno);
         peso = findViewById(R.id.edit_peso);
         colore = findViewById(R.id.edit_colore);
-        tipo = findViewById(R.id.edit_tipo);
+        tipo = findViewById(R.id.spinnerTipo);
         allergie = findViewById(R.id.edit_allergie);
         note = findViewById(R.id.edit_note);
         petImageView = findViewById(R.id.pet_image);
@@ -129,7 +131,7 @@ public class CreatePetActivity extends AppCompatActivity {
     private PetModel newPet() {
         return new PetModel(
                 petImagePath,
-                tipo.getText().toString(),
+                tipo.getSelectedItem().toString(),
                 microchip.getText().toString(),
                 nome.getText().toString(),
                 soprannome.getText().toString(),
