@@ -51,7 +51,7 @@ public class ViewPetActivity extends AppCompatActivity {
     private DogFactViewModel dogFactViewModel;
     private CatFactViewModel catFactViewModel;
     private Button editPetButton, savePetButton, editImageButton, deletePetButton, factButton;
-    private boolean isEditing = false;
+    private boolean isEditing = false, bfact=false;
     private PetModel pet;
     String petImagePath;
     String[] tipi ;
@@ -116,6 +116,10 @@ tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
         if (pet != null) {
             populateFields();
             setEditable(false);
+            if(pet.getAnimal_type().equals("Cane")||pet.getAnimal_type().equals("Gatto")){
+                bfact=true;
+            }
+            factButton.setVisibility(bfact ? View.VISIBLE : View.GONE);
         }
 
         editPetButton.setOnClickListener(v -> {
