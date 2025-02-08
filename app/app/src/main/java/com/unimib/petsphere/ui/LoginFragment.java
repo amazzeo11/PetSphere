@@ -175,7 +175,7 @@ public class LoginFragment extends Fragment {
             String password = textInputPassword.getText().toString();
             if (email.isEmpty() || password.isEmpty()) {
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                        "Email e password non validi",
+                        "Email e password non possono essere vuoti",
                         Snackbar.LENGTH_SHORT).show();
                 return;
             }
@@ -191,8 +191,9 @@ public class LoginFragment extends Fragment {
                 }
                 goToMainPage();
             } else {
-                String errorMessage = ((Result.Error) result).getMessage();
-                Toast.makeText(requireContext(), "Errore: " + errorMessage, Toast.LENGTH_SHORT).show();
+                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                        "Email e password non validi",
+                        Snackbar.LENGTH_SHORT).show();
             }
         });
 

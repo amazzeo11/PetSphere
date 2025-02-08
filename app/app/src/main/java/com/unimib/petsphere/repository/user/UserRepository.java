@@ -2,16 +2,21 @@ package com.unimib.petsphere.repository.user;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.unimib.petsphere.model.Result;
 import com.unimib.petsphere.model.User;
 import com.unimib.petsphere.source.user.BaseUserAuthenticationRemoteDataSource;
 import com.unimib.petsphere.source.user.BaseUserDataRemoteDataSource;
+import com.unimib.petsphere.source.user.UserFirebaseDataSource;
 
 import java.util.List;
 import java.util.Set;
@@ -26,6 +31,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
 
     private final BaseUserAuthenticationRemoteDataSource userRemoteDataSource;
     private final BaseUserDataRemoteDataSource userDataRemoteDataSource;
+    private final UserFirebaseDataSource userFirebaseDataSource;
     private final MutableLiveData<Result> userMutableLiveData;
     private final MutableLiveData<Result> signUpResult = new MutableLiveData<>();
     private final DatabaseReference mDatabase;
@@ -39,6 +45,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
         this.userRemoteDataSource.setUserResponseCallback(this);
         this.userDataRemoteDataSource.setUserResponseCallback(this);
         this.firebaseAuth = FirebaseAuth.getInstance();
+        this.userFirebaseDataSource = new UserFirebaseDataSource();
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
     }
 
@@ -69,6 +76,10 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
             signUp(email, password, getLoggedUser().getUserName());
         }
         return userMutableLiveData;
+    }
+
+    public LiveData<User> getUserLiveData(String uid) {
+        return userFirebaseDataSource.getUserLiveData(uid);
     }
 
     @Override
@@ -129,6 +140,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
             userMutableLiveData.postValue(new Result.UserSuccess(user));
             userDataRemoteDataSource.saveUserData(user);
         } else {
+            Log.e("DEBUG", "Errore: utente nullo");
             userMutableLiveData.postValue(new Result.Error("Errore: utente nullo"));
         }
     }

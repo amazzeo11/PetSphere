@@ -5,6 +5,8 @@ import static com.unimib.petsphere.util.Constants.*;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -13,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.unimib.petsphere.model.User;
+import com.unimib.petsphere.repository.user.UserResponseCallback;
 
 /**
  * Classe che ottiene le informazioni dell'utente usando Firebase Realtime Database
@@ -45,25 +48,32 @@ public class UserFirebaseDataSource extends BaseUserDataRemoteDataSource {
         });
     }
 
-    // voglio i dati dell'utente
-    public void getUserData(String uid) {
-        DatabaseReference userRef = databaseReference.child(uid);
+    // voglio prendere i dati dell'utente
+    public LiveData<User> getUserLiveData(String uid) {
+        MutableLiveData<User> userLiveData = new MutableLiveData<>();
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(uid);
+
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user != null) {
-                    userResponseCallback.onSuccessFromRemoteDatabase(user);
+                if (dataSnapshot.exists()) {
+                    User user = dataSnapshot.getValue(User.class);
+                    userLiveData.setValue(user);
                 } else {
-                    userResponseCallback.onFailureFromRemoteDatabase("Dati non trovati");
+                    Log.e("UserRepository", "Utente non trovato nel database");
+                    userLiveData.setValue(null);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                userResponseCallback.onFailureFromRemoteDatabase(databaseError.getMessage());
+                Log.e("UserRepository", "Errore nel caricamento utente", databaseError.toException());
+                userLiveData.setValue(null);
             }
         });
+
+        return userLiveData;
     }
+
 
 }
