@@ -53,7 +53,11 @@ dependencies {
     implementation(libs.legacy.support.v4)
     implementation(libs.recyclerview)
     implementation(libs.room.common)
-
+    //API random facts
+    implementation (libs.retrofit.v290)
+    implementation (libs.converter.gson)
+    implementation (libs.lifecycle.viewmodel)
+    implementation (libs.lifecycle.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
