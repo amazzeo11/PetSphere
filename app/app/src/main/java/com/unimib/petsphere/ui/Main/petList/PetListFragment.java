@@ -65,44 +65,42 @@ public class PetListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pets_list, container, false);
-        View recycler= view.findViewById(R.id.list);
-
-        RecyclerView recyclerView = (RecyclerView) recycler;
+        RecyclerView recyclerView = view.findViewById(R.id.list);
         Button newPetButton = view.findViewById(R.id.new_pet_btn);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+
+        adapter = new PetRecyclerViewAdapter(R.layout.preview_pet_card, petList, pet -> {
+            Intent intent = new Intent(getActivity(), ViewPetActivity.class);
+            intent.putExtra("pet", pet);
+            startActivity(intent);
+        });
+        recyclerView.setAdapter(adapter);
+
+        petViewModel.getPets().observe(getViewLifecycleOwner(), result -> {
+            if (result.isSuccess()) {
+                petList.clear();
+                petList.addAll(((Result.PetSuccess) result).getData().getPets());
+                adapter.notifyDataSetChanged();
+            } else {
+                Snackbar.make(view, "Errore nel caricamento", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
         newPetButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), CreatePetActivity.class);
             startActivity(intent);
         });
 
-        List<PetModel> petList = PetRoomDatabase.getDatabase(getContext()).PetDAO().getAll();
-        recyclerView.setLayoutManager(new LinearLayoutManager(recycler.getContext()));
-
-        adapter =
-                new PetRecyclerViewAdapter(R.layout.preview_pet_card,petList,  new PetRecyclerViewAdapter.OnItemClickListener() {
-                            @Override
-                            public void onPetItemClick(PetModel pet) {
-                                Intent intent = new Intent(getActivity(), ViewPetActivity.class);
-                                intent.putExtra("pet", pet);
-                                startActivity(intent);
-                            }
-
-                        });
-
-        recyclerView.setAdapter(adapter);
-
-        petViewModel.getPets().observe(getViewLifecycleOwner(),
-                result -> {
-                    if (result.isSuccess()) {
-                        int initialSize = this.petList.size();
-                        this.petList.clear();
-                        this.petList.addAll(((Result.PetSuccess) result).getData().getPets());
-                    } else {
-                        Snackbar.make(view,
-                                "error",
-                                Snackbar.LENGTH_SHORT).show();
-                    }
-                });
-
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        petViewModel.refreshPets();
+    }
+
+
 }

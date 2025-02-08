@@ -9,6 +9,8 @@
         <item>Cavallo</item>
         <item>Pappagallo</item>
         <item>Tartaruga</item>
+        <item>Pesce Rosso</item>
+        <item>Altro</item>
     </string-array>
 
 </resources>
