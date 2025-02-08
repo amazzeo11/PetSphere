@@ -1,3 +1,5 @@
+// Author: Sara Angeretti
+
 package com.unimib.petsphere.ui;
 
 import android.app.Activity;

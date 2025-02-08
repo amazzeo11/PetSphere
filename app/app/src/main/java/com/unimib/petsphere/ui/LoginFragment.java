@@ -1,3 +1,5 @@
+// Author: Sara Angeretti
+
 package com.unimib.petsphere.ui;
 
 import static com.unimib.petsphere.util.Constants.INVALID_CREDENTIALS_ERROR;
@@ -116,8 +118,6 @@ public class LoginFragment extends Fragment {
                         userViewModel.getGoogleUserMutableLiveData(idToken).observe(getViewLifecycleOwner(), authenticationResult -> {
                             if (authenticationResult.isSuccess()) {
                                 User user = ((Result.UserSuccess) authenticationResult).getData();
-                                //FirebaseUser user = mAuth.getCurrentUser();
-                                //saveLoginData(user.getEmail(), user.getPassword(), user.getUid());
                                 Log.i(TAG, "Logged as: " + user.getEmail());
                                 userViewModel.setAuthenticationError(false);
                                 goToMainPage();
@@ -333,11 +333,4 @@ public class LoginFragment extends Fragment {
         // chiudo il login così che l'utente non possa tornarci andando indietro
         requireActivity().finish();
     }
-    /*
-    private void goToSignUpPage() {
-        NavController navController = NavHostFragment.findNavController(LoginFragment.this);
-        Log.d("NAVIGATION", "Current destination: " + navController.getCurrentDestination().getId());
-        navController.navigate(R.id.action_loginFragment_to_signUpFragment);
-    }
-    */
 }

@@ -1,3 +1,5 @@
+// Author: Sara Angeretti
+
 package com.unimib.petsphere.repository.user;
 
 import com.unimib.petsphere.model.User;

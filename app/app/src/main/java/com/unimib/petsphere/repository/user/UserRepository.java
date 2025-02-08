@@ -1,3 +1,5 @@
+// Author: Sara Angeretti
+
 package com.unimib.petsphere.repository.user;
 
 import android.util.Log;
@@ -184,16 +186,4 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
         Log.e("Firebase", "Errore nella richiesta: " + errorMessage);
         userMutableLiveData.postValue(new Result.Error(errorMessage));
     }
-
-/*
-    @Override
-    public void onFailureFromRemote(Exception exception) {
-
-    }
-
-    @Override
-    public void onFailureFromLocal(Exception exception) {
-
-    }
-*/
 }

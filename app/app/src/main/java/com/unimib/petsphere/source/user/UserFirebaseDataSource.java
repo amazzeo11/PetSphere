@@ -1,3 +1,5 @@
+// Author: Sara Angeretti
+
 package com.unimib.petsphere.source.user;
 
 import static com.unimib.petsphere.util.Constants.*;
@@ -74,6 +76,4 @@ public class UserFirebaseDataSource extends BaseUserDataRemoteDataSource {
 
         return userLiveData;
     }
-
-
 }
