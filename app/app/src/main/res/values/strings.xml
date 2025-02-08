@@ -32,7 +32,7 @@
     <string name="i_tuoi_animali">I tuoi animali:</string>
     <string name="inserisci_un_nuovo_animale">Inserisci un nuovo animale</string>
     <string name="foto_pet">foto pet</string>
-    <string name="nome_pet">nome pet</string>
+    <string name="nome_pet">Nome pet:</string>
     <string name="modifica_profilo">Modifica Profilo</string>
     <string name="inserisci_note">Inserisci note</string>
     <string name="note">Note:</string>
@@ -62,4 +62,8 @@
     <string name="annulla">Annulla</string>
     <string name="conferma_eliminazione">Sei sicur* di voler eliminare questo pet?</string>
     <string name="messaggio_conferma_eliminazione">Questa azione non è reversibile</string>
+    <string name="colore_scheda_pet">Colore scheda pet:</string>
+    <string name="carica_immagine">Carica immagine</string>
+    <string name="modifica_immagine">Modifica immagine</string>
+    <string name="_0_0">0.0</string>
 </resources>
