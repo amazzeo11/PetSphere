@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,8 +34,8 @@ import java.io.IOException;
 
 public class CreatePetActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
-    private EditText nome, soprannome, microchip, eta, compleanno, peso, colore, allergie, note;
-    private Spinner tipo;
+    private EditText nome, soprannome, microchip, eta, compleanno, peso, allergie, note;
+    private Spinner colore, tipo;
     private Button saveButton, uploadImageButton;
     private ImageView petImageView;
     private PetViewModel petViewModel;
@@ -57,7 +58,7 @@ public class CreatePetActivity extends AppCompatActivity {
         eta = findViewById(R.id.edit_eta);
         compleanno = findViewById(R.id.edit_compleanno);
         peso = findViewById(R.id.edit_peso);
-        colore = findViewById(R.id.edit_colore);
+        colore = findViewById(R.id.spinnerColore);
         tipo = findViewById(R.id.spinnerTipo);
         allergie = findViewById(R.id.edit_allergie);
         note = findViewById(R.id.edit_note);
@@ -76,6 +77,7 @@ public class CreatePetActivity extends AppCompatActivity {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
             finish();
         });
+
     }
 
     private void openImageChooser() {
@@ -138,7 +140,7 @@ public class CreatePetActivity extends AppCompatActivity {
                 Double.parseDouble(peso.getText().toString()),
                 eta.getText().toString(),
                 compleanno.getText().toString(),
-                colore.getText().toString(),
+                colore.getSelectedItem().toString(),
                 note.getText().toString(),
                 allergie.getText().toString()
         );
