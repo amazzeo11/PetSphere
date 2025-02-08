@@ -1,5 +1,5 @@
 package com.unimib.petsphere.ui.pet;
-
+//Author: Alessia Mazzeo
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;

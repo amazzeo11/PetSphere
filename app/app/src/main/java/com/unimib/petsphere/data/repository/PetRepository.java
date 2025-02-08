@@ -9,7 +9,7 @@ import com.unimib.petsphere.data.model.Result;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//Author: Alessia Mazzeo
 
 public class PetRepository implements PetResponseCallback , IPetRepository{
 

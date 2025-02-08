@@ -1,5 +1,5 @@
 package com.unimib.petsphere.data;
-
+//Author: Alessia Mazzeo
 import static com.unimib.petsphere.util.constants.UNEXPECTED_ERROR;
 
 import com.unimib.petsphere.data.database.PetDAO;

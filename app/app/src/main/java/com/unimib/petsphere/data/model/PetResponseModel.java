@@ -1,5 +1,5 @@
 package com.unimib.petsphere.data.model;
-
+//Author: Alessia Mazzeo
 
 import java.util.List;
 

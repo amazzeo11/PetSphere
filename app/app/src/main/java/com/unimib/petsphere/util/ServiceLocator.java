@@ -1,5 +1,5 @@
 package com.unimib.petsphere.util;
-
+//Author: Alessia Mazzeo
 
 import android.app.Application;
 
