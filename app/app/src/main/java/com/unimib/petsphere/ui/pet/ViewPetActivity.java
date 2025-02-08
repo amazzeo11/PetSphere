@@ -1,7 +1,11 @@
 package com.unimib.petsphere.ui.pet;
 
+import static androidx.core.app.PendingIntentCompat.getActivity;
+
 import android.app.Activity;
+
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,14 +23,23 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.unimib.petsphere.R;
 import com.unimib.petsphere.data.model.PetModel;
+import com.unimib.petsphere.data.repository.CatFactRepository;
+import com.unimib.petsphere.data.repository.DogFactRepository;
 import com.unimib.petsphere.data.repository.PetRepository;
 import com.unimib.petsphere.util.ServiceLocator;
+import com.unimib.petsphere.viewModel.CatFactViewModel;
+import com.unimib.petsphere.viewModel.CatFactViewModelFactory;
+import com.unimib.petsphere.viewModel.DogFactViewModel;
+import com.unimib.petsphere.viewModel.DogFactViewModelFactory;
 import com.unimib.petsphere.viewModel.PetViewModel;
 import com.unimib.petsphere.viewModel.PetViewModelFactory;
 
@@ -41,8 +54,10 @@ public class ViewPetActivity extends AppCompatActivity {
     private Spinner tipo;
     private ImageView petImageView;
     private PetViewModel petViewModel;
-    private Button editPetButton, savePetButton, editImageButton, deletePetButton;
-    private boolean isEditing = false;
+    private DogFactViewModel dogFactViewModel;
+    private CatFactViewModel catFactViewModel;
+    private Button editPetButton, savePetButton, editImageButton, deletePetButton, factButton;
+    private boolean isEditing = false, bfact=false;
     private PetModel pet;
     String petImagePath;
     String[] tipi ;
@@ -52,7 +67,8 @@ public class ViewPetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pet);
-tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
+        tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -65,10 +81,24 @@ tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
                         this.getApplication(),
                         this.getApplication().getResources().getBoolean(R.bool.debug_mode)
                 );
+        DogFactRepository dogFactRepository =  ServiceLocator.getInstance().getDogFactRepository(
+                this.getApplication(),
+                this.getApplication().getResources().getBoolean(R.bool.debug_mode)
+        );
+        CatFactRepository catFactRepository =  ServiceLocator.getInstance().getCatFactRepository(
+                this.getApplication(),
+                this.getApplication().getResources().getBoolean(R.bool.debug_mode)
+        );
 
         petViewModel = new ViewModelProvider(
                 this,
                 new PetViewModelFactory(petRepository)).get(PetViewModel.class);
+        dogFactViewModel = new ViewModelProvider(
+                this,
+                new DogFactViewModelFactory(dogFactRepository)).get(DogFactViewModel.class);
+        catFactViewModel = new ViewModelProvider(
+                this,
+                new CatFactViewModelFactory(catFactRepository)).get(CatFactViewModel.class);
 
         nome = findViewById(R.id.text_nome);
         soprannome = findViewById(R.id.text_soprannome);
@@ -86,12 +116,17 @@ tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
         savePetButton = findViewById(R.id.save_btn);
         deletePetButton = findViewById(R.id.delete_btn);
         editImageButton = findViewById(R.id.edit_image);
+        factButton = findViewById(R.id.fact_btn);
 
         pet = (PetModel) getIntent().getSerializableExtra("pet");
 
         if (pet != null) {
             populateFields();
             setEditable(false);
+            if(pet.getAnimal_type().equals("Cane")||pet.getAnimal_type().equals("Gatto")){
+                bfact=true;
+            }
+            factButton.setVisibility(bfact ? View.VISIBLE : View.GONE);
         }
 
         editPetButton.setOnClickListener(v -> {
@@ -115,9 +150,22 @@ tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
         });
 
         deletePetButton.setOnClickListener(v -> {
-            petViewModel.deletePet(pet);
-            finish();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.setTitle(R.string.conferma_eliminazione)
+                    .setMessage(R.string.messaggio_conferma_eliminazione)
+                    .setPositiveButton(R.string.elimina, (dialog, id) -> {
+                        petViewModel.deletePet(pet);
+                        finish();
+                    })
+                    .setNegativeButton(R.string.annulla, (dialog, id) -> dialog.dismiss());
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
+
+
+
 
         petViewModel.getDeleteMsg().observe(this, message -> {
             if (message != null) {
@@ -126,9 +174,38 @@ tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
         });
 
         editImageButton.setOnClickListener(v -> openImageChooser());
+
+        factButton.setOnClickListener(view -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            if (pet.getAnimal_type().equals("Cane")) {
+                dogFactViewModel.refreshFact();
+                dogFactViewModel.getDogFact().observe(this, fact -> {
+                    builder.setTitle("Curiosità sui cani")
+                            .setMessage(fact)
+                            .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                });
+            } else if (pet.getAnimal_type().equals("Gatto")) {
+                catFactViewModel.refreshFact();
+                catFactViewModel.getCatFact().observe(this, fact -> {
+                    builder.setTitle("Curiosità sui gatti")
+                            .setMessage(fact)
+                            .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                });
+            }
+        });
+
+
+
     }
 
-        private void populateFields() {
+    private void populateFields() {
         nome.setText(pet.getName());
         soprannome.setText(pet.getNickname());
         microchip.setText(pet.getMicrochip());

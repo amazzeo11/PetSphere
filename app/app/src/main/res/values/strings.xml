@@ -56,6 +56,10 @@
     <string name="inserisci_peso">Inserisci peso</string>
     <string name="elimina">Elimina</string>
     <string name="modifica">Modifica</string>
+    <string name="random_fact">Random Fact</string>
     <string name="inserisci_compleanno">Inserisci compleanno</string>
     <string name="peso_in_kg">Peso (Kg):</string>
+    <string name="annulla">Annulla</string>
+    <string name="conferma_eliminazione">Sei sicur* di voler eliminare questo pet?</string>
+    <string name="messaggio_conferma_eliminazione">Questa azione non è reversibile</string>
 </resources>
