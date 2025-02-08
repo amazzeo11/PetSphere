@@ -1,7 +1,11 @@
 package com.unimib.petsphere.ui.pet;
 
+import static androidx.core.app.PendingIntentCompat.getActivity;
+
 import android.app.Activity;
+
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
@@ -52,7 +57,8 @@ public class ViewPetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pet);
-tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
+        tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -115,9 +121,22 @@ tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
         });
 
         deletePetButton.setOnClickListener(v -> {
-            petViewModel.deletePet(pet);
-            finish();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.setTitle(R.string.conferma_eliminazione)
+                    .setMessage(R.string.messaggio_conferma_eliminazione)
+                    .setPositiveButton(R.string.elimina, (dialog, id) -> {
+                        petViewModel.deletePet(pet);
+                        finish();
+                    })
+                    .setNegativeButton(R.string.annulla, (dialog, id) -> dialog.dismiss());
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
+
+
+
 
         petViewModel.getDeleteMsg().observe(this, message -> {
             if (message != null) {
@@ -128,7 +147,7 @@ tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
         editImageButton.setOnClickListener(v -> openImageChooser());
     }
 
-        private void populateFields() {
+    private void populateFields() {
         nome.setText(pet.getName());
         soprannome.setText(pet.getNickname());
         microchip.setText(pet.getMicrochip());
