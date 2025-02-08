@@ -17,6 +17,7 @@
         android:hint="@string/email"
         android:layout_marginStart="@dimen/def_margin"
         android:layout_marginEnd="@dimen/def_margin"
+        android:layout_marginTop="@dimen/m_margin"
         android:layout_marginBottom="@dimen/m_margin"
         style="?attr/textInputOutlinedStyle"
         app:startIconDrawable="@drawable/baseline_email_24"
@@ -85,94 +86,11 @@
         android:text="@string/login"
         android:textColor="@color/bg_color"
         android:backgroundTint="@color/main_color"
-        app:layout_constraintBottom_toTopOf="@id/relLayoutOppure"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
-
-    <RelativeLayout
-        android:id="@+id/relLayoutOppure"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="@dimen/m_margin"
-        app:layout_constraintBottom_toTopOf="@id/googleLoginButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        >
-
-        <View
-            android:layout_width="@dimen/margin_rel_layout"
-            android:layout_height="1dp"
-            android:layout_toStartOf="@id/text_or"
-            android:layout_marginEnd="@dimen/def_margin"
-            android:layout_centerInParent="true"
-            android:background="#555" />
-
-        <!--android:background="@color/text_color"-->
-
-        <TextView
-            android:id="@+id/text_or"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/or"
-            android:textColor="#555" />
-        <!--android:textColor="@color/text_color" />-->
-
-        <View
-            android:layout_width="@dimen/margin_rel_layout"
-            android:layout_height="1dp"
-            android:layout_marginStart="@dimen/def_margin"
-            android:layout_toEndOf="@id/text_or"
-            android:layout_centerInParent="true"
-            android:background="#555" />
-        <!--android:background="@color/text_color"/>-->
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/googleLoginButton"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_button"
-        android:layout_marginEnd="@dimen/margin_button"
-        android:layout_marginBottom="@dimen/xs_margin"
-        android:layout_gravity="center"
-        android:text="@string/login_with_google"
-        app:icon="@drawable/google_icon"
-        app:iconGravity="textStart"
-        app:iconPadding="15dp"
-        app:iconTint="@color/main_color"
-        android:textColor="@color/main_color"
-        android:backgroundTint="@color/bg_color"
         app:layout_constraintBottom_toTopOf="@id/signUpButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
-<!--
-    <Button
-        android:id="@+id/facebookLoginButton"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_button"
-        android:layout_marginEnd="@dimen/margin_button"
-        android:layout_marginBottom="@dimen/s_margin"
-        android:layout_gravity="center"
-        android:text="@string/login_with_fb"
-        app:icon="@drawable/fb"
-        app:iconGravity="textStart"
-        app:iconPadding="15dp"
-        app:iconTint="@color/main_color"
-        android:textColor="@color/main_color"
-        android:backgroundTint="@color/bg_color"
-        app:layout_constraintBottom_toTopOf="@id/signUpButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
--->
+
     <Button
         android:id="@+id/signUpButton"
         style="@style/Widget.Material3.Button.TextButton"

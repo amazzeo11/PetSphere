@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.unimib.petsphere.R;
+import com.unimib.petsphere.util.Constants;
 import com.unimib.petsphere.viewModel.UserViewModel;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -165,7 +166,7 @@ public class SignUpFragment extends Fragment {
     }
 
     private boolean isPasswordLongEnough (String password) {
-        if (password == null || password.length() <= 6) {
+        if (password == null || password.length() < Constants.MINIMUM_LENGTH_PASSWORD) {
             return false;
         }
         return true;

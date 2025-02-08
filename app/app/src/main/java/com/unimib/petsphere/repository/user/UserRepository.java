@@ -85,12 +85,6 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     }
 
     @Override
-    public MutableLiveData<Result> getGoogleUser(String idToken) {
-        signInWithGoogle(idToken);
-        return userMutableLiveData;
-    }
-
-    @Override
     public User getLoggedUser() {
         return userRemoteDataSource.getLoggedUser();
     }
@@ -128,11 +122,6 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     @Override
     public void signIn(String email, String password) {
         userRemoteDataSource.signIn(email, password);
-    }
-
-    @Override
-    public void signInWithGoogle(String token) {
-        userRemoteDataSource.signInWithGoogle(token);
     }
 
     @Override

@@ -50,16 +50,6 @@ public class UserViewModel extends ViewModel {
         userRepository.saveUser(user);
     }
 
-    public MutableLiveData<Result> getGoogleUserMutableLiveData(String token) {
-        Log.d(TAG, "getGoogleUserMutableLiveData() chiamato con token: " + token);
-        if (userMutableLiveData == null) {
-            userMutableLiveData = new MutableLiveData<>();
-            getUserData(token);
-        }
-        Log.d(TAG, "userMutableLiveData dopo getUserData: " + userMutableLiveData.getValue());
-        return userMutableLiveData;
-    }
-
     public void getUser(String email, String password, boolean isUserRegistered) {
         userRepository.getUser(email, password, isUserRegistered);
     }
@@ -158,16 +148,8 @@ public class UserViewModel extends ViewModel {
         userMutableLiveData = userRepository.getUser(email, password, isUserRegistered);
     }
 
-    private void getUserData(String token) {
-        userMutableLiveData = userRepository.getGoogleUser(token);
-    }
-
     public void signIn(String email, String password) {
         userMutableLiveData.setValue(userRepository.getUser(email, password, true).getValue());
-    }
-
-    public void signInWithGoogle(String token) {
-        userMutableLiveData.setValue(userRepository.getGoogleUser(token).getValue());
     }
 
     public User getLoggedUser() {

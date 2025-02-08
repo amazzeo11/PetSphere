@@ -108,35 +108,6 @@ public class UserAuthenticationFirebaseDataSource extends BaseUserAuthentication
         }
     }
 
-    @Override
-    public void signInWithGoogle(String idToken) {
-        if (idToken !=  null) {
-            // Got an ID token from Google. Use it to authenticate with Firebase.
-            AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(idToken, null);
-            firebaseAuth.signInWithCredential(firebaseCredential).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithCredential:success");
-                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                    if (firebaseUser != null) {
-                        User user = new User(firebaseUser.getDisplayName(), firebaseUser.getEmail(), firebaseUser.getUid());
-                        userMutableLiveData.postValue(new Result.UserSuccess(user));
-                        userResponseCallback.onSuccessFromAuthentication(user);
-                    } else {
-                        String errorMessage = getErrorMessage(task.getException());
-                        Log.w(TAG, "signInWithCredential:failure", task.getException());
-                        userMutableLiveData.postValue(new Result.Error(errorMessage));
-                        userResponseCallback.onFailureFromAuthentication(errorMessage);
-                    }
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithCredential:failure", task.getException());
-                    userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
-                }
-            });
-        }
-    }
-
     private String getErrorMessage(Exception exception) {
         if (exception instanceof FirebaseAuthWeakPasswordException) {
             return WEAK_PASSWORD_ERROR;
