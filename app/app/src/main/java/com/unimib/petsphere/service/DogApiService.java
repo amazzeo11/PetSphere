@@ -1,5 +1,5 @@
 package com.unimib.petsphere.service;
-
+//Author: Alessia Mazzeo
 import com.unimib.petsphere.data.model.DogFact;
 
 import retrofit2.Call;

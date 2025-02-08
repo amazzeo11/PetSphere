@@ -1,5 +1,5 @@
 package com.unimib.petsphere.data.model;
-
+//Author: Alessia Mazzeo
 
 import com.google.gson.annotations.SerializedName;
 import java.util.List;

@@ -1,5 +1,5 @@
 package com.unimib.petsphere.data.database;
-
+//Author: Alessia Mazzeo
 import static com.unimib.petsphere.util.constants.DATABASE_VERSION;
 
 import android.content.Context;

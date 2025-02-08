@@ -1,5 +1,5 @@
 package com.unimib.petsphere.ui.Main;
-
+//Author: Alessia Mazzeo
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;

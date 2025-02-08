@@ -1,5 +1,5 @@
 package com.unimib.petsphere.data.model;
-
+//Author: Alessia Mazzeo
 
 public abstract class Result {
     private Result() {}

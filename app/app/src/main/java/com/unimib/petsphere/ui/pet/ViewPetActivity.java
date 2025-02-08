@@ -1,5 +1,5 @@
 package com.unimib.petsphere.ui.pet;
-
+//Author: Alessia Mazzeo
 import static androidx.core.app.PendingIntentCompat.getActivity;
 
 import android.app.Activity;

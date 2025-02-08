@@ -1,5 +1,5 @@
 package com.unimib.petsphere.ui.Main.petList;
-
+//Author: Alessia Mazzeo
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.RecyclerView;
