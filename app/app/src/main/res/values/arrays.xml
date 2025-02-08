@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="colori_animali">blu, rosso, giallo</string-array>
-
     <string-array name="tipi_animali">
         <item>Cane</item>
         <item>Gatto</item>
@@ -11,6 +9,19 @@
         <item>Tartaruga</item>
         <item>Pesce Rosso</item>
         <item>Altro</item>
+    </string-array>
+
+    <string-array name="colori_pet">
+    <item>Bianco</item>
+    <item>Rosso</item>
+    <item>Verde</item>
+    <item>Blu</item>
+    <item>Viola</item>
+    <item>Azzurro</item>
+    <item>Rosa</item>
+    <item>Giallo</item>
+    <item>Arancione</item>
+    <item>Nero</item>
     </string-array>
 
 </resources>

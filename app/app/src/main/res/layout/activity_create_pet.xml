@@ -119,7 +119,7 @@
                 android:id="@+id/edit_colore"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:entries="@array/colori_animali"/>
+                android:entries="@array/colori_pet"/>
 
 
             <TextView android:text="@string/allergie"

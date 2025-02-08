@@ -62,4 +62,5 @@
     <string name="annulla">Annulla</string>
     <string name="conferma_eliminazione">Sei sicur* di voler eliminare questo pet?</string>
     <string name="messaggio_conferma_eliminazione">Questa azione non è reversibile</string>
+    <string name="colore_scheda_pet">Colore scheda pet:</string>
 </resources>

@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,6 +17,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,6 +29,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.graphics.ColorUtils;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -48,10 +53,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ViewPetActivity extends AppCompatActivity {
-    private EditText nome, soprannome, microchip, eta, compleanno, peso, colore, allergie, note;
-    private Spinner tipo;
+    private EditText nome, soprannome, microchip, eta, compleanno, peso, allergie, note;
+    private Spinner colore, tipo;
     private ImageView petImageView;
     private PetViewModel petViewModel;
     private DogFactViewModel dogFactViewModel;
@@ -60,14 +67,28 @@ public class ViewPetActivity extends AppCompatActivity {
     private boolean isEditing = false, bfact=false;
     private PetModel pet;
     String petImagePath;
-    String[] tipi ;
+    String[] tipi , colori;
     int selected;
+    private CardView petCardView;
+    private final Map<String, Integer> colorMap = new HashMap<String, Integer>() {{
+        put("Rosso", R.color.rosso);
+        put("Verde", R.color.verde);
+        put("Blu", R.color.blu);
+        put("Viola", R.color.viola);
+        put("Azzurro", R.color.azzurro);
+        put("Rosa", R.color.rosa);
+        put("Giallo", R.color.giallo);
+        put("Arancione", R.color.arancione);
+        put("Bianco", R.color.bianco);
+        put("Nero", R.color.nero);
+    }};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pet);
         tipi=this.getApplication().getResources().getStringArray(R.array.tipi_animali);
+        petCardView = findViewById(R.id.card);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -118,11 +139,16 @@ public class ViewPetActivity extends AppCompatActivity {
         editImageButton = findViewById(R.id.edit_image);
         factButton = findViewById(R.id.fact_btn);
 
+        colori = getResources().getStringArray(R.array.colori_pet);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, colori);
+        colore.setAdapter(adapter);
+
         pet = (PetModel) getIntent().getSerializableExtra("pet");
 
         if (pet != null) {
             populateFields();
             setEditable(false);
+            setCardBackgroundColor(pet.getColor());
             if(pet.getAnimal_type().equals("Cane")||pet.getAnimal_type().equals("Gatto")){
                 bfact=true;
             }
@@ -164,9 +190,6 @@ public class ViewPetActivity extends AppCompatActivity {
             dialog.show();
         });
 
-
-
-
         petViewModel.getDeleteMsg().observe(this, message -> {
             if (message != null) {
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -201,9 +224,32 @@ public class ViewPetActivity extends AppCompatActivity {
             }
         });
 
+        colore.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedColor = colori[position];
+                setCardBackgroundColor(selectedColor);
+                pet.setColor(selectedColor);
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
 
     }
+
+    private void setCardBackgroundColor(String colorName) {
+        if (colorMap.containsKey(colorName)) {
+            int baseColor = getResources().getColor(colorMap.get(colorName), getTheme());
+            int transparentColor = ColorUtils.setAlphaComponent(baseColor, 80);
+            petCardView.setCardBackgroundColor(transparentColor);
+        } else {
+            petCardView.setCardBackgroundColor(ColorUtils.setAlphaComponent(Color.WHITE, 80));
+        }
+    }
+
+
+
 
     private void populateFields() {
         nome.setText(pet.getName());
@@ -212,11 +258,15 @@ public class ViewPetActivity extends AppCompatActivity {
         eta.setText(String.valueOf(pet.getAge()));
         compleanno.setText(pet.getBirthday());
         peso.setText(String.valueOf(pet.getWeight()));
-        colore.setText(pet.getColor());
+        selected=Arrays.asList(tipi).indexOf(pet.getColor());
         allergie.setText(pet.getAllergies());
         note.setText(pet.getNotes());
         selected=Arrays.asList(tipi).indexOf(pet.getAnimal_type());
         tipo.setSelection(selected);
+        int selectedColorIndex = Arrays.asList(colori).indexOf(pet.getColor());
+        if (selectedColorIndex != -1) {
+            colore.setSelection(selectedColorIndex);
+        }
 
 
 
@@ -248,8 +298,8 @@ public class ViewPetActivity extends AppCompatActivity {
         pet.setAge(eta.getText().toString());
         pet.setBirthday(compleanno.getText().toString());
         pet.setWeight(Double.parseDouble(peso.getText().toString()));
-        pet.setColor(colore.getText().toString());
         pet.setAnimal_type(tipo.getSelectedItem().toString());
+        pet.setColor(colore.getSelectedItem().toString());
         pet.setAllergies(allergie.getText().toString());
         pet.setNotes(note.getText().toString());
         pet.setImage(petImagePath);
