@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -175,18 +176,32 @@ public class ViewPetActivity extends AppCompatActivity {
         editImageButton.setOnClickListener(v -> openImageChooser());
 
         factButton.setOnClickListener(view -> {
-            if(pet.getAnimal_type().equals("Cane")){
-            dogFactViewModel.refreshFact();
-            dogFactViewModel.getDogFact().observe(this, fact ->
-                    Snackbar.make(view, fact, Snackbar.LENGTH_LONG).show()
-            );
-            }else if(pet.getAnimal_type().equals("Gatto")){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            if (pet.getAnimal_type().equals("Cane")) {
+                dogFactViewModel.refreshFact();
+                dogFactViewModel.getDogFact().observe(this, fact -> {
+                    builder.setTitle("Curiosità sui cani")
+                            .setMessage(fact)
+                            .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                });
+            } else if (pet.getAnimal_type().equals("Gatto")) {
                 catFactViewModel.refreshFact();
-                catFactViewModel.getCatFact().observe(this, fact ->
-                        Snackbar.make(view, fact, Snackbar.LENGTH_LONG).show()
-                );
+                catFactViewModel.getCatFact().observe(this, fact -> {
+                    builder.setTitle("Curiosità sui gatti")
+                            .setMessage(fact)
+                            .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                });
             }
         });
+
+
 
     }
 
