@@ -30,6 +30,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -57,7 +58,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ViewPetActivity extends AppCompatActivity {
-    private EditText nome, soprannome, microchip, eta, compleanno, peso, allergie, note;
+    private EditText nome, soprannome, microchip, eta, compleanno, peso, allergie, note, razza;
     private Spinner colore, tipo;
     private ImageView petImageView;
     private PetViewModel petViewModel;
@@ -129,6 +130,7 @@ public class ViewPetActivity extends AppCompatActivity {
         peso = findViewById(R.id.text_peso);
         colore = findViewById(R.id.colore);
         tipo = findViewById(R.id.tipo);
+        razza = findViewById(R.id.razza);
         allergie = findViewById(R.id.allergie);
         note = findViewById(R.id.note);
         petImageView = findViewById(R.id.pet_image);
@@ -144,6 +146,7 @@ public class ViewPetActivity extends AppCompatActivity {
         colore.setAdapter(adapter);
 
         pet = (PetModel) getIntent().getSerializableExtra("pet");
+
 
         if (pet != null) {
             populateFields();
@@ -167,12 +170,11 @@ public class ViewPetActivity extends AppCompatActivity {
         savePetButton.setOnClickListener(v -> {
             isEditing = !isEditing;
             updatePetData();
-            petViewModel.updatePet(pet);
             setEditable(false);
             savePetButton.setVisibility(View.GONE);
             editPetButton.setVisibility(View.VISIBLE);
             editImageButton.setVisibility(View.GONE);
-            Toast.makeText(this, "Modifiche salvate", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.modifiche_salvate, Toast.LENGTH_SHORT).show();
         });
 
         deletePetButton.setOnClickListener(v -> {
@@ -204,9 +206,9 @@ public class ViewPetActivity extends AppCompatActivity {
             if (pet.getAnimal_type().equals("Cane")) {
                 dogFactViewModel.refreshFact();
                 dogFactViewModel.getDogFact().observe(this, fact -> {
-                    builder.setTitle("Curiosità sui cani")
+                    builder.setTitle(R.string.curiosita_cani)
                             .setMessage(fact)
-                            .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+                            .setPositiveButton(R.string.ok, (dialog, id) -> dialog.dismiss());
 
                     AlertDialog dialog = builder.create();
                     dialog.show();
@@ -214,9 +216,9 @@ public class ViewPetActivity extends AppCompatActivity {
             } else if (pet.getAnimal_type().equals("Gatto")) {
                 catFactViewModel.refreshFact();
                 catFactViewModel.getCatFact().observe(this, fact -> {
-                    builder.setTitle("Curiosità sui gatti")
+                    builder.setTitle(R.string.curiosita_gatti)
                             .setMessage(fact)
-                            .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+                            .setPositiveButton(R.string.ok, (dialog, id) -> dialog.dismiss());
 
                     AlertDialog dialog = builder.create();
                     dialog.show();
@@ -240,15 +242,13 @@ public class ViewPetActivity extends AppCompatActivity {
 
     private void setCardBackgroundColor(String colorName) {
         if (colorMap.containsKey(colorName)) {
-            int baseColor = getResources().getColor(colorMap.get(colorName), getTheme());
+            int baseColor = ContextCompat.getColor(this, colorMap.get(colorName));
             int transparentColor = ColorUtils.setAlphaComponent(baseColor, 80);
             petCardView.setCardBackgroundColor(transparentColor);
         } else {
             petCardView.setCardBackgroundColor(ColorUtils.setAlphaComponent(Color.WHITE, 80));
         }
     }
-
-
 
 
     private void populateFields() {
@@ -263,6 +263,7 @@ public class ViewPetActivity extends AppCompatActivity {
         note.setText(pet.getNotes());
         selected=Arrays.asList(tipi).indexOf(pet.getAnimal_type());
         tipo.setSelection(selected);
+        razza.setText(pet.getBreed());
         int selectedColorIndex = Arrays.asList(colori).indexOf(pet.getColor());
         if (selectedColorIndex != -1) {
             colore.setSelection(selectedColorIndex);
@@ -287,6 +288,7 @@ public class ViewPetActivity extends AppCompatActivity {
         peso.setEnabled(enabled);
         colore.setEnabled(enabled);
         tipo.setEnabled(enabled);
+        razza.setEnabled(enabled);
         allergie.setEnabled(enabled);
         note.setEnabled(enabled);
     }
@@ -329,7 +331,7 @@ public class ViewPetActivity extends AppCompatActivity {
 
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Errore nel caricamento dell'immagine", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.errore_immagine, Toast.LENGTH_SHORT).show();
             }
         }
     }

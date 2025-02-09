@@ -34,7 +34,7 @@ import java.io.IOException;
 
 public class CreatePetActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
-    private EditText nome, soprannome, microchip, eta, compleanno, peso, allergie, note;
+    private EditText nome, soprannome, microchip, eta, compleanno, peso, allergie, note, razza;
     private Spinner colore, tipo;
     private Button saveButton, uploadImageButton;
     private ImageView petImageView;
@@ -60,6 +60,7 @@ public class CreatePetActivity extends AppCompatActivity {
         peso = findViewById(R.id.edit_peso);
         colore = findViewById(R.id.spinnerColore);
         tipo = findViewById(R.id.spinnerTipo);
+        razza = findViewById(R.id.edit_razza);
         allergie = findViewById(R.id.edit_allergie);
         note = findViewById(R.id.edit_note);
         petImageView = findViewById(R.id.pet_image);
@@ -104,7 +105,7 @@ public class CreatePetActivity extends AppCompatActivity {
 
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Errore nel caricamento dell'immagine", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.errore_immagine, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -134,6 +135,7 @@ public class CreatePetActivity extends AppCompatActivity {
         return new PetModel(
                 petImagePath,
                 tipo.getSelectedItem().toString(),
+                razza.getText().toString(),
                 microchip.getText().toString(),
                 nome.getText().toString(),
                 soprannome.getText().toString(),
