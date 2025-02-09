@@ -41,10 +41,10 @@ public class UserFragment extends Fragment {
     //private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseAuth mAuth;
 
-    private Button bottoneSignOut, bottoneModificaProfilo, bottoneConfermaModifiche, bottoneModificaUtente, bottoneConferma;
+    private Button bottoneSignOut, bottoneModificaNomeUtente, bottoneModificaPassword, bottoneConfermaUserName, bottoneConfermaPassword;
     private EditText textUserName, textUserEmail, textUserPassword, textUserOldPassword;
     private TextInputLayout boxVecchiaPassword, boxNuovaPassword;
-    private LinearLayout campoVecchiaPassword;
+    private LinearLayout campoVecchiaPassword, campoNuovaPassword, campoPlaceholderPassword;
     private boolean isUpdatingProfile = false;
 
     public UserFragment() {
@@ -71,10 +71,14 @@ public class UserFragment extends Fragment {
 
         // bottone sign out
         bottoneSignOut = view.findViewById(R.id.bottoneSignOut);
-        // tasto modifica profilo
-        bottoneModificaUtente = view.findViewById(R.id.bottoneModificaDatiUtente);
-        // tasto conferma modifiche
-        bottoneConferma = view.findViewById(R.id.bottoneConfermaModifiche);
+        // tasto modifica nome utente
+        bottoneModificaNomeUtente = view.findViewById(R.id.bottoneModificaNomeUtente);
+        // tasto modifica password
+        bottoneModificaPassword = view.findViewById(R.id.bottoneModificaPassword);
+        // tasto conferma modifiche username
+        bottoneConfermaUserName = view.findViewById(R.id.bottoneConfermaUserName);
+        // tasto conferma modifiche username
+        bottoneConfermaPassword = view.findViewById(R.id.bottoneConfermaPassword);
         // dati utente
         textUserName = view.findViewById(R.id.testoUserDatiNome);
         textUserEmail = view.findViewById(R.id.testoUserDatiEmail);
@@ -83,6 +87,8 @@ public class UserFragment extends Fragment {
         boxVecchiaPassword = view.findViewById(R.id.boxUserVecchiaPassword);
         boxNuovaPassword = view.findViewById(R.id.boxUserDatiPassword);
         campoVecchiaPassword = view.findViewById(R.id.layoutUserOldPassword);
+        campoNuovaPassword = view.findViewById(R.id.layoutUserPassword);
+        campoPlaceholderPassword = view.findViewById(R.id.layoutUserPlaceholderPassword);
 
         // sign out
         bottoneSignOut.setOnClickListener(v -> signOut());
@@ -98,8 +104,11 @@ public class UserFragment extends Fragment {
         textUserName.setEnabled(false);
         textUserEmail.setEnabled(false);
         textUserPassword.setEnabled(false);
-        bottoneConferma.setVisibility(View.GONE);
+        bottoneConfermaUserName.setVisibility(View.GONE);
+        bottoneConfermaPassword.setVisibility(View.GONE);
         campoVecchiaPassword.setVisibility(View.GONE);
+        campoNuovaPassword.setVisibility(View.GONE);
+        campoPlaceholderPassword.setVisibility(View.VISIBLE);
         // inizializzo toggle password nascosto
         boxVecchiaPassword.setEndIconMode(TextInputLayout.END_ICON_NONE);
         boxNuovaPassword.setEndIconMode(TextInputLayout.END_ICON_NONE);
@@ -139,45 +148,44 @@ public class UserFragment extends Fragment {
                 boxVecchiaPassword.setEndIconMode(TextInputLayout.END_ICON_NONE);
             }
         });
-
         textUserPassword.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 boxNuovaPassword.setEndIconMode(TextInputLayout.END_ICON_NONE);
             }
         });
 
-        // abilito modifica profilo:
-        bottoneModificaUtente.setOnClickListener(view1 -> {
+        // NOME UTENTE
+        // abilito modifica nome utente:
+        bottoneModificaNomeUtente.setOnClickListener(view0 -> {
             isUpdatingProfile = true;
             textUserName.setEnabled(true);
-            textUserEmail.setEnabled(false); // rimane così com'è
-            textUserPassword.setEnabled(true);
-            textUserOldPassword.setEnabled(true);
-            campoVecchiaPassword.setVisibility(View.VISIBLE);
-            bottoneConferma.setVisibility(View.VISIBLE);
-
-            // aggiungo TextWatcher per password
-            textUserPassword.addTextChangedListener(passwordTextWatcher);
-            textUserOldPassword.addTextChangedListener(passwordTextWatcher);
+            textUserEmail.setEnabled(false);
+            textUserOldPassword.setEnabled(false);
+            textUserPassword.setEnabled(false);
+            bottoneModificaPassword.setEnabled(false);
+            bottoneModificaNomeUtente.setEnabled(false);
+            bottoneModificaPassword.setVisibility(View.GONE);
+            bottoneModificaNomeUtente.setVisibility(View.GONE);
+            bottoneConfermaUserName.setVisibility(View.VISIBLE);
+            bottoneConfermaPassword.setVisibility(View.GONE);
         });
 
-        // disabilito modifica profilo:
-        bottoneConferma.setOnClickListener(view2 -> {
+        // disabilito modifica nome utente:
+        bottoneConfermaUserName.setOnClickListener(view1 -> {
+            isUpdatingProfile = false;
             textUserName.setEnabled(false);
             textUserEmail.setEnabled(false);
-            textUserPassword.setEnabled(false);
             textUserOldPassword.setEnabled(false);
-            campoVecchiaPassword.setVisibility(View.GONE);
-            bottoneConferma.setVisibility(View.GONE);
-
-            // rimuovo TextWatcher
-            textUserPassword.removeTextChangedListener(passwordTextWatcher);
-            textUserOldPassword.removeTextChangedListener(passwordTextWatcher);
+            textUserPassword.setEnabled(false);
+            bottoneModificaPassword.setEnabled(true);
+            bottoneModificaNomeUtente.setEnabled(true);
+            bottoneModificaNomeUtente.setVisibility(View.VISIBLE);
+            bottoneModificaPassword.setVisibility(View.VISIBLE);
+            bottoneConfermaUserName.setVisibility(View.GONE);
+            bottoneConfermaPassword.setVisibility(View.GONE);
 
             // nuovi dati inseriti dall'utente
             String newUserName = textUserName.getText().toString().trim();
-            String newPassword = textUserPassword.getText().toString().trim();
-            String oldPassword = textUserOldPassword.getText().toString().trim();
 
             if (!(newUserName.isEmpty())) {
                 userViewModel.updateUserName(newUserName);
@@ -186,6 +194,69 @@ public class UserFragment extends Fragment {
                         requireActivity().getString(R.string.error_update_username),
                         Snackbar.LENGTH_SHORT).show();
             }
+        });
+
+        userViewModel.isUserNameUpdated().observe(getViewLifecycleOwner(), isNameUpdated -> {
+            if (isNameUpdated != null) {
+                if (isNameUpdated) {
+                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                            "Nome utente aggiornato con successo!", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                            "Errore durante l'aggiornamento del nome utente.", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // PASSWORD
+        // abilito modifica password:
+        bottoneModificaPassword.setOnClickListener(view2 -> {
+            isUpdatingProfile = true;
+            textUserName.setEnabled(false);
+            textUserEmail.setEnabled(false);
+            textUserPassword.setEnabled(true);
+            textUserOldPassword.setEnabled(true);
+            bottoneModificaPassword.setEnabled(false);
+            bottoneModificaNomeUtente.setEnabled(false);
+            bottoneModificaPassword.setVisibility(View.GONE);
+            bottoneModificaNomeUtente.setVisibility(View.GONE);
+            campoVecchiaPassword.setVisibility(View.VISIBLE);
+            campoNuovaPassword.setVisibility(View.VISIBLE);
+            campoPlaceholderPassword.setVisibility(View.GONE);
+            bottoneConfermaUserName.setVisibility(View.GONE);
+            bottoneConfermaPassword.setVisibility(View.VISIBLE);
+
+            // aggiungo TextWatcher per password
+            textUserPassword.addTextChangedListener(passwordTextWatcher);
+            textUserOldPassword.addTextChangedListener(passwordTextWatcher);
+        });
+
+        // disabilito modifica password:
+        bottoneConfermaPassword.setOnClickListener(view3 -> {
+            isUpdatingProfile = false;
+            textUserName.setEnabled(false);
+            textUserEmail.setEnabled(false);
+            textUserPassword.setEnabled(false);
+            textUserOldPassword.setEnabled(false);
+            bottoneModificaPassword.setEnabled(true);
+            bottoneModificaNomeUtente.setEnabled(true);
+            bottoneModificaNomeUtente.setVisibility(View.VISIBLE);
+            bottoneModificaPassword.setVisibility(View.VISIBLE);
+            campoVecchiaPassword.setVisibility(View.GONE);
+            campoNuovaPassword.setVisibility(View.GONE);
+            campoPlaceholderPassword.setVisibility(View.VISIBLE);
+            bottoneModificaNomeUtente.setVisibility(View.VISIBLE);
+            bottoneModificaPassword.setVisibility(View.VISIBLE);
+            bottoneConfermaUserName.setVisibility(View.GONE);
+            bottoneConfermaPassword.setVisibility(View.GONE);
+
+            // rimuovo TextWatcher
+            textUserPassword.removeTextChangedListener(passwordTextWatcher);
+            textUserOldPassword.removeTextChangedListener(passwordTextWatcher);
+
+            // nuovi dati inseriti dall'utente
+            String newPassword = textUserPassword.getText().toString().trim();
+            String oldPassword = textUserOldPassword.getText().toString().trim();
 
             // l'utente si deve re-autenticare per cambiare la password
             if (!(oldPassword.isEmpty()) && !(newPassword.isEmpty())) {
@@ -206,6 +277,13 @@ public class UserFragment extends Fragment {
                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
                             "Errore durante l'aggiornamento della password.", Snackbar.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        userViewModel.getPasswordUpdateError().observe(getViewLifecycleOwner(), errorMessage -> {
+            if (errorMessage != null) {
+                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                            errorMessage, Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -248,6 +326,8 @@ public class UserFragment extends Fragment {
         String uid = mAuth.getInstance().getCurrentUser().getUid();
         userViewModel.getUserLiveData(uid).observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
+                isUpdatingProfile = false;
+
                 textUserName.setText(user.getUserName());
                 textUserEmail.setText(user.getEmail());
                 textUserPassword.setText(getString(R.string.placeholder_vuoto));
@@ -257,8 +337,15 @@ public class UserFragment extends Fragment {
                 textUserEmail.setEnabled(false);
                 textUserPassword.setEnabled(false);
                 textUserOldPassword.setEnabled(false);
-                bottoneConferma.setVisibility(View.GONE);
+                bottoneModificaPassword.setEnabled(true);
+                bottoneModificaNomeUtente.setEnabled(true);
+                bottoneModificaPassword.setVisibility(View.VISIBLE);
+                bottoneModificaNomeUtente.setVisibility(View.VISIBLE);
                 campoVecchiaPassword.setVisibility(View.GONE);
+                campoNuovaPassword.setVisibility(View.GONE);
+                campoPlaceholderPassword.setVisibility(View.VISIBLE);
+                bottoneConfermaUserName.setVisibility(View.GONE);
+                bottoneConfermaPassword.setVisibility(View.GONE);
             }
         });
     }

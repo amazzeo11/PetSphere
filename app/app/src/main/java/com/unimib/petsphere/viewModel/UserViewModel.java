@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModel;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
@@ -89,17 +91,22 @@ public class UserViewModel extends ViewModel {
                                         if (dbTask.isSuccessful()) {
                                             Log.d("UserViewModel", "Nome utente aggiornato nel database");
                                             userUpdateResult.setValue(new Result.UserSuccess(user));
+                                            isUserNameUpdated.setValue(true);
                                         } else {
                                             Log.e("UserViewModel", "Errore nell'aggiornamento del nome utente nel database", dbTask.getException());
                                             userUpdateResult.setValue(new Result.Error("Errore nell'aggiornamento del nome utente"));
+                                            isUserNameUpdated.setValue(false);
                                         }
                                     });
                         } else {
+                            isUserNameUpdated.setValue(false); // UserName NON aggiornato con successo
                             Log.e("UserViewModel", "Errore aggiornamento nome utente", task.getException());
                         }
                     });
         }
     }
+    private final MutableLiveData<String> passwordUpdateError = new MutableLiveData<>();
+    public LiveData<String> getPasswordUpdateError() { return passwordUpdateError; }
 
     // modifica password - da documentazione Firebase
     public void updatePassword(String oldPassword, String newPassword) {
@@ -107,7 +114,7 @@ public class UserViewModel extends ViewModel {
         if (user != null) {
             // l'utente si deve reautenticare con la vecchia password
             AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), oldPassword);
-            user.reauthenticate(credential)
+            user.reauthenticate(credential) //controlla lui che l'attuale password sia corretta
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         // la reautenticazione ha successo
@@ -118,13 +125,24 @@ public class UserViewModel extends ViewModel {
                                     Log.d("UserViewModel", "Password aggiornata con successo");
                                 } else {
                                     isPasswordUpdated.setValue(false); // password NON aggiornata con successo
-                                    Log.e("UserViewModel", "Errore aggiornamento password", updateTask.getException());
+                                    if (updateTask.getException() instanceof FirebaseAuthWeakPasswordException) {
+                                        passwordUpdateError.setValue("La nuova password è troppo debole"); // controllo di firebase, fix con mio metodo
+                                        Log.e("UserViewModel", "Errore aggiornamento password", updateTask.getException());
+                                    } else {
+                                        passwordUpdateError.setValue("Errore durante l'aggiornamento della password");
+                                        Log.e("UserViewModel", "Errore aggiornamento password", updateTask.getException());
+                                    }
                                 }
                             });
                     } else {
                         // la reautenticazione fallisce
                         isPasswordUpdated.setValue(false); // Password NON aggiornata con successo
                         Log.e("UserViewModel", "Errore nella reautenticazione", task.getException());
+                        if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                            passwordUpdateError.setValue("La vecchia password inserita non è corretta");
+                        } else {
+                            passwordUpdateError.setValue("Errore di autenticazione, riprova");
+                        }
                     }
                 });
         }
@@ -136,6 +154,14 @@ public class UserViewModel extends ViewModel {
     public LiveData<Boolean> isPasswordUpdated() {
         return isPasswordUpdated;
     }
+
+    // per modifica dati utente, boolean
+    private MutableLiveData<Boolean> isUserNameUpdated = new MutableLiveData<>(null);
+    // accessibile da fuori, boolean
+    public LiveData<Boolean> isUserNameUpdated() {
+        return isUserNameUpdated;
+    }
+
     public boolean isAuthenticationError() {
         return authenticationError;
     }
