@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import android.widget.LinearLayout;
 import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.unimib.petsphere.R;
@@ -40,6 +43,7 @@ public class UserFragment extends Fragment {
 
     private Button bottoneSignOut, bottoneModificaProfilo, bottoneConfermaModifiche, bottoneModificaUtente, bottoneConferma;
     private EditText textUserName, textUserEmail, textUserPassword, textUserOldPassword;
+    private TextInputLayout boxVecchiaPassword, boxNuovaPassword;
     private LinearLayout campoVecchiaPassword;
     private boolean isUpdatingProfile = false;
 
@@ -57,9 +61,6 @@ public class UserFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-
-        }*/
     }
 
     @Override
@@ -79,6 +80,8 @@ public class UserFragment extends Fragment {
         textUserEmail = view.findViewById(R.id.testoUserDatiEmail);
         textUserPassword = view.findViewById(R.id.testoUserDatiPassword);
         textUserOldPassword = view.findViewById(R.id.testoUserVecchiaPassword);
+        boxVecchiaPassword = view.findViewById(R.id.boxUserVecchiaPassword);
+        boxNuovaPassword = view.findViewById(R.id.boxUserDatiPassword);
         campoVecchiaPassword = view.findViewById(R.id.layoutUserOldPassword);
 
         // sign out
@@ -97,6 +100,51 @@ public class UserFragment extends Fragment {
         textUserPassword.setEnabled(false);
         bottoneConferma.setVisibility(View.GONE);
         campoVecchiaPassword.setVisibility(View.GONE);
+        // inizializzo toggle password nascosto
+        boxVecchiaPassword.setEndIconMode(TextInputLayout.END_ICON_NONE);
+        boxNuovaPassword.setEndIconMode(TextInputLayout.END_ICON_NONE);
+
+        // TextWatcher per l'icona della password
+        TextWatcher passwordTextWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // campo vecchia password
+                if (textUserOldPassword.hasFocus()) {
+                    if (s.length() > 0) { // così compare appena l'utente pigia qualche tasto
+                        boxVecchiaPassword.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+                    } else {
+                        boxVecchiaPassword.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                    }
+                }
+                // campo nuova password
+                else if (textUserPassword.hasFocus()) {
+                    if (s.length() > 0) {
+                        boxNuovaPassword.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+                    } else {
+                        boxNuovaPassword.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        };
+
+        // metto un listener per quando le password perdono il focus così sparisce il toggle
+        textUserOldPassword.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                boxVecchiaPassword.setEndIconMode(TextInputLayout.END_ICON_NONE);
+            }
+        });
+
+        textUserPassword.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                boxNuovaPassword.setEndIconMode(TextInputLayout.END_ICON_NONE);
+            }
+        });
 
         // abilito modifica profilo:
         bottoneModificaUtente.setOnClickListener(view1 -> {
@@ -107,6 +155,10 @@ public class UserFragment extends Fragment {
             textUserOldPassword.setEnabled(true);
             campoVecchiaPassword.setVisibility(View.VISIBLE);
             bottoneConferma.setVisibility(View.VISIBLE);
+
+            // aggiungo TextWatcher per password
+            textUserPassword.addTextChangedListener(passwordTextWatcher);
+            textUserOldPassword.addTextChangedListener(passwordTextWatcher);
         });
 
         // disabilito modifica profilo:
@@ -117,6 +169,10 @@ public class UserFragment extends Fragment {
             textUserOldPassword.setEnabled(false);
             campoVecchiaPassword.setVisibility(View.GONE);
             bottoneConferma.setVisibility(View.GONE);
+
+            // rimuovo TextWatcher
+            textUserPassword.removeTextChangedListener(passwordTextWatcher);
+            textUserOldPassword.removeTextChangedListener(passwordTextWatcher);
 
             // nuovi dati inseriti dall'utente
             String newUserName = textUserName.getText().toString().trim();
@@ -179,7 +235,7 @@ public class UserFragment extends Fragment {
                     if (textUserEmail.getText().toString().isEmpty()) {
                         textUserEmail.setText(userEmail);
                     }
-                    textUserPassword.setText(getString(R.string.placeholder_password));
+                    textUserPassword.setText(getString(R.string.placeholder_vuoto));
                 }
             });
         }
@@ -194,7 +250,7 @@ public class UserFragment extends Fragment {
             if (user != null) {
                 textUserName.setText(user.getUserName());
                 textUserEmail.setText(user.getEmail());
-                textUserPassword.setText(getString(R.string.placeholder_password));
+                textUserPassword.setText(getString(R.string.placeholder_vuoto));
 
                 // disabilito la modifica di default
                 textUserName.setEnabled(false);
@@ -210,11 +266,6 @@ public class UserFragment extends Fragment {
     public void signOut() {
         // faccio il logout da firebase auth
         mAuth.signOut();
-        // e da google one-tap, ma solo se già loggato così
-        if (oneTapClient != null) {
-            oneTapClient.signOut()
-                    .addOnCompleteListener(task -> Log.d("Logout", "One Tap logout completato"));
-        }
         // faccio tornare al LoginFragment nella WelcomeActivity
         Intent intent = new Intent(getActivity(), WelcomeActivity.class);
         startActivity(intent);
