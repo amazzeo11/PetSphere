@@ -12,13 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.unimib.petsphere.R;
 
 public class ClickerFragment extends Fragment {
 
     private MediaPlayer mediaPlayer;
-
+    private TextView click1, click2, click3;
     public ClickerFragment() {
         // Required empty public constructor
     }
@@ -42,10 +43,29 @@ public class ClickerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Button button = view.findViewById(R.id.clicker_button);
+        click1 = view.findViewById(R.id.click1);
+        click2 = view.findViewById(R.id.click2);
+        click3 = view.findViewById(R.id.click3);
+        click1.setVisibility(View.GONE);
+        click2.setVisibility(View.GONE);
+        click3.setVisibility(View.GONE);
 
         button.setOnClickListener(v -> {
+            int n = (int)(Math.random()*3)+1;
             if (mediaPlayer != null) {
                 mediaPlayer.release();
+            }
+
+            switch(n){
+                case 1:
+                    click1.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    click2.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    click3.setVisibility(View.VISIBLE);
+                    break;
             }
 
             mediaPlayer = MediaPlayer.create(getContext(), R.raw.clicker_sound);
@@ -53,6 +73,9 @@ public class ClickerFragment extends Fragment {
 
             mediaPlayer.setOnCompletionListener(mp -> {
                 mediaPlayer.release();
+                click1.setVisibility(View.GONE);
+                click2.setVisibility(View.GONE);
+                click3.setVisibility(View.GONE);
                 mediaPlayer = null;
             });
         });

@@ -30,6 +30,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -145,6 +146,7 @@ public class ViewPetActivity extends AppCompatActivity {
 
         pet = (PetModel) getIntent().getSerializableExtra("pet");
 
+
         if (pet != null) {
             populateFields();
             setEditable(false);
@@ -167,7 +169,6 @@ public class ViewPetActivity extends AppCompatActivity {
         savePetButton.setOnClickListener(v -> {
             isEditing = !isEditing;
             updatePetData();
-            petViewModel.updatePet(pet);
             setEditable(false);
             savePetButton.setVisibility(View.GONE);
             editPetButton.setVisibility(View.VISIBLE);
@@ -240,15 +241,13 @@ public class ViewPetActivity extends AppCompatActivity {
 
     private void setCardBackgroundColor(String colorName) {
         if (colorMap.containsKey(colorName)) {
-            int baseColor = getResources().getColor(colorMap.get(colorName), getTheme());
+            int baseColor = ContextCompat.getColor(this, colorMap.get(colorName));
             int transparentColor = ColorUtils.setAlphaComponent(baseColor, 80);
             petCardView.setCardBackgroundColor(transparentColor);
         } else {
             petCardView.setCardBackgroundColor(ColorUtils.setAlphaComponent(Color.WHITE, 80));
         }
     }
-
-
 
 
     private void populateFields() {
