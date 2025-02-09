@@ -25,8 +25,12 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+
     <string name="lista_animali">Lista Animali</string>
     <string name="clicker">Clicker</string>
+    <string name="clickertitle">Clicker:</string>
+    <string name="click">Click!</string>
     <string name="profilo_utente">Profilo</string>
     <string name="benvenut">Benvenut*!</string>
     <string name="i_tuoi_animali">I tuoi animali:</string>
@@ -66,4 +70,7 @@
     <string name="carica_immagine">Carica immagine</string>
     <string name="modifica_immagine">Modifica immagine</string>
     <string name="_0_0">0.0</string>
+    <string name="testo_clicker">Un clicker è uno strumento che riproduce sempre lo stesso suono utilizzabile per migliorare l\'addestramento.\nSe il pet associa il rumore ad un rinforzo positivo, come un biscottino, questo strumento potrà aiutarti a fornire un feedback più preciso al tuo pet.\n\nCliccalo quando il tuo pet esegue il comando giusto, gli darai una risposta rapida e chiara per confermare il suo successo.\n\nBuon addestramento!</string>
+    <string name="titolo_clicker_info">Cos\'è un clicker?</string>
+    <string name="ho_capito">Ho capito</string>
 </resources>
