@@ -37,7 +37,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
+<!--
             <ImageButton
                 android:id="@+id/bottoneConfermaModifiche"
                 android:layout_width="@dimen/margin_button"
@@ -50,7 +50,7 @@
                 android:src="@drawable/baseline_check_24"
                 app:tint="@color/main_color"
                 android:visibility="gone"/>
-
+-->
             <Button
                 android:id="@+id/bottoneModificaDatiUtente"
                 android:layout_width="wrap_content"
@@ -78,11 +78,11 @@
 
         <ImageButton
             android:id="@+id/bottoneModificaNomeUtente"
-            android:layout_width="@dimen/margin_button"
+            android:layout_width="@dimen/m_margin"
             android:layout_height="match_parent"
             android:layout_gravity="start|center_vertical"
             android:layout_marginStart="@dimen/def_margin"
-            android:layout_weight="0.1"
+            android:layout_weight="0.15"
             android:backgroundTint="@android:color/transparent"
             android:gravity="start|center_vertical"
             android:src="@drawable/user_icon"
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:text="@string/user_dati_nome_utente"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:layout_weight="0.8"
+            android:layout_weight="0.85"
             />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -129,11 +129,11 @@
 
         <ImageButton
             android:id="@+id/bottoneModificaEmail"
-            android:layout_width="@dimen/def_margin"
+            android:layout_width="@dimen/m_margin"
             android:layout_height="match_parent"
             android:layout_gravity="start|center_vertical"
             android:layout_marginStart="@dimen/def_margin"
-            android:layout_weight="0.3"
+            android:layout_weight="0.15"
             android:backgroundTint="@android:color/transparent"
             android:gravity="start|center_vertical"
             android:src="@drawable/baseline_email_24"
@@ -145,7 +145,7 @@
             android:layout_height="wrap_content"
             android:text="@string/user_dati_email"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:layout_weight="0.6"
+            android:layout_weight="0.85"
             />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -175,17 +175,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        app:endIconMode="password_toggle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutUserEmail">
 
         <ImageButton
             android:id="@+id/bottoneVecchiaPassword"
-            android:layout_width="@dimen/def_margin"
+            android:layout_width="@dimen/m_margin"
             android:layout_height="match_parent"
             android:layout_gravity="start|center_vertical"
             android:layout_marginStart="@dimen/def_margin"
-            android:layout_weight="0.25"
+            android:layout_weight="0.15"
             android:backgroundTint="@android:color/transparent"
             android:gravity="start|center_vertical"
             android:src="@drawable/baseline_key_24"
@@ -197,7 +198,7 @@
             android:layout_height="wrap_content"
             android:text="@string/user_dati_vecchia_password"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:layout_weight="0.35"
+            android:layout_weight="0.85"
             />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -227,17 +228,18 @@
         android:id="@+id/layoutUserPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:endIconMode="password_toggle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutUserOldPassword">
 
         <ImageButton
             android:id="@+id/bottoneModificaPassword"
-            android:layout_width="@dimen/def_margin"
+            android:layout_width="@dimen/m_margin"
             android:layout_height="match_parent"
             android:layout_gravity="start|center_vertical"
             android:layout_marginStart="@dimen/def_margin"
-            android:layout_weight="0.25"
+            android:layout_weight="0.15"
             android:backgroundTint="@android:color/transparent"
             android:gravity="start|center_vertical"
             android:src="@drawable/baseline_key_24"
@@ -249,7 +251,7 @@
             android:layout_height="wrap_content"
             android:text="@string/user_dati_password"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:layout_weight="0.35"
+            android:layout_weight="0.85"
             />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -260,7 +262,7 @@
             android:layout_marginEnd="@dimen/def_margin"
             app:boxStrokeColor="@color/bg_color"
             app:boxStrokeWidth="0dp"
-            android:layout_weight="0.75">
+            android:layout_weight="1">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/testoUserDatiPassword"
@@ -291,8 +293,27 @@
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/def_margin"
             android:text="@string/sign_out"
+            android:layout_weight="0.75"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@color/main_color" />
+
+        <View
+            android:layout_width="@dimen/margin_rel_layout"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/bottoneConfermaModifiche"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/def_margin"
+            android:layout_weight="0.5"
+            android:backgroundTint="@color/main_color"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/conferma_modifiche"
+            android:visibility="visible"
+            app:tint="@color/main_color" />
     </LinearLayout>
 
     <!-- Tasto conferma modifiche

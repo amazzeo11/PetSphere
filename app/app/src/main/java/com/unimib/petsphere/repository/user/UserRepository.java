@@ -75,7 +75,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
         if (isUserRegistered) {
             signIn(email, password);
         } else {
-            signUp(email, password, getLoggedUser().getUserName());
+            signUp(getLoggedUser().getUserName(), email, password);
         }
         return userMutableLiveData;
     }

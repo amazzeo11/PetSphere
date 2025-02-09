@@ -27,8 +27,8 @@ public class User implements Parcelable {
         return userName;
     }
 
-    public void setUserName(String name) {
-        this.userName = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {

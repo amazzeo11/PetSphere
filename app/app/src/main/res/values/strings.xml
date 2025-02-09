@@ -46,14 +46,14 @@
     <string name="dati_utente_titolo">Dati utente</string>
     <string name="user_dati_nome_utente">Nome utente:</string>
     <string name="user_dati_email">Email:</string>
-    <string name="user_dati_password">Nuova Password:</string>
+    <string name="user_dati_password">Password:</string>
     <string name="user_dati_vecchia_password">Vecchia Password:</string>
     <string name="placeholder_password">********</string>
     <string name="placeholder_email">placeholderEmail</string>
     <string name="placeholder_username">placeholderNomeUtente</string>
     <string name="stringa_vuota">Non impostato</string>
     <string name="modifica_profilo">Modifica profilo</string>
-    <string name="conferma_modifiche">Conferma modifiche</string>
+    <string name="conferma_modifiche">Salva</string>
     <string name="success_update_username">Nome utente modificato con successo</string>
     <string name="success_update_email">Email modificata con successo</string>
     <string name="success_update_password">Password modificata con successo</string>

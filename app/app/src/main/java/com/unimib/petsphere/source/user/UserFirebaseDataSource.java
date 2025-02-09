@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,6 +54,20 @@ public class UserFirebaseDataSource extends BaseUserDataRemoteDataSource {
     // voglio prendere i dati dell'utente
     public LiveData<User> getUserLiveData(String uid) {
         MutableLiveData<User> userLiveData = new MutableLiveData<>();
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            Log.e("UserFirebaseDataSource", "Utente non autenticato");
+            userLiveData.setValue(null);
+            return userLiveData;
+        }
+
+        if (!currentUser.getUid().equals(uid)) {
+            Log.e("UserFirebaseDataSource", "Tentativo di accesso a dati non autorizzati");
+            userLiveData.setValue(null);
+            return userLiveData;
+        }
+
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(uid);
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {

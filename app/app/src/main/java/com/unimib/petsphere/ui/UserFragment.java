@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.google.android.gms.auth.api.identity.SignInClient;
@@ -39,8 +38,7 @@ public class UserFragment extends Fragment {
     //private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseAuth mAuth;
 
-    private Button bottoneSignOut, bottoneModificaProfilo, bottoneConfermaModifiche, bottoneModificaUtente;
-    private ImageButton bottoneConferma;
+    private Button bottoneSignOut, bottoneModificaProfilo, bottoneConfermaModifiche, bottoneModificaUtente, bottoneConferma;
     private EditText textUserName, textUserEmail, textUserPassword, textUserOldPassword;
     private LinearLayout campoVecchiaPassword;
     private boolean isUpdatingProfile = false;
