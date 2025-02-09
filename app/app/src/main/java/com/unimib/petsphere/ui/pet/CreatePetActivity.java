@@ -104,7 +104,7 @@ public class CreatePetActivity extends AppCompatActivity {
 
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Errore nel caricamento dell'immagine", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.errore_immagine, Toast.LENGTH_SHORT).show();
             }
         }
     }

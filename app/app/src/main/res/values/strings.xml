@@ -73,4 +73,10 @@
     <string name="testo_clicker">Un clicker è uno strumento che riproduce sempre lo stesso suono utilizzabile per migliorare l\'addestramento.\nSe il pet associa il rumore ad un rinforzo positivo, come un biscottino, questo strumento potrà aiutarti a fornire un feedback più preciso al tuo pet.\n\nCliccalo quando il tuo pet esegue il comando giusto, gli darai una risposta rapida e chiara per confermare il suo successo.\n\nBuon addestramento!</string>
     <string name="titolo_clicker_info">Cos\'è un clicker?</string>
     <string name="ho_capito">Ho capito</string>
+    <string name="creazione_succ">"Pet creato con successo!"</string>
+    <string name="modifiche_salvate">"Modifiche salvate"</string>
+    <string name="curiosita_cani">"Curiosità sui cani:"</string>
+    <string name="curiosita_gatti">"Curiosità sui gatti:"</string>
+    <string name="ok">"OK"</string>
+    <string name="errore_immagine">"Errore nel caricamento dell'immagine"</string>
 </resources>

@@ -173,7 +173,7 @@ public class ViewPetActivity extends AppCompatActivity {
             savePetButton.setVisibility(View.GONE);
             editPetButton.setVisibility(View.VISIBLE);
             editImageButton.setVisibility(View.GONE);
-            Toast.makeText(this, "Modifiche salvate", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.modifiche_salvate, Toast.LENGTH_SHORT).show();
         });
 
         deletePetButton.setOnClickListener(v -> {
@@ -205,9 +205,9 @@ public class ViewPetActivity extends AppCompatActivity {
             if (pet.getAnimal_type().equals("Cane")) {
                 dogFactViewModel.refreshFact();
                 dogFactViewModel.getDogFact().observe(this, fact -> {
-                    builder.setTitle("Curiosità sui cani")
+                    builder.setTitle(R.string.curiosita_cani)
                             .setMessage(fact)
-                            .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+                            .setPositiveButton(R.string.ok, (dialog, id) -> dialog.dismiss());
 
                     AlertDialog dialog = builder.create();
                     dialog.show();
@@ -215,9 +215,9 @@ public class ViewPetActivity extends AppCompatActivity {
             } else if (pet.getAnimal_type().equals("Gatto")) {
                 catFactViewModel.refreshFact();
                 catFactViewModel.getCatFact().observe(this, fact -> {
-                    builder.setTitle("Curiosità sui gatti")
+                    builder.setTitle(R.string.curiosita_gatti)
                             .setMessage(fact)
-                            .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+                            .setPositiveButton(R.string.ok, (dialog, id) -> dialog.dismiss());
 
                     AlertDialog dialog = builder.create();
                     dialog.show();
@@ -328,7 +328,7 @@ public class ViewPetActivity extends AppCompatActivity {
 
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Errore nel caricamento dell'immagine", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.errore_immagine, Toast.LENGTH_SHORT).show();
             }
         }
     }
