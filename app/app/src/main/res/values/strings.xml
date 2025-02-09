@@ -79,4 +79,6 @@
     <string name="curiosita_gatti">"Curiosità sui gatti:"</string>
     <string name="ok">"OK"</string>
     <string name="errore_immagine">"Errore nel caricamento dell'immagine"</string>
+    <string name="razza">Razza:</string>
+    <string name="inserisci_la_razza">Inserisci la razza</string>
 </resources>

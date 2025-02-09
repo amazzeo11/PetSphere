@@ -11,6 +11,7 @@ public class PetModel implements Serializable {
     public long uid;
     private String image;
     private String animal_type;
+    private String breed;
     private String microchip;
     private String name;
     private String nickname;
@@ -22,9 +23,10 @@ public class PetModel implements Serializable {
     private String allergies;
 
 
-    public PetModel(String image, String animalType, String microchip, String name, String nickname, double weight, String age, String birthday, String color, String notes, String allergies){
+    public PetModel(String image, String animalType, String breed, String microchip, String name, String nickname, double weight, String age, String birthday, String color, String notes, String allergies){
         this.image=image;
         this.animal_type = animalType;
+        this.breed = breed;
         this.microchip = microchip;
         this.name = name;
         this.nickname = nickname;
@@ -137,5 +139,13 @@ public class PetModel implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getBreed() {
+        return breed;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 }

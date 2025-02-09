@@ -58,7 +58,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ViewPetActivity extends AppCompatActivity {
-    private EditText nome, soprannome, microchip, eta, compleanno, peso, allergie, note;
+    private EditText nome, soprannome, microchip, eta, compleanno, peso, allergie, note, razza;
     private Spinner colore, tipo;
     private ImageView petImageView;
     private PetViewModel petViewModel;
@@ -130,6 +130,7 @@ public class ViewPetActivity extends AppCompatActivity {
         peso = findViewById(R.id.text_peso);
         colore = findViewById(R.id.colore);
         tipo = findViewById(R.id.tipo);
+        razza = findViewById(R.id.razza);
         allergie = findViewById(R.id.allergie);
         note = findViewById(R.id.note);
         petImageView = findViewById(R.id.pet_image);
@@ -262,6 +263,7 @@ public class ViewPetActivity extends AppCompatActivity {
         note.setText(pet.getNotes());
         selected=Arrays.asList(tipi).indexOf(pet.getAnimal_type());
         tipo.setSelection(selected);
+        razza.setText(pet.getBreed());
         int selectedColorIndex = Arrays.asList(colori).indexOf(pet.getColor());
         if (selectedColorIndex != -1) {
             colore.setSelection(selectedColorIndex);
@@ -286,6 +288,7 @@ public class ViewPetActivity extends AppCompatActivity {
         peso.setEnabled(enabled);
         colore.setEnabled(enabled);
         tipo.setEnabled(enabled);
+        razza.setEnabled(enabled);
         allergie.setEnabled(enabled);
         note.setEnabled(enabled);
     }
