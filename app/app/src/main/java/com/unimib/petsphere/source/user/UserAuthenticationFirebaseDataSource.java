@@ -7,6 +7,7 @@ import static com.unimib.petsphere.util.Constants.*;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.unimib.petsphere.model.Result;
@@ -30,6 +31,7 @@ public class UserAuthenticationFirebaseDataSource extends BaseUserAuthentication
     private final FirebaseAuth firebaseAuth;
     private final UserFirebaseDataSource userDataRemoteDataSource;
     private final MutableLiveData<Result> userMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Result> loginLiveData = new MutableLiveData<>();
     private UserResponseCallback userResponseCallback;
 
     public UserAuthenticationFirebaseDataSource(UserFirebaseDataSource userDataRemoteDataSource) {
@@ -46,6 +48,10 @@ public class UserAuthenticationFirebaseDataSource extends BaseUserAuthentication
         } else {
             return null;
         }
+    }
+
+    public LiveData<Result> getLoginLiveData() {
+        return loginLiveData;
     }
 
     @Override
@@ -89,20 +95,30 @@ public class UserAuthenticationFirebaseDataSource extends BaseUserAuthentication
     public void signIn(String email, String password) {
         if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
             Log.e(TAG, "Email e password vuote");
+            //userResponseCallback.onFailureFromAuthentication("Email e password non possono essere vuoti");
+            loginLiveData.postValue(new Result.Error("Email e password non possono essere vuoti"));
         } else {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                             if (firebaseUser != null) {
-                                userResponseCallback.onSuccessFromAuthentication(
+                                /*if (userResponseCallback != null) {
+                                    userResponseCallback.onSuccessFromAuthentication(new User(firebaseUser.getDisplayName(), email, firebaseUser.getUid()));
+                                } else {
+                                    Log.e(TAG, "userResponseCallback is null when attempting to call onSuccessFromAuthentication.");
+                                }*/
+                                loginLiveData.postValue(new Result.UserSuccess(new User(firebaseUser.getDisplayName(), email, firebaseUser.getUid())));
+                                /*userResponseCallback.onSuccessFromAuthentication( //npe
                                         new User(firebaseUser.getDisplayName(), email, firebaseUser.getUid())
-                                );
+                                );*/
                             } else {
-                                userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+                                //userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+                                loginLiveData.postValue(new Result.Error(getErrorMessage(task.getException())));
                             }
                         } else {
-                            userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+                            //userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+                           loginLiveData.postValue(new Result.Error(getErrorMessage(task.getException())));
                         }
                     });
         }

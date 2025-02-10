@@ -123,27 +123,13 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(v -> {
             String email = textInputEmail.getText().toString();
             String password = textInputPassword.getText().toString();
-            if (email.isEmpty() || password.isEmpty()) {
-                Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                        "Email e password non possono essere vuoti",
-                        Snackbar.LENGTH_SHORT).show();
-                return;
-            }
             userViewModel.loginWithEmailAndPassword(email, password);
+            goToMainPage();
         });
 
-        userViewModel.getLoginResult().observe(getViewLifecycleOwner(), result -> {
-            if (result.isSuccess()) {
-                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                if (firebaseUser != null) {
-                    User utente = new User(firebaseUser.getDisplayName(), firebaseUser.getEmail(), firebaseUser.getUid());
-                    userViewModel.saveUser(utente);
-                }
-                goToMainPage();
-            } else {
-                Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                        "Email e password non validi",
-                        Snackbar.LENGTH_SHORT).show();
+        userViewModel.getLoginErrorMessage().observe(getViewLifecycleOwner(), errorMessage -> {
+            if (errorMessage != null) {
+                Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_SHORT).show();
             }
         });
 

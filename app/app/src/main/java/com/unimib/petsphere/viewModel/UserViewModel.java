@@ -107,8 +107,16 @@ public class UserViewModel extends ViewModel {
         }
     }
     private final MutableLiveData<String> passwordUpdateError = new MutableLiveData<>();
-    public LiveData<String> getPasswordUpdateError() { return passwordUpdateError; }
 
+    public LiveData<String> getPasswordUpdateError() {
+        return passwordUpdateError;
+    }
+
+    private final MutableLiveData<String> loginErrorMessage = new MutableLiveData<>();
+
+    public LiveData<String> getLoginErrorMessage() {
+        return loginErrorMessage;
+    }
     // modifica password - da documentazione Firebase
     public void updatePassword(String oldPassword, String newPassword) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -175,37 +183,16 @@ public class UserViewModel extends ViewModel {
         userMutableLiveData = userRepository.getUser(email, password, isUserRegistered);
     }
 
-    public void signIn(String email, String password) {
-        userMutableLiveData.setValue(userRepository.getUser(email, password, true).getValue());
-    }
-
     public User getLoggedUser() {
         return userRepository.getLoggedUser();
     }
 
     public void loginWithEmailAndPassword(String email, String password) {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                    if (firebaseUser != null) {
-                        User user = new User(
-                                firebaseUser.getDisplayName(),
-                                firebaseUser.getEmail(),
-                                firebaseUser.getUid()
-                        );
-
-                        loginResult.setValue(new Result.UserSuccess(user));
-                    }
-                } else {
-                    loginResult.setValue(new Result.Error(task.getException().getMessage()));
-                }
-            });
-    }
-
-    public MutableLiveData<Result> getLoginResult() {
-        return loginResult;
+        if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
+            loginErrorMessage.setValue("Email e password non possono essere vuoti");
+            return;
+        }
+        userRepository.signIn(email, password);
     }
 
     public void signUpWithEmailAndPassword(String userName, String email, String password, String confirmPassword, SignUpCallback callback) {
