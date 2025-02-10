@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.unimib.petsphere.R;
+import com.unimib.petsphere.model.Result;
 import com.unimib.petsphere.util.Constants;
 import com.unimib.petsphere.viewModel.UserViewModel;
 import com.unimib.petsphere.model.User;
@@ -108,6 +109,15 @@ public class SignUpFragment extends Fragment {
             // chiamata al ViewModel per gestire la logica di registrazione
             userViewModel.signUpWithEmailAndPassword(userName, email, password, confirmPassword);
             goToMainPage();
+        });
+
+        userViewModel.getSignUpResult().observe(getViewLifecycleOwner(), result -> {
+            if (result instanceof Result.Error) {
+                String errorMessage = ((Result.Error) result).getMessage();
+                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
+            } else if (result instanceof Result.UserSuccess) {
+                goToMainPage();
+            }
         });
     }
 

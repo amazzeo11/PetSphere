@@ -41,8 +41,9 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     private final BaseUserDataRemoteDataSource userDataRemoteDataSource;
     private final UserFirebaseDataSource userFirebaseDataSource;
     private final UserAuthenticationFirebaseDataSource userAuthenticationFirebaseDataSource;
-    private final MutableLiveData<Result> userMutableLiveData;
-    private final MutableLiveData<Result> signUpResult = new MutableLiveData<>();
+        private final MutableLiveData<Result> userMutableLiveData;
+        private final MutableLiveData<Result> signUpResult = new MutableLiveData<>();
+        private final LiveData<Result> signUpRes = signUpResult;
     private final DatabaseReference mDatabase;
     private final FirebaseAuth firebaseAuth;
 
@@ -103,7 +104,6 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     }
 
     // validazione dati registrazione
-
     public void signUpWithEmailAndPassword(String userName, String email, String password, String confirmPassword) {
         // validazioni
         if (!isNameValid(userName)) {
@@ -157,6 +157,10 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
             signUp(getLoggedUser().getUserName(), email, password);
         }
         return userMutableLiveData;
+    }
+
+    public LiveData<Result> getSignUpResult(String uid) {
+        return signUpRes;
     }
 
     public LiveData<User> getUserLiveData(String uid) {

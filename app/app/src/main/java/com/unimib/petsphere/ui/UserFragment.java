@@ -323,31 +323,37 @@ public class UserFragment extends Fragment {
     public void onStart() {
         super.onStart();
         // recupero i dati dal UserViewModel
-        String uid = mAuth.getInstance().getCurrentUser().getUid();
-        userViewModel.getUserLiveData(uid).observe(getViewLifecycleOwner(), user -> {
-            if (user != null) {
-                isUpdatingProfile = false;
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null) {
+            String uid = firebaseUser.getUid();
+            //String uid = mAuth.getInstance().getCurrentUser().getUid();
+            userViewModel.getUserLiveData(uid).observe(getViewLifecycleOwner(), user -> {
+                if (user != null) {
+                    isUpdatingProfile = false;
 
-                textUserName.setText(user.getUserName());
-                textUserEmail.setText(user.getEmail());
-                textUserPassword.setText(getString(R.string.placeholder_vuoto));
+                    textUserName.setText(user.getUserName());
+                    textUserEmail.setText(user.getEmail());
+                    textUserPassword.setText(getString(R.string.placeholder_vuoto));
 
-                // disabilito la modifica di default
-                textUserName.setEnabled(false);
-                textUserEmail.setEnabled(false);
-                textUserPassword.setEnabled(false);
-                textUserOldPassword.setEnabled(false);
-                bottoneModificaPassword.setEnabled(true);
-                bottoneModificaNomeUtente.setEnabled(true);
-                bottoneModificaPassword.setVisibility(View.VISIBLE);
-                bottoneModificaNomeUtente.setVisibility(View.VISIBLE);
-                campoVecchiaPassword.setVisibility(View.GONE);
-                campoNuovaPassword.setVisibility(View.GONE);
-                campoPlaceholderPassword.setVisibility(View.VISIBLE);
-                bottoneConfermaUserName.setVisibility(View.GONE);
-                bottoneConfermaPassword.setVisibility(View.GONE);
-            }
-        });
+                    // disabilito la modifica di default
+                    textUserName.setEnabled(false);
+                    textUserEmail.setEnabled(false);
+                    textUserPassword.setEnabled(false);
+                    textUserOldPassword.setEnabled(false);
+                    bottoneModificaPassword.setEnabled(true);
+                    bottoneModificaNomeUtente.setEnabled(true);
+                    bottoneModificaPassword.setVisibility(View.VISIBLE);
+                    bottoneModificaNomeUtente.setVisibility(View.VISIBLE);
+                    campoVecchiaPassword.setVisibility(View.GONE);
+                    campoNuovaPassword.setVisibility(View.GONE);
+                    campoPlaceholderPassword.setVisibility(View.VISIBLE);
+                    bottoneConfermaUserName.setVisibility(View.GONE);
+                    bottoneConfermaPassword.setVisibility(View.GONE);
+                }
+            });
+        } else {
+            Log.e("UserFragment", "Utente non autenticato, non è possibile recuperare UID.");
+        }
     }
 
     public void signOut() {

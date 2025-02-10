@@ -13,6 +13,7 @@ import java.util.Set;
 public interface IUserRepository {
     MutableLiveData<Result> getUser(String email, String password, boolean isUserRegistered);
     LiveData<User> getUserLiveData (String uid);
+    LiveData<Result> getSignUpResult ();
     MutableLiveData<Result> logout();
     void signUpWithEmailAndPassword(String userName, String email, String password, String confirmPassword);
     void saveUser(User user);

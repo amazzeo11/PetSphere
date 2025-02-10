@@ -195,6 +195,10 @@ public class UserViewModel extends ViewModel {
         userRepository.signIn(email, password);
     }
 
+    public LiveData<Result> getSignUpResult() {
+        return userRepository.getSignUpResult();
+    }
+
     public void signUpWithEmailAndPassword(String userName, String email, String password, String confirmPassword) {
         userRepository.signUpWithEmailAndPassword(userName, email, password, confirmPassword);
     }
