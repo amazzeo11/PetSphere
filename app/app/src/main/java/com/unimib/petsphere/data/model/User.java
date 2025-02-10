@@ -3,7 +3,7 @@ package com.unimib.petsphere.data.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.firebase.database.Exclude;
+
 
 public class User implements Parcelable {
     private String name;
@@ -32,10 +32,6 @@ public class User implements Parcelable {
         this.email = email;
     }
 
-    @Exclude
-    public String getIdToken() {
-        return idToken;
-    }
 
     public void setIdToken(String idToken) {
         this.idToken = idToken;

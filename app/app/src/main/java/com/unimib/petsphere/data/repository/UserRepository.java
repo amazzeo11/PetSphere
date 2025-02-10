@@ -49,11 +49,6 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
         return userMutableLiveData;
     }
 
-    @Override
-    public MutableLiveData<Result> getUserFavoriteNews(String idToken) {
-        userDataRemoteDataSource.getUserFavoriteNews(idToken);
-        return userFavoriteNewsMutableLiveData;
-    }
 
     @Override
     public MutableLiveData<Result> getUserPreferences(String idToken) {
@@ -118,11 +113,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
         userPreferencesMutableLiveData.postValue(new Result.UserSuccess(null));
     }
 
-    @Override
-    public void onFailureFromRemoteDatabase(String message) {
-        Result.Error result = new Result.Error(message);
-        userMutableLiveData.postValue(result);
-    }
+
 
     @Override
     public void onSuccessLogout() {
@@ -130,17 +121,6 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     }
 
 
-
-    @Override
-    public void onFailureFromRemote(Exception exception) {
-
-    }
-
-
-    @Override
-    public void onFailureFromLocal(Exception exception) {
-
-    }
 
 
     //@Override

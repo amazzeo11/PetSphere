@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.firebase.bom.v3390)
+    implementation(platform(libs.firebase.bom.v3390))
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -59,6 +59,8 @@ dependencies {
     implementation (libs.converter.gson)
     implementation (libs.lifecycle.viewmodel)
     implementation (libs.lifecycle.livedata)
+    implementation(libs.play.services.auth)
+    implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

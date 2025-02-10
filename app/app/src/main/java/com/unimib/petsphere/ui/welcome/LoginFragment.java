@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.auth.api.identity.BeginSignInResult;
 import com.google.android.gms.auth.api.identity.Identity;
@@ -73,7 +74,7 @@ public class LoginFragment extends Fragment {
                 .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                         .setSupported(true)
                         // Your server's client ID, not your Android client ID.
-                        .setServerClientId("312115728845-hgfoq5h454hbts6rtt5koohsej6cptqj.apps.googleusercontent.com")
+                        .setServerClientId("833447821580-d757b4daqdr5rljqga46lch5gu3ncva2.apps.googleusercontent.com")
                         // Only show accounts previously used to sign in.
                         .setFilterByAuthorizedAccounts(false)
                         .build())
@@ -118,7 +119,7 @@ public class LoginFragment extends Fragment {
     private void retrieveUserInformationAndStartActivity(User user, View view) {
         //progressIndicator.setVisibility(View.VISIBLE);
 
-        userViewModel.getUserPreferences(user.getIdToken()).observe(
+        userViewModel.getLoggedUserLiveData().observe(
                 getViewLifecycleOwner(), userPreferences -> {
                     //The viewmodel updated sharedprefs
                     goToNextPage(view);
@@ -147,14 +148,16 @@ public class LoginFragment extends Fragment {
             startActivity(new Intent(getContext(), MainActivity.class));
 
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (userViewModel.getLoggedUser() != null) {
-            goToNextPage(view);
-        }
+        // Controllo se l'utente è già loggato
+        userViewModel.getLoggedUserLiveData().observe(getViewLifecycleOwner(), user -> {
+            if (user != null) {
+                goToNextPage(view);
+            }
+        });
 
         editTextEmail = view.findViewById(R.id.textInputEmail);
         editTextPassword = view.findViewById(R.id.textInputPassword);
@@ -166,8 +169,17 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(v -> {
             if (editTextEmail.getText() != null && isEmailOk(editTextEmail.getText().toString())) {
                 if (editTextPassword.getText() != null && isPasswordOk(editTextPassword.getText().toString())) {
-                    Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_pickCountryFragment);
-
+                    userViewModel.getUserMutableLiveData(editTextEmail.getText().toString(),
+                                    editTextPassword.getText().toString(), true)
+                            .observe(getViewLifecycleOwner(), authenticationResult -> {
+                                if (authenticationResult.isSuccess()) {
+                                    goToNextPage(view);
+                                } else {
+                                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                            getErrorMessage(((Result.Error) authenticationResult).getMessage()),
+                                            Snackbar.LENGTH_SHORT).show();
+                                }
+                            });
                 } else {
                     editTextPassword.setError(getString(R.string.error_password_login));
                 }
@@ -177,33 +189,22 @@ public class LoginFragment extends Fragment {
         });
 
         loginGoogleButton.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
-                .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
-                    @Override
-                    public void onSuccess(BeginSignInResult result) {
-                        Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
-                        IntentSenderRequest intentSenderRequest =
-                                new IntentSenderRequest.Builder(result.getPendingIntent()).build();
-                        activityResultLauncher.launch(intentSenderRequest);
-                    }
+                .addOnSuccessListener(requireActivity(), result -> {
+                    IntentSenderRequest intentSenderRequest =
+                            new IntentSenderRequest.Builder(result.getPendingIntent()).build();
+                    activityResultLauncher.launch(intentSenderRequest);
                 })
-                .addOnFailureListener(requireActivity(), new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // No saved credentials found. Launch the One Tap sign-up flow, or
-                        // do nothing and continue presenting the signed-out UI.
-                        Log.d(TAG, e.getLocalizedMessage());
-
-                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                                requireActivity().getString(R.string.error_unexpected),
-                                Snackbar.LENGTH_SHORT).show();
-                    }
+                .addOnFailureListener(requireActivity(), e -> {
+                    Log.d(TAG, e.getLocalizedMessage());
+                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                            requireActivity().getString(R.string.error_unexpected),
+                            Snackbar.LENGTH_SHORT).show();
                 }));
 
         signupButton.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_signupFragment);
         });
     }
-
 
 
 
