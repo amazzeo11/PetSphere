@@ -4,22 +4,27 @@ package com.unimib.petsphere.ui.welcome;
 import static com.unimib.petsphere.util.constants.USER_COLLISION_ERROR;
 import static com.unimib.petsphere.util.constants.WEAK_PASSWORD_ERROR;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.unimib.petsphere.R;
 import com.unimib.petsphere.data.model.Result;
 import com.unimib.petsphere.data.model.User;
 import com.unimib.petsphere.data.repository.IUserRepository;
+import com.unimib.petsphere.ui.Main.MainActivity;
 import com.unimib.petsphere.util.ServiceLocator;
 import com.unimib.petsphere.viewModel.UserViewModel;
 import com.unimib.petsphere.viewModel.UserViewModelFactory;
@@ -61,36 +66,43 @@ public class SignupFragment extends Fragment {
             String password = textInputPassword.getText().toString().trim();
 
             if (isEmailOk(email) & isPasswordOk(password)) {
-                //binding.progressBar.setVisibility(View.VISIBLE);
-                if (!userViewModel.isAuthenticationError()) {
-                    userViewModel.getUserMutableLiveData(email, password, false).observe(
-                            getViewLifecycleOwner(), result -> {
-                                if (result.isSuccess()) {
-                                    User user = ((Result.UserSuccess) result).getData();
-                                    //saveLoginData(email, password, user.getIdToken());
-                                    userViewModel.setAuthenticationError(false);
-                                    Navigation.findNavController(view).navigate(
-                                            R.id.action_signupFragment_to_pickCountryFragment);
-                                } else {
-                                    userViewModel.setAuthenticationError(true);
-                                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                                            getErrorMessage(((Result.Error) result).getMessage()),
-                                            Snackbar.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                if (user != null) {
+                                    Log.d("SignupFragment", "Registrazione avvenuta con successo: " + user.getEmail());
+                                    goToNextPage();
                                 }
-                            });
-                } else {
-                    userViewModel.getUser(email, password, false);
-                }
-                //binding.progressBar.setVisibility(View.GONE);
+                            } else {
+
+                                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                        "Errore durante la registrazione", Snackbar.LENGTH_SHORT).show();
+                            }
+                        });
             } else {
-                userViewModel.setAuthenticationError(true);
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
                         R.string.error_email_login, Snackbar.LENGTH_SHORT).show();
             }
         });
 
 
+
+
         return view;
+    }
+    private final FirebaseAuth.AuthStateListener authStateListener = firebaseAuth -> {
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if (currentUser != null) {
+            Log.d("SignupFragment", "Utente autenticato: " + currentUser.getEmail());
+            goToNextPage();
+        }
+    };
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        FirebaseAuth.getInstance().removeAuthStateListener(authStateListener);
     }
 
     private String getErrorMessage(String message) {
@@ -128,5 +140,11 @@ public class SignupFragment extends Fragment {
             return true;
         }
     }
+    private void goToNextPage() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
 
 }

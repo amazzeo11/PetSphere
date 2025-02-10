@@ -27,9 +27,6 @@
         android:name="com.unimib.petsphere.ui.welcome.SignupFragment"
         tools:layout="@layout/fragment_signup"
         android:label="SignupFragment" >
-        <action
-            android:id="@+id/action_signupFragment_to_pickCountryFragment"
-            app:destination="@id/mainActivity"/>
     </fragment>
     <activity
         android:id="@+id/mainActivity"

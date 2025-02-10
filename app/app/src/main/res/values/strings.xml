@@ -90,4 +90,6 @@
     <string name="error_unexpected">Unexpected error</string>
     <string name="signup">Signup</string>
     <string name="create_a_new_account">Create a new account</string>
+    <string name="error_no_user">no user</string>
+    <string name="error_password_too_short">password troppo corta</string>
 </resources>

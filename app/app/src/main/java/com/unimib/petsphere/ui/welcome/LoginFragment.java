@@ -32,6 +32,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.unimib.petsphere.R;
 import com.unimib.petsphere.data.model.Result;
 import com.unimib.petsphere.data.model.User;
@@ -53,8 +55,25 @@ public class LoginFragment extends Fragment {
     private ActivityResultLauncher<IntentSenderRequest> activityResultLauncher;
     private ActivityResultContracts.StartIntentSenderForResult startIntentSenderForResult;
     private UserViewModel userViewModel;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
 
     public LoginFragment() {}
+    @Override
+    public void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (authStateListener != null) {
+            firebaseAuth.removeAuthStateListener(authStateListener);
+        }
+    }
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,66 +85,23 @@ public class LoginFragment extends Fragment {
                 requireActivity(),
                 new UserViewModelFactory(userRepository)).get(UserViewModel.class);
 
-        oneTapClient = Identity.getSignInClient(requireActivity());
-        signInRequest = BeginSignInRequest.builder()
-                .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
-                        .setSupported(true)
-                        .build())
-                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                        .setSupported(true)
-                        // Your server's client ID, not your Android client ID.
-                        .setServerClientId("833447821580-d757b4daqdr5rljqga46lch5gu3ncva2.apps.googleusercontent.com")
-                        // Only show accounts previously used to sign in.
-                        .setFilterByAuthorizedAccounts(false)
-                        .build())
-                // Automatically sign in when exactly one credential is retrieved.
-                .setAutoSelectEnabled(true)
-                .build();
+        firebaseAuth = FirebaseAuth.getInstance();
 
-        startIntentSenderForResult = new ActivityResultContracts.StartIntentSenderForResult();
-
-        activityResultLauncher = registerForActivityResult(startIntentSenderForResult, activityResult -> {
-            if (activityResult.getResultCode() == Activity.RESULT_OK) {
-                Log.d(TAG, "result.getResultCode() == Activity.RESULT_OK");
-                try {
-                    SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(activityResult.getData());
-                    String idToken = credential.getGoogleIdToken();
-                    if (idToken !=  null) {
-                        // Got an ID token from Google. Use it to authenticate with Firebase.
-                        userViewModel.getGoogleUserMutableLiveData(idToken).observe(getViewLifecycleOwner(), authenticationResult -> {
-                            if (authenticationResult.isSuccess()) {
-                                User user = ((Result.UserSuccess) authenticationResult).getData();
-                                //saveLoginData(user.getEmail(), null, user.getIdToken());
-                                Log.i(TAG, "Logged as: " + user.getEmail());
-                                userViewModel.setAuthenticationError(false);
-                                retrieveUserInformationAndStartActivity(user, getView());
-                            } else {
-                                userViewModel.setAuthenticationError(true);
-                                Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                                        getErrorMessage(((Result.Error) authenticationResult).getMessage()),
-                                        Snackbar.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                } catch (ApiException e) {
-                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                            requireActivity().getString(R.string.error_unexpected),
-                            Snackbar.LENGTH_SHORT).show();
-                }
+        authStateListener = firebaseAuth -> {
+            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+            if (currentUser != null) {
+                Log.d(TAG, "User is logged in: " + currentUser.getEmail());
+                goToNextPage();
             }
-        });
+        };
     }
+
 
     private void retrieveUserInformationAndStartActivity(User user, View view) {
-        //progressIndicator.setVisibility(View.VISIBLE);
-
-        userViewModel.getLoggedUserLiveData().observe(
-                getViewLifecycleOwner(), userPreferences -> {
-                    //The viewmodel updated sharedprefs
-                    goToNextPage(view);
-                }
-        );
+        Log.d(TAG, "User information retrieved: " + user.getEmail());
+        goToNextPage();
     }
+
 
     private String getErrorMessage(String errorType) {
         switch (errorType) {
@@ -143,11 +119,12 @@ public class LoginFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
-    private void goToNextPage(View view) {
-
-            startActivity(new Intent(getContext(), MainActivity.class));
-
+    private void goToNextPage() {
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -155,7 +132,7 @@ public class LoginFragment extends Fragment {
         // Controllo se l'utente è già loggato
         userViewModel.getLoggedUserLiveData().observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
-                goToNextPage(view);
+                goToNextPage();
             }
         });
 
@@ -173,7 +150,7 @@ public class LoginFragment extends Fragment {
                                     editTextPassword.getText().toString(), true)
                             .observe(getViewLifecycleOwner(), authenticationResult -> {
                                 if (authenticationResult.isSuccess()) {
-                                    goToNextPage(view);
+                                    goToNextPage();
                                 } else {
                                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                             getErrorMessage(((Result.Error) authenticationResult).getMessage()),
