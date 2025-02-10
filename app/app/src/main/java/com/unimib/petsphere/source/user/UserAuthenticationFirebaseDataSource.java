@@ -54,6 +54,11 @@ public class UserAuthenticationFirebaseDataSource extends BaseUserAuthentication
         return loginLiveData;
     }
 
+    public void setUserResponseCallback(UserResponseCallback callback) {
+        this.userResponseCallback = callback;
+    }
+
+
     @Override
     public void signUp(String userName, String email, String password) {
         Log.e("UserSignUp", "signUp() è stato chiamato con email: " + email); // cancella dopo

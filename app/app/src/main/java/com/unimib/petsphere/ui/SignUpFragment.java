@@ -107,6 +107,7 @@ public class SignUpFragment extends Fragment {
 
             // chiamata al ViewModel per gestire la logica di registrazione
             userViewModel.signUpWithEmailAndPassword(userName, email, password, confirmPassword);
+            goToMainPage();
         });
     }
 

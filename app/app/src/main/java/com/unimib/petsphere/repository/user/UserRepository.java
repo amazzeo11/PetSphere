@@ -136,6 +136,8 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
             return;
         }
 
+        userAuthenticationFirebaseDataSource.setUserResponseCallback(this);
+
         userAuthenticationFirebaseDataSource.signUp(userName, email, password);
         //User newUser = new User(userName, email, password);
         signUp(userName, email, password);
