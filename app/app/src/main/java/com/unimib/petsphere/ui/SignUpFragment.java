@@ -106,17 +106,7 @@ public class SignUpFragment extends Fragment {
             String confirmPassword = editTextConfirmPassword.getText().toString();
 
             // chiamata al ViewModel per gestire la logica di registrazione
-            userViewModel.signUpWithEmailAndPassword(userName, email, password, confirmPassword, new SignUpCallback() {
-                @Override
-                public void onSuccess(User user) {
-                    goToMainPage();
-                }
-
-                @Override
-                public void onFailure(Exception e) {
-                    Snackbar.make(requireView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
-                }
-            });
+            userViewModel.signUpWithEmailAndPassword(userName, email, password, confirmPassword);
         });
     }
 

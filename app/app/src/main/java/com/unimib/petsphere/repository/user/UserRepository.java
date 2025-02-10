@@ -33,7 +33,7 @@ import java.util.Set;
 /**
  * Repository class che ottiene le informazioni sull'utente, intermediario tra viewModel e UserFirebaseDataSource, fonte dei dati
  */
-public class UserRepository implements IUserRepository, UserResponseCallback, SignUpCallback {
+public class UserRepository implements IUserRepository, UserResponseCallback {
 
     private static final String TAG = UserRepository.class.getSimpleName();
 
@@ -104,42 +104,42 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Si
 
     // validazione dati registrazione
 
-    public void signUpWithEmailAndPassword(String userName, String email, String password, String confirmPassword, SignUpCallback callback) {
-        userAuthenticationFirebaseDataSource.signUp(userName, email, password);
+    public void signUpWithEmailAndPassword(String userName, String email, String password, String confirmPassword) {
         // validazioni
         if (!isNameValid(userName)) {
-            callback.onFailure(new Exception("Il nome utente non è valido."));
+            signUpResult.setValue(new Result.Error("Il nome utente non è valido."));
             return;
         }
 
         if (!isEmailOk(email)) {
-            callback.onFailure(new Exception("L'email non è valida."));
+            signUpResult.setValue(new Result.Error("L'email non è valida."));
             return;
         }
 
         if (!isPasswordLongEnough(password)) {
-            callback.onFailure(new Exception("La password deve essere lunga almeno 7 caratteri."));
+            signUpResult.setValue(new Result.Error("La password deve essere lunga almeno 7 caratteri."));
             return;
         }
 
         if (!isPasswordWithNum(password)) {
-            callback.onFailure(new Exception("La password deve contenere almeno un numero."));
+            signUpResult.setValue(new Result.Error("La password deve contenere almeno un numero."));
             return;
         }
 
         if (!isPasswordWithMaiusc(password)) {
-            callback.onFailure(new Exception("La password deve contenere almeno una lettera maiuscola."));
+            signUpResult.setValue(new Result.Error("La password deve contenere almeno una lettera maiuscola."));
             return;
         }
 
         if (!isPasswordTheSame(password, confirmPassword)) {
-            callback.onFailure(new Exception("La conferma della password non è valida."));
+            signUpResult.setValue(new Result.Error("La conferma della password non è valida."));
             return;
         }
 
+        userAuthenticationFirebaseDataSource.signUp(userName, email, password);
         User newUser = new User(userName, email, password);
         saveUser(newUser);
-        callback.onSuccess(newUser);
+        signUpResult.setValue(new Result.UserSuccess(newUser));
     }
 
     /*public void saveUser(User user) {
@@ -195,7 +195,9 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Si
                 if (task.isSuccessful()) {
                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                     if (firebaseUser != null) {
+                        User user = new User(userName, email, firebaseUser.getUid());
                         saveUserData(userName, email, firebaseUser.getUid());
+                        signUpResult.setValue(new Result.UserSuccess(user));
                     }
                 } else {
                     signUpResult.setValue(new Result.Error(task.getException().getMessage()));

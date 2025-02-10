@@ -195,8 +195,8 @@ public class UserViewModel extends ViewModel {
         userRepository.signIn(email, password);
     }
 
-    public void signUpWithEmailAndPassword(String userName, String email, String password, String confirmPassword, SignUpCallback callback) {
-        userRepository.signUpWithEmailAndPassword(userName, email, password, confirmPassword, callback);
+    public void signUpWithEmailAndPassword(String userName, String email, String password, String confirmPassword) {
+        userRepository.signUpWithEmailAndPassword(userName, email, password, confirmPassword);
     }
 
     public MutableLiveData<Result> logout() {

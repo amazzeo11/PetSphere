@@ -183,7 +183,7 @@ public class UserAuthenticationFirebaseDataSource extends BaseUserAuthentication
 
     @Override
     public void onFailure(Exception e) {
-
+        userMutableLiveData.postValue(new Result.Error(e.getMessage()));
     }
 
     private String getErrorMessage(Exception exception) {
