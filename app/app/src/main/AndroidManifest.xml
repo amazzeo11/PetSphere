@@ -20,7 +20,7 @@
             android:name=".ui.pet.CreatePetActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.welcome.StartActivity"
+            android:name=".ui.welcome.WelcomeActivity"
             android:exported="true" />
         <activity
             android:name=".ui.Main.MainActivity"

@@ -1,6 +1,7 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -8,7 +9,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.unimib.petsphere"
+        applicationId = "com.unimib.petSphere"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -37,7 +38,7 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.firebase.bom.v3390)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -63,4 +64,5 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
+    implementation(libs.firebase.auth)
 }
