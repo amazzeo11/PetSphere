@@ -137,10 +137,10 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
         }
 
         userAuthenticationFirebaseDataSource.signUp(userName, email, password);
-        User newUser = new User(userName, email, password);
+        //User newUser = new User(userName, email, password);
         signUp(userName, email, password);
-        saveUser(newUser);
-        signUpResult.setValue(new Result.UserSuccess(newUser));
+        //saveUser(newUser);
+        //signUpResult.setValue(new Result.UserSuccess(newUser));
     }
 
     public void saveUser(User user) {
