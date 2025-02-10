@@ -138,28 +138,11 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
 
         userAuthenticationFirebaseDataSource.signUp(userName, email, password);
         User newUser = new User(userName, email, password);
+        signUp(userName, email, password);
         saveUser(newUser);
         signUpResult.setValue(new Result.UserSuccess(newUser));
     }
 
-    /*public void saveUser(User user) {
-        mDatabase.child(user.getUid()).setValue(user)
-            .addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    Log.d("Firebase", "Dati dell'utente salvati con successo");
-                    userMutableLiveData.setValue(new Result.UserSuccess(user));
-                } else {
-                    String errorMessage;
-                    if (task.getException() != null) {
-                        errorMessage = task.getException().getMessage();
-                    } else {
-                        errorMessage = "Errore sconosciuto";
-                    }
-                    Log.e("Firebase", "Errore nel salvataggio dei dati dell'utente: " + errorMessage);
-                    userMutableLiveData.setValue(new Result.Error(errorMessage));
-                }
-            });
-    }*/
     public void saveUser(User user) {
         userDataRemoteDataSource.saveUserData(user);
     }
