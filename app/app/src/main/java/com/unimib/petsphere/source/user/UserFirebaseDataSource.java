@@ -36,7 +36,8 @@ public class UserFirebaseDataSource extends BaseUserDataRemoteDataSource {
     // voglio salvare i dati dell'utente
     @Override
     public void saveUserData(User user) {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        //String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String uid = user.getUid();
         DatabaseReference userRef = databaseReference.child(uid);
 
         // salvo l'utente

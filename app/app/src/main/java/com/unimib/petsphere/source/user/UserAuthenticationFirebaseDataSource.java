@@ -19,19 +19,22 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.unimib.petsphere.model.User;
+import com.unimib.petsphere.repository.user.UserResponseCallback;
 
 // Classe che gestisce l'autenticazione dell'utente usando Firebase Authentication
 
-public class UserAuthenticationFirebaseDataSource extends BaseUserAuthenticationRemoteDataSource {
+public class UserAuthenticationFirebaseDataSource extends BaseUserAuthenticationRemoteDataSource implements UserResponseCallback {
 
     private static final String TAG = UserAuthenticationFirebaseDataSource.class.getSimpleName();
 
     private final FirebaseAuth firebaseAuth;
     private final UserFirebaseDataSource userDataRemoteDataSource;
     private final MutableLiveData<Result> userMutableLiveData = new MutableLiveData<>();
+    private UserResponseCallback userResponseCallback;
 
     public UserAuthenticationFirebaseDataSource(UserFirebaseDataSource userDataRemoteDataSource) {
         this.userDataRemoteDataSource = userDataRemoteDataSource;
+        userDataRemoteDataSource.setUserResponseCallback(this);
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
@@ -46,43 +49,40 @@ public class UserAuthenticationFirebaseDataSource extends BaseUserAuthentication
     }
 
     @Override
-    public void logout() {
-        FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() == null) {
-                    firebaseAuth.removeAuthStateListener(this);
-                    Log.d(TAG, "User logged out");
-                    userResponseCallback.onSuccessLogout();
-                }
-            }
-        };
-        firebaseAuth.addAuthStateListener(authStateListener);
-        firebaseAuth.signOut();
-    }
+    public void signUp(String userName, String email, String password) {
+        Log.e("UserSignUp", "signUp() è stato chiamato con email: " + email); // cancella dopo
 
-    @Override
-    public void signUp(String email, String password) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                    if (firebaseUser != null) {
-                        User user = new User(firebaseUser.getDisplayName(), email, firebaseUser.getUid());
-                        // log di controlo per verificare l'utente prima di salvarlo
-                        Log.d("UserSignUp", "utente da salvare: " + user.toString());
-                        // lo salvo
-                        userDataRemoteDataSource.saveUserData(user);
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                    Log.e("UserSignUp", "sono dentro listener");
+                    if (task.isSuccessful()) {
+                        FirebaseUser firebaseUser = task.getResult().getUser(); // dalla registrazione invece di current
+                        //FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-                        userResponseCallback.onSuccessFromAuthentication(user);
+                        Log.e("UserSignUp", "sono dentro if task succesful");
+                        if (firebaseUser != null) {
+                            Log.e("UserSignUp", "sono dentro if user non null");
+                            String uid = firebaseUser.getUid();
+                            User user = new User(userName, email, uid);
+                            // log di controlo per verificare l'utente prima di salvarlo
+                            Log.e("UserSignUp", "utente da salvare: " + user.toString());
+
+                            Log.e("UserAuth", "Registrazione riuscita! UID: " + firebaseUser.getUid());
+                            user.setUid(firebaseUser.getUid());
+                            if (userResponseCallback != null) {
+                                userResponseCallback.onSuccessFromAuthentication(user); // è qua che nullpointerexc
+                            }
+
+                            // lo salvo
+                            userDataRemoteDataSource.saveUserData(user);
+                        } else {
+                            Log.e("UserAuth", "Registrazione riuscita, ma utente nullo!");
+                            userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+                        }
                     } else {
-                        Log.d("UserSignUp", "dà null");
                         userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+                        Log.e("UserAuth", "Registrazione fallita: " + task.getException());
                     }
-                } else {
-                    userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
-                }
-        });
+                });
     }
 
     @Override
@@ -106,6 +106,68 @@ public class UserAuthenticationFirebaseDataSource extends BaseUserAuthentication
                         }
                     });
         }
+    }
+
+    @Override
+    public void logout() {
+        FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null) {
+                    firebaseAuth.removeAuthStateListener(this);
+                    Log.d(TAG, "User logged out");
+                    userResponseCallback.onSuccessLogout();
+                }
+            }
+        };
+        firebaseAuth.addAuthStateListener(authStateListener);
+        firebaseAuth.signOut();
+    }
+
+    @Override
+    public void onSuccessFromAuthentication(User user) {
+        if (user != null) {
+            Log.d("DEBUG", "chiamo saveUserData() con utente: " + user);
+            userMutableLiveData.postValue(new Result.UserSuccess(user));
+            userDataRemoteDataSource.saveUserData(user);
+        } else {
+            Log.e("DEBUG", "Errore: utente nullo");
+            userMutableLiveData.postValue(new Result.Error("Errore: utente nullo"));
+        }
+    }
+
+    @Override
+    public void onFailureFromAuthentication(String message) {
+        Log.e(TAG, "errore durante l'autenticazione: " + message);
+        userMutableLiveData.postValue(new Result.Error(message));
+    }
+
+    @Override
+    public void onSuccessFromRemoteDatabase(User user) {
+        Log.d(TAG, "Dati dell'utente caricati correttamente: " + user);
+        userMutableLiveData.postValue(new Result.UserSuccess(user));
+    }
+
+    @Override
+    public void onFailureFromRemoteDatabase(String message) {
+        Log.e(TAG, "Errore durante il recupero dei dati del'utente: " + message);
+        userMutableLiveData.postValue(new Result.Error(message));
+    }
+
+    @Override
+    public void onSuccessLogout() {
+        Log.d(TAG, "Logout avvenuto con successo, top");
+        userMutableLiveData.postValue(new Result.UserSuccess(null));
+    }
+
+    @Override
+    public void onSuccess(User user) {
+        userMutableLiveData.postValue(new Result.UserSuccess(user));
+    }
+
+    @Override
+    public void onFailure(Exception e) {
+
     }
 
     private String getErrorMessage(Exception exception) {

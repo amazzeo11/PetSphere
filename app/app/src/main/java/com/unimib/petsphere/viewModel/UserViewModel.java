@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.unimib.petsphere.model.Result;
 import com.unimib.petsphere.model.User;
 import com.unimib.petsphere.repository.user.IUserRepository;
+import com.unimib.petsphere.repository.user.SignUpCallback;
 import com.unimib.petsphere.repository.user.UserResponseCallback;
 
 public class UserViewModel extends ViewModel {
@@ -207,8 +208,8 @@ public class UserViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void signUpWithEmailAndPassword(String userName, String email, String password) {
-        userRepository.signUp(userName, email, password);
+    public void signUpWithEmailAndPassword(String userName, String email, String password, String confirmPassword, SignUpCallback callback) {
+        userRepository.signUpWithEmailAndPassword(userName, email, password, confirmPassword, callback);
     }
 
     public MutableLiveData<Result> logout() {
