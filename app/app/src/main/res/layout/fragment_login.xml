@@ -123,7 +123,7 @@
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
-        android:id="@+id/loginGoogleButton"
+        android:id="@+id/google_btn"
         android:layout_gravity="center"
         app:icon="@drawable/google_icon"
         app:iconGravity="textStart"

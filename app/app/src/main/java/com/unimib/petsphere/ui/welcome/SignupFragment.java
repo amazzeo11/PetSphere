@@ -4,6 +4,9 @@ package com.unimib.petsphere.ui.welcome;
 import static com.unimib.petsphere.util.constants.USER_COLLISION_ERROR;
 import static com.unimib.petsphere.util.constants.WEAK_PASSWORD_ERROR;
 
+import static java.lang.Character.isDigit;
+import static java.lang.Character.isUpperCase;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -56,7 +59,6 @@ public class SignupFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
 
         textInputEmail = view.findViewById(R.id.textInputEmail);
@@ -82,9 +84,6 @@ public class SignupFragment extends Fragment {
                                         "Errore durante la registrazione", Snackbar.LENGTH_SHORT).show();
                             }
                         });
-            } else {
-                Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                        R.string.error_email_login, Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -111,7 +110,7 @@ public class SignupFragment extends Fragment {
     private String getErrorMessage(String message) {
         switch(message) {
             case WEAK_PASSWORD_ERROR:
-                return requireActivity().getString(R.string.error_password_login);
+                return requireActivity().getString(R.string.error_pw);
             case USER_COLLISION_ERROR:
                 return requireActivity().getString(R.string.error_collision_user);
             default:
@@ -121,8 +120,7 @@ public class SignupFragment extends Fragment {
 
 
     private boolean isEmailOk(String email) {
-        // Check if the email is valid through the use of this library:
-        // https://commons.apache.org/proper/commons-validator/
+
         if (!EmailValidator.getInstance().isValid((email))) {
             textInputEmail.setError(getString(R.string.error_email_login));
             return false;
@@ -134,13 +132,38 @@ public class SignupFragment extends Fragment {
 
 
     private boolean isPasswordOk(String password) {
-        // Check if the password length is correct
-        if (password.isEmpty() || password.length() < 6) {
-            textInputPassword.setError(getString(R.string.error_password_login));
-            return false;
-        } else {
-            textInputPassword.setError(null);
+        boolean lunghezza = false;
+        boolean maiuscola = false;
+        boolean numero = false;
+        if (password.length() >= 8) {
+            lunghezza = true;
+        }
+
+        for (int i = 0; i<password.length(); i++) {
+            if (isDigit(password.charAt(i))) {
+                numero = true;
+            }
+            if (isUpperCase(password.charAt(i))) {
+                maiuscola = true;
+            }
+        }
+
+        if(lunghezza && maiuscola && numero){
             return true;
+        }else{
+            if(!lunghezza){
+                Snackbar.make(requireView(), R.string.error_length, Snackbar.LENGTH_SHORT).show();
+                return false;
+            }
+            if(!maiuscola){
+                Snackbar.make(requireView(), R.string.error_maiusc, Snackbar.LENGTH_SHORT).show();
+                return false;
+            }
+            if(!numero){
+                Snackbar.make(requireView(), R.string.error_num, Snackbar.LENGTH_SHORT).show();
+                return false;
+            }
+            return false;
         }
     }
     private void goToNextPage() {

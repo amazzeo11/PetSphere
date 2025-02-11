@@ -83,7 +83,6 @@
     <string name="inserisci_la_razza">Inserisci la razza</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_email_login">Check the email address</string>
-    <string name="error_password_login">The password must have at least 8 characters</string>
     <string name="error_retrieving_news">There was an error retrieving the news</string>
     <string name="error_no_internet">No internet connection</string>
     <string name="error_collision_user">This email is already registered</string>
@@ -100,4 +99,8 @@
     <string name="effettua_il_login">Effettua il login:</string>
     <string name="registrati">Registrati:</string>
     <string name="hai_gi_un_account">Hai già un account?</string>
+    <string name="error_length">La password deve contenere almeno 8 caratteri</string>
+    <string name="error_maiusc">La password deve contenere almeno una lettera maiuscola</string>
+    <string name="error_num">La password deve contenere almeno un numero</string>
+    <string name="error_pw">Password non valida</string>
 </resources>

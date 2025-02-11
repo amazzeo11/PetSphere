@@ -3,6 +3,10 @@ package com.unimib.petsphere.ui.welcome;
 import static com.unimib.petsphere.util.constants.INVALID_CREDENTIALS_ERROR;
 import static com.unimib.petsphere.util.constants.INVALID_USER_ERROR;
 
+import static java.lang.Character.isDigit;
+import static java.lang.Character.isLowerCase;
+import static java.lang.Character.isUpperCase;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,8 +36,10 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.unimib.petsphere.R;
 import com.unimib.petsphere.data.model.Result;
 import com.unimib.petsphere.data.model.User;
@@ -42,6 +48,8 @@ import com.unimib.petsphere.ui.Main.MainActivity;
 import com.unimib.petsphere.util.ServiceLocator;
 import com.unimib.petsphere.viewModel.UserViewModel;
 import com.unimib.petsphere.viewModel.UserViewModelFactory;
+
+import org.apache.commons.validator.routines.EmailValidator;
 
 
 public class LoginFragment extends Fragment {
@@ -94,6 +102,44 @@ public class LoginFragment extends Fragment {
                 goToNextPage();
             }
         };
+
+        oneTapClient = Identity.getSignInClient(requireActivity());
+
+        signInRequest = BeginSignInRequest.builder()
+                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                        .setSupported(true)
+                        .setServerClientId(getString(R.string.default_web_client_id))
+                        .setFilterByAuthorizedAccounts(false)
+                        .build())
+                .setAutoSelectEnabled(true)
+                .build();
+
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartIntentSenderForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        try {
+                            SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(result.getData());
+                            String idToken = credential.getGoogleIdToken();
+                            if (idToken != null) {
+                                AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(idToken, null);
+                                firebaseAuth.signInWithCredential(firebaseCredential)
+                                        .addOnCompleteListener(task -> {
+                                            if (task.isSuccessful()) {
+                                                FirebaseUser user = firebaseAuth.getCurrentUser();
+                                                Log.d(TAG, "Google sign in successful: " + user.getEmail());
+                                                goToNextPage();
+                                            } else {
+                                                Log.w(TAG, "Google sign in failed", task.getException());
+                                                Snackbar.make(requireView(), R.string.error_unexpected, Snackbar.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
+                        } catch (ApiException e) {
+                            Log.e(TAG, "Google Sign-in failed", e);
+                        }
+                    }
+                });
     }
 
 
@@ -106,7 +152,7 @@ public class LoginFragment extends Fragment {
     private String getErrorMessage(String errorType) {
         switch (errorType) {
             case INVALID_CREDENTIALS_ERROR:
-                return requireActivity().getString(R.string.error_password_login);
+                return requireActivity().getString(R.string.error_pw);
             case INVALID_USER_ERROR:
                 return requireActivity().getString(R.string.error_email_login);
             default:
@@ -129,7 +175,6 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Controllo se l'utente è già loggato
         userViewModel.getLoggedUserLiveData().observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
                 goToNextPage();
@@ -141,7 +186,6 @@ public class LoginFragment extends Fragment {
 
         Button loginButton = view.findViewById(R.id.loginButton);
         Button signupButton = view.findViewById(R.id.buttonNewAccount);
-        Button loginGoogleButton = view.findViewById(R.id.loginGoogleButton);
 
         loginButton.setOnClickListener(v -> {
             if (editTextEmail.getText() != null && isEmailOk(editTextEmail.getText().toString())) {
@@ -158,25 +202,26 @@ public class LoginFragment extends Fragment {
                                 }
                             });
                 } else {
-                    editTextPassword.setError(getString(R.string.error_password_login));
+                    editTextPassword.setError(getString(R.string.error_pw));
                 }
             } else {
                 editTextEmail.setError(getString(R.string.error_email_login));
             }
         });
+        Button googleLoginButton = view.findViewById(R.id.google_btn);
+        googleLoginButton.setOnClickListener(v -> {
+            oneTapClient.beginSignIn(signInRequest)
+                    .addOnSuccessListener(requireActivity(), result -> {
+                        IntentSenderRequest intentSenderRequest =
+                                new IntentSenderRequest.Builder(result.getPendingIntent()).build();
+                        activityResultLauncher.launch(intentSenderRequest);
+                    })
+                    .addOnFailureListener(requireActivity(), e -> {
+                        Log.e(TAG, "Google Sign-in failed: " + e.getLocalizedMessage());
+                        Snackbar.make(view, R.string.error_unexpected, Snackbar.LENGTH_SHORT).show();
+                    });
+        });
 
-        loginGoogleButton.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
-                .addOnSuccessListener(requireActivity(), result -> {
-                    IntentSenderRequest intentSenderRequest =
-                            new IntentSenderRequest.Builder(result.getPendingIntent()).build();
-                    activityResultLauncher.launch(intentSenderRequest);
-                })
-                .addOnFailureListener(requireActivity(), e -> {
-                    Log.d(TAG, e.getLocalizedMessage());
-                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                            requireActivity().getString(R.string.error_unexpected),
-                            Snackbar.LENGTH_SHORT).show();
-                }));
 
         signupButton.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_signupFragment);
@@ -186,12 +231,12 @@ public class LoginFragment extends Fragment {
 
 
     private boolean isEmailOk(String email) {
-        return true;
-        //return EmailValidator.getInstance().isValid(email);
+        return EmailValidator.getInstance().isValid(email);
     }
 
     private boolean isPasswordOk(String password) {
-        return true;
-        //return password.length() > 7;
+     return true;
     }
+
+
 }
