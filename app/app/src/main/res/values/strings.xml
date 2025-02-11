@@ -97,4 +97,5 @@
     <string name="logout">Logout</string>
     <string name="sei_loggato_come">Sei loggat* come:</string>
     <string name="pagina_utente">Pagina Utente:</string>
+    <string name="effettua_il_login">Effettua il login:</string>
 </resources>
