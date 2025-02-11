@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -60,7 +61,7 @@ public class SignupFragment extends Fragment {
 
         textInputEmail = view.findViewById(R.id.textInputEmail);
         textInputPassword = view.findViewById(R.id.textInputPassword);
-
+        Button backlog =   view.findViewById(R.id.back_to_log);
         view.findViewById(R.id.signupButton).setOnClickListener(v -> {
             String email = textInputEmail.getText().toString().trim();
             String password = textInputPassword.getText().toString().trim();
@@ -87,7 +88,9 @@ public class SignupFragment extends Fragment {
             }
         });
 
-
+        backlog.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_signupFragment_to_loginFragment);
+        });
 
 
         return view;

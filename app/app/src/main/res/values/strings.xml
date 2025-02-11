@@ -98,4 +98,6 @@
     <string name="sei_loggato_come">Sei loggat* come:</string>
     <string name="pagina_utente">Pagina Utente:</string>
     <string name="effettua_il_login">Effettua il login:</string>
+    <string name="registrati">Registrati:</string>
+    <string name="hai_gi_un_account">Hai già un account?</string>
 </resources>
