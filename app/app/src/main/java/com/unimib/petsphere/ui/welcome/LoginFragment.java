@@ -3,17 +3,26 @@ package com.unimib.petsphere.ui.welcome;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.IntentSenderRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.Identity;
+import com.google.android.gms.auth.api.identity.SignInClient;
+import com.google.android.gms.auth.api.identity.SignInCredential;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.unimib.petsphere.R;
@@ -27,8 +36,13 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 public class LoginFragment extends Fragment {
 
+    private static final String TAG = "LoginFragment";
+
     private TextInputEditText editTextEmail, editTextPassword;
     private UserViewModel userViewModel;
+    private SignInClient oneTapClient;
+    private BeginSignInRequest signInRequest;
+    private ActivityResultLauncher<IntentSenderRequest> activityResultLauncher;
 
     public LoginFragment() {}
 
@@ -40,6 +54,35 @@ public class LoginFragment extends Fragment {
                 requireActivity(),
                 new UserViewModelFactory(ServiceLocator.getInstance().getUserRepository(requireActivity().getApplication()))
         ).get(UserViewModel.class);
+
+
+        oneTapClient = Identity.getSignInClient(requireActivity());
+        signInRequest = BeginSignInRequest.builder()
+                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                        .setSupported(true)
+                        .setServerClientId(getString(R.string.default_web_client_id))
+                        .setFilterByAuthorizedAccounts(false)
+                        .build())
+                .setAutoSelectEnabled(true)
+                .build();
+
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartIntentSenderForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        try {
+                            SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(result.getData());
+                            String idToken = credential.getGoogleIdToken();
+                            if (idToken != null) {
+                                userViewModel.signInWithGoogle(idToken);
+                            }
+                        } catch (ApiException e) {
+                            Log.e(TAG, "Google Sign-in failed", e);
+                            Snackbar.make(requireView(), R.string.error_unexpected, Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
     }
 
     @Override
@@ -57,7 +100,8 @@ public class LoginFragment extends Fragment {
         Button loginButton = view.findViewById(R.id.loginButton);
         Button signupButton = view.findViewById(R.id.buttonNewAccount);
         Button forgotPasswordButton = view.findViewById(R.id.forgot_pw);
-Button googleButton = view.findViewById(R.id.google_btn);
+        Button googleButton = view.findViewById(R.id.google_btn);
+
         userViewModel.getLoggedUserLiveData().observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
                 goToNextPage();
@@ -97,6 +141,9 @@ Button googleButton = view.findViewById(R.id.google_btn);
             }
         });
 
+
+        googleButton.setOnClickListener(v -> startGoogleSignIn());
+
         userViewModel.getSignInWithGoogleResult().observe(getViewLifecycleOwner(), result -> {
             if (result instanceof Result.UserSuccess) {
                 goToNextPage();
@@ -104,7 +151,18 @@ Button googleButton = view.findViewById(R.id.google_btn);
                 Snackbar.make(requireView(), ((Result.Error) result).getMessage(), Snackbar.LENGTH_SHORT).show();
             }
         });
+    }
 
+    private void startGoogleSignIn() {
+        oneTapClient.beginSignIn(signInRequest)
+                .addOnSuccessListener(requireActivity(), result -> {
+                    try {
+                        activityResultLauncher.launch(new IntentSenderRequest.Builder(result.getPendingIntent().getIntentSender()).build());
+                    } catch (Exception e) {
+                        Log.e(TAG, "Couldn't start Google Sign-In", e);
+                    }
+                })
+                .addOnFailureListener(requireActivity(), e -> Log.e(TAG, "Google Sign-In failed", e));
     }
 
     private void goToNextPage() {
