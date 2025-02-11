@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Author: Alessia Mazzeo !-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/clicker"
+        android:enabled="true"
+        android:icon="@drawable/clicker_icon"
+        android:title="@string/clicker"/>
+
+    <item
+        android:id="@+id/petslistfragment"
+        android:enabled="true"
+        android:icon="@drawable/paw_icon"
+        android:title="@string/lista_animali"/>
+
+
+    <item
+        android:id="@+id/user"
+        android:enabled="true"
+        android:icon="@drawable/user_icon"
+        android:title="@string/profilo_utente"/>
+
+</menu>

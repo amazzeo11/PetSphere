@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "833447821580",
+    "project_id": "petsphere-dea9a",
+    "storage_bucket": "petsphere-dea9a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833447821580:android:fcec132bc725b593e3c929",
+        "android_client_info": {
+          "package_name": "com.unimib.petSphere"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "833447821580-d757b4daqdr5rljqga46lch5gu3ncva2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unimib.petSphere",
+            "certificate_hash": "381bb3362edf6a5c7d4b234b5fc9355e5382efd7"
+          }
+        },
+        {
+          "client_id": "833447821580-o72je025kc3sj6ds1961a05gi1o14qo8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7SXsFuxO7ImRv_a3hHqhjbbdTxHHT_L4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "833447821580-o72je025kc3sj6ds1961a05gi1o14qo8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
