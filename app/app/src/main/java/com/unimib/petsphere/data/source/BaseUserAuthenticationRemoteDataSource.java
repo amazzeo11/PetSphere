@@ -1,18 +1,12 @@
 package com.unimib.petsphere.data.source;
 
-
 import com.unimib.petsphere.data.model.User;
-import com.unimib.petsphere.data.repository.UserResponseCallback;
 
 public abstract class BaseUserAuthenticationRemoteDataSource {
-    protected UserResponseCallback userResponseCallback;
-
-    public void setUserResponseCallback(UserResponseCallback userResponseCallback) {
-        this.userResponseCallback = userResponseCallback;
-    }
-    public abstract User getLoggedUser();
-    public abstract void logout();
-    public abstract void signUp(String email, String password);
-    public abstract void signIn(String email, String password);
-    public abstract void signInWithGoogle(String idToken);
+    public abstract void signUp(String email, String password, AuthCallback callback);
+    public abstract void signIn(String email, String password, AuthCallback callback);
+    public abstract void signInWithGoogle(String token, AuthCallback callback);
+    public abstract void logout(AuthCallback callback);
+    public abstract void changePassword(String email, AuthCallback callback);
+    public abstract void getLoggedUser(AuthCallback callback);
 }

@@ -1,27 +1,34 @@
 package com.unimib.petsphere.viewModel;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
 import com.unimib.petsphere.data.model.Result;
 import com.unimib.petsphere.data.model.User;
-import com.unimib.petsphere.data.repository.IUserRepository;
-import java.util.Set;
+import com.unimib.petsphere.data.repository.UserRepository;
 
 public class UserViewModel extends ViewModel {
     private static final String TAG = UserViewModel.class.getSimpleName();
 
-    private final IUserRepository userRepository;
+    private final UserRepository userRepository;
     private MutableLiveData<Result> userMutableLiveData;
     private MutableLiveData<Result> userPreferencesMutableLiveData;
     private MutableLiveData<User> loggedUserLiveData;
     private boolean authenticationError;
+    private MutableLiveData<Result> signUpResultMutableLiveData;
+    private MutableLiveData<Result> signInResultMutableLiveData; // Aggiunto per il login
+    private MutableLiveData<Result> changePasswordResultMutableLiveData;
+    private MutableLiveData<Result> signInWithGoogleResult = new MutableLiveData<>();
 
-    public UserViewModel(IUserRepository userRepository) {
+    public UserViewModel(UserRepository userRepository) {
         this.userRepository = userRepository;
         authenticationError = false;
         loggedUserLiveData = new MutableLiveData<>();
+        signUpResultMutableLiveData = new MutableLiveData<>();
+        signInResultMutableLiveData = new MutableLiveData<>(); // Inizializzato per il login
+        changePasswordResultMutableLiveData = new MutableLiveData<>();
 
-        // Inizializza l'utente loggato
         User loggedUser = userRepository.getLoggedUser();
         if (loggedUser != null) {
             loggedUserLiveData.setValue(loggedUser);
@@ -30,33 +37,6 @@ public class UserViewModel extends ViewModel {
 
     public LiveData<User> getLoggedUserLiveData() {
         return loggedUserLiveData;
-    }
-
-    public MutableLiveData<Result> getUserMutableLiveData(String email, String password, boolean isUserRegistered) {
-        if (userMutableLiveData == null) {
-            getUserData(email, password, isUserRegistered);
-        }
-        return userMutableLiveData;
-    }
-
-    public MutableLiveData<Result> getGoogleUserMutableLiveData(String token) {
-        if (userMutableLiveData == null) {
-            getUserData(token);
-        }
-        return userMutableLiveData;
-    }
-
-    public void saveUserPreferences(String favoriteCountry, Set<String> favoriteTopics, String idToken) {
-        if (idToken != null) {
-            userRepository.saveUserPreferences(favoriteCountry, favoriteTopics, idToken);
-        }
-    }
-
-    public MutableLiveData<Result> getUserPreferences(String idToken) {
-        if (idToken != null) {
-            userPreferencesMutableLiveData = userRepository.getUserPreferences(idToken);
-        }
-        return userPreferencesMutableLiveData;
     }
 
     public User getLoggedUser() {
@@ -70,7 +50,7 @@ public class UserViewModel extends ViewModel {
             userRepository.logout();
         }
 
-        // Resetta lo stato dell'utente loggato
+        userRepository.clearLoggedUser();
         loggedUserLiveData.postValue(null);
 
         return userMutableLiveData;
@@ -88,25 +68,51 @@ public class UserViewModel extends ViewModel {
         this.authenticationError = authenticationError;
     }
 
-    private void getUserData(String email, String password, boolean isUserRegistered) {
-        userMutableLiveData = userRepository.getUser(email, password, isUserRegistered);
-
-        // Aggiorna il LiveData dell'utente loggato se l'accesso ha successo
-        userMutableLiveData.observeForever(result -> {
+    public void signUp(String email, String password) {
+        userRepository.signUp(email, password).observeForever(result -> {
+            signUpResultMutableLiveData.postValue(result);
             if (result instanceof Result.UserSuccess) {
-                loggedUserLiveData.postValue(((Result.UserSuccess) result).getData());
+                loggedUserLiveData.postValue(((Result.UserSuccess) result).getUser());
             }
         });
     }
 
-    private void getUserData(String token) {
-        userMutableLiveData = userRepository.getGoogleUser(token);
 
-        // Aggiorna il LiveData dell'utente loggato se l'accesso ha successo
-        userMutableLiveData.observeForever(result -> {
+
+    public LiveData<Result> getSignUpResult() {
+        return signUpResultMutableLiveData;
+    }
+
+    public void signIn(String email, String password) {
+        userRepository.signIn(email, password).observeForever(result -> {
+            signInResultMutableLiveData.postValue(result);
+        });
+    }
+
+    public LiveData<Result> getSignInResult() {
+        return signInResultMutableLiveData;
+    }
+
+    public void changePassword(String email) {
+        userRepository.changePassword(email).observeForever(result -> {
+            changePasswordResultMutableLiveData.postValue(result);
+        });
+    }
+
+    public LiveData<Result> getChangePasswordResult() {
+        return changePasswordResultMutableLiveData;
+    }
+
+    public void signInWithGoogle(String token) {
+        userRepository.signInWithGoogle(token).observeForever(result -> {
+            signInWithGoogleResult.postValue(result);
             if (result instanceof Result.UserSuccess) {
-                loggedUserLiveData.postValue(((Result.UserSuccess) result).getData());
+                loggedUserLiveData.postValue(((Result.UserSuccess) result).getUser());
             }
         });
+    }
+
+    public LiveData<Result> getSignInWithGoogleResult() {
+        return signInWithGoogleResult;
     }
 }
