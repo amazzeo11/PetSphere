@@ -29,4 +29,15 @@ public abstract class Result {
             return message;
         }
     }
+
+    public static final class UserSuccess extends Result {
+        private final User user;
+        public UserSuccess(User user) {
+            this.user = user;
+        }
+        public User getData() {
+            return user;
+        }
+    }
+
 }

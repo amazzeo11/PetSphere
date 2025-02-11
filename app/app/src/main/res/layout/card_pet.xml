@@ -212,26 +212,35 @@
                 android:id="@+id/save_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Salva"
-                android:visibility="gone" />
+                android:text="@string/salva"
+                android:visibility="gone"
+                android:padding="8dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/edit_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Modifica" />
+                android:text="@string/modifica"
+                android:padding="8dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/delete_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Elimina"/>
+                android:text="@string/elimina"
+                android:padding="8dp"
+                android:layout_marginStart="8dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/fact_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/random_fact" />
+                android:padding="8dp"
+                android:text="@string/random_fact"
+                app:icon="@drawable/baseline_casino_24"
+                app:iconGravity="textEnd"
+                app:iconPadding="8dp"
+                android:layout_marginStart="8dp"/>
         </LinearLayout>
 
 
