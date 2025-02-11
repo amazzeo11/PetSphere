@@ -103,4 +103,6 @@
     <string name="error_maiusc">La password deve contenere almeno una lettera maiuscola</string>
     <string name="error_num">La password deve contenere almeno un numero</string>
     <string name="error_pw">Password non valida</string>
+    <string name="password_reset_email_sent">Mail di reset password inviata</string>
+    <string name="error_sending_password_reset">errore nell\'invio della mail di reset password</string>
 </resources>

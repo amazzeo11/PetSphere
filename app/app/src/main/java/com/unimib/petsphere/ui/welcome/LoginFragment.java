@@ -143,10 +143,6 @@ public class LoginFragment extends Fragment {
     }
 
 
-    private void retrieveUserInformationAndStartActivity(User user, View view) {
-        Log.d(TAG, "User information retrieved: " + user.getEmail());
-        goToNextPage();
-    }
 
 
     private String getErrorMessage(String errorType) {
@@ -186,6 +182,7 @@ public class LoginFragment extends Fragment {
 
         Button loginButton = view.findViewById(R.id.loginButton);
         Button signupButton = view.findViewById(R.id.buttonNewAccount);
+        Button forgotPasswordButton = view.findViewById(R.id.forgot_pw);
 
         loginButton.setOnClickListener(v -> {
             if (editTextEmail.getText() != null && isEmailOk(editTextEmail.getText().toString())) {
@@ -208,6 +205,7 @@ public class LoginFragment extends Fragment {
                 editTextEmail.setError(getString(R.string.error_email_login));
             }
         });
+
         Button googleLoginButton = view.findViewById(R.id.google_btn);
         googleLoginButton.setOnClickListener(v -> {
             oneTapClient.beginSignIn(signInRequest)
@@ -222,11 +220,25 @@ public class LoginFragment extends Fragment {
                     });
         });
 
-
         signupButton.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_signupFragment);
         });
+
+        forgotPasswordButton.setOnClickListener(v -> {
+            if (editTextEmail.getText() != null && isEmailOk(editTextEmail.getText().toString())) {
+                FirebaseAuth.getInstance().sendPasswordResetEmail(editTextEmail.getText().toString())
+                        .addOnSuccessListener(aVoid -> {
+                            Snackbar.make(view, R.string.password_reset_email_sent, Snackbar.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(e -> {
+                            Snackbar.make(view, R.string.error_sending_password_reset, Snackbar.LENGTH_SHORT).show();
+                        });
+            } else {
+                editTextEmail.setError(getString(R.string.error_email_login));
+            }
+        });
     }
+
 
 
 

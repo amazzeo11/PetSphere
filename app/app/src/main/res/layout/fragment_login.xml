@@ -63,6 +63,7 @@
 
     <Button
         style="@style/Widget.Material3.Button.TextButton"
+        android:id="@+id/forgot_pw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
