@@ -35,7 +35,6 @@ public class UserFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
-
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
 
@@ -43,6 +42,7 @@ public class UserFragment extends Fragment {
         editTextNewPassword = view.findViewById(R.id.editTextNewPassword);
         buttonChangePassword = view.findViewById(R.id.buttonChangePassword);
         buttonLogout = view.findViewById(R.id.buttonLogout);
+        editTextNewPassword.setVisibility(View.GONE);
 
 
         if (currentUser != null) {
@@ -53,6 +53,7 @@ public class UserFragment extends Fragment {
 
         buttonChangePassword.setOnClickListener(v -> {
             String newPassword = editTextNewPassword.getText().toString().trim();
+            editTextNewPassword.setVisibility(View.VISIBLE);
             if (newPassword.length() < 6) {
                 editTextNewPassword.setError(getString(R.string.error_password_too_short));
                 return;

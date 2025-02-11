@@ -92,4 +92,9 @@
     <string name="create_a_new_account">Create a new account</string>
     <string name="error_no_user">no user</string>
     <string name="error_password_too_short">password troppo corta</string>
+    <string name="nuova_password">Nuova Password</string>
+    <string name="cambia_password">Cambia Password</string>
+    <string name="logout">Logout</string>
+    <string name="sei_loggato_come">Sei loggat* come:</string>
+    <string name="pagina_utente">Pagina Utente:</string>
 </resources>
