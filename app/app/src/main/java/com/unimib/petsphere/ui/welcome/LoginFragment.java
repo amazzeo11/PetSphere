@@ -247,7 +247,7 @@ public class LoginFragment extends Fragment {
     }
 
     private boolean isPasswordOk(String password) {
-     return true;
+        return !password.isEmpty();
     }
 
 
