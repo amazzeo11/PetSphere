@@ -7,4 +7,3 @@ Componenti:
 
 Alessia Mazzeo 899612
 
-Sara Angeretti 844951
