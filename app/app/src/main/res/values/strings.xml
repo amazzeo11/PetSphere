@@ -105,4 +105,6 @@
     <string name="error_pw">Password non valida</string>
     <string name="password_reset_email_sent">Mail di reset password inviata</string>
     <string name="error_sending_password_reset">errore nell\'invio della mail di reset password</string>
+    <string name="eliminato_success">Pet eliminato con successo</string>
+
 </resources>

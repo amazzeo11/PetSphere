@@ -72,7 +72,7 @@ public class UserFragment extends Fragment {
             }
         });
 
-        // Logout
+
         buttonLogout.setOnClickListener(v -> {
             firebaseAuth.signOut();
             Intent intent = new Intent(getActivity(), WelcomeActivity.class);

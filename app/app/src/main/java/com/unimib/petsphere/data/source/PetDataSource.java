@@ -1,4 +1,4 @@
-package com.unimib.petsphere.data;
+package com.unimib.petsphere.data.source;
 //Author: Alessia Mazzeo
 import static com.unimib.petsphere.util.constants.UNEXPECTED_ERROR;
 

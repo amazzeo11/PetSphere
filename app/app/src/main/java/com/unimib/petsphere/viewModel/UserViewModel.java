@@ -13,11 +13,10 @@ public class UserViewModel extends ViewModel {
 
     private final UserRepository userRepository;
     private MutableLiveData<Result> userMutableLiveData;
-    private MutableLiveData<Result> userPreferencesMutableLiveData;
     private MutableLiveData<User> loggedUserLiveData;
     private boolean authenticationError;
     private MutableLiveData<Result> signUpResultMutableLiveData;
-    private MutableLiveData<Result> signInResultMutableLiveData; // Aggiunto per il login
+    private MutableLiveData<Result> signInResultMutableLiveData;
     private MutableLiveData<Result> changePasswordResultMutableLiveData;
     private MutableLiveData<Result> signInWithGoogleResult = new MutableLiveData<>();
 
@@ -26,7 +25,7 @@ public class UserViewModel extends ViewModel {
         authenticationError = false;
         loggedUserLiveData = new MutableLiveData<>();
         signUpResultMutableLiveData = new MutableLiveData<>();
-        signInResultMutableLiveData = new MutableLiveData<>(); // Inizializzato per il login
+        signInResultMutableLiveData = new MutableLiveData<>();
         changePasswordResultMutableLiveData = new MutableLiveData<>();
 
         User loggedUser = userRepository.getLoggedUser();
@@ -39,30 +38,6 @@ public class UserViewModel extends ViewModel {
         return loggedUserLiveData;
     }
 
-    public User getLoggedUser() {
-        return userRepository.getLoggedUser();
-    }
-
-    public MutableLiveData<Result> logout() {
-        if (userMutableLiveData == null) {
-            userMutableLiveData = userRepository.logout();
-        } else {
-            userRepository.logout();
-        }
-
-        userRepository.clearLoggedUser();
-        loggedUserLiveData.postValue(null);
-
-        return userMutableLiveData;
-    }
-
-    public void getUser(String email, String password, boolean isUserRegistered) {
-        userRepository.getUser(email, password, isUserRegistered);
-    }
-
-    public boolean isAuthenticationError() {
-        return authenticationError;
-    }
 
     public void setAuthenticationError(boolean authenticationError) {
         this.authenticationError = authenticationError;
@@ -78,11 +53,6 @@ public class UserViewModel extends ViewModel {
     }
 
 
-
-    public LiveData<Result> getSignUpResult() {
-        return signUpResultMutableLiveData;
-    }
-
     public void signIn(String email, String password) {
         userRepository.signIn(email, password).observeForever(result -> {
             signInResultMutableLiveData.postValue(result);
@@ -97,10 +67,6 @@ public class UserViewModel extends ViewModel {
         userRepository.changePassword(email).observeForever(result -> {
             changePasswordResultMutableLiveData.postValue(result);
         });
-    }
-
-    public LiveData<Result> getChangePasswordResult() {
-        return changePasswordResultMutableLiveData;
     }
 
     public void signInWithGoogle(String token) {

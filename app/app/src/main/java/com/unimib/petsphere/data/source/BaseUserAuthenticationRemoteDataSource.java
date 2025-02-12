@@ -1,6 +1,6 @@
 package com.unimib.petsphere.data.source;
 
-import com.unimib.petsphere.data.model.User;
+import com.unimib.petsphere.data.repository.AuthCallback;
 
 public abstract class BaseUserAuthenticationRemoteDataSource {
     public abstract void signUp(String email, String password, AuthCallback callback);

@@ -1,4 +1,4 @@
-package com.unimib.petsphere.data;
+package com.unimib.petsphere.data.source;
 //Author: Alessia Mazzeo
 
 import com.unimib.petsphere.data.model.PetModel;

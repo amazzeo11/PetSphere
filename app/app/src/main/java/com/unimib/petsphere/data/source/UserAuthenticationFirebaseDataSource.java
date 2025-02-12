@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.unimib.petsphere.data.model.User;
+import com.unimib.petsphere.data.repository.AuthCallback;
 
 public class UserAuthenticationFirebaseDataSource extends BaseUserAuthenticationRemoteDataSource {
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
