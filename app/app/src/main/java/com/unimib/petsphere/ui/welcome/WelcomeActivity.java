@@ -1,5 +1,5 @@
 package com.unimib.petsphere.ui.welcome;
-
+//Author: Alessia Mazzeo
 
 import android.os.Bundle;
 

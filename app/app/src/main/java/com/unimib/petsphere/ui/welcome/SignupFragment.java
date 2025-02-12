@@ -1,5 +1,5 @@
 package com.unimib.petsphere.ui.welcome;
-
+//Author: Alessia Mazzeo
 import static com.unimib.petsphere.util.constants.USER_COLLISION_ERROR;
 import static com.unimib.petsphere.util.constants.WEAK_PASSWORD_ERROR;
 

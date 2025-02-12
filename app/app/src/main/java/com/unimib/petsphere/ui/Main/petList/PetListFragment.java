@@ -1,6 +1,5 @@
 package com.unimib.petsphere.ui.Main.petList;
 //Author: Alessia Mazzeo
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -16,12 +15,11 @@ import android.widget.Button;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.unimib.petsphere.R;
-import com.unimib.petsphere.data.database.PetRoomDatabase;
 import com.unimib.petsphere.data.model.PetModel;
 import com.unimib.petsphere.data.model.Result;
 import com.unimib.petsphere.data.repository.PetRepository;
-import com.unimib.petsphere.ui.pet.CreatePetActivity;
-import com.unimib.petsphere.ui.pet.ViewPetActivity;
+import com.unimib.petsphere.ui.Main.pet.CreatePetActivity;
+import com.unimib.petsphere.ui.Main.pet.ViewPetActivity;
 import com.unimib.petsphere.util.ServiceLocator;
 import com.unimib.petsphere.viewModel.PetViewModel;
 import com.unimib.petsphere.viewModel.PetViewModelFactory;

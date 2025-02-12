@@ -1,5 +1,5 @@
 package com.unimib.petsphere.viewModel;
-
+//Author: Alessia Mazzeo
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

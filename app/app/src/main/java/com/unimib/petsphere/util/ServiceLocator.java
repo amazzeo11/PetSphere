@@ -70,7 +70,6 @@ public class ServiceLocator {
         return new CatFactRepository();
     }
     public UserRepository getUserRepository(Application application) {
-        SharedPreferencesUtils sharedPreferencesUtil = new SharedPreferencesUtils(application);
 
         BaseUserAuthenticationRemoteDataSource userRemoteAuthenticationDataSource =
                 new UserAuthenticationFirebaseDataSource();

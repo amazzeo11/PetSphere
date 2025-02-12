@@ -14,10 +14,10 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31" >
         <activity
-            android:name=".ui.pet.ViewPetActivity"
+            android:name=".ui.Main.pet.ViewPetActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.pet.CreatePetActivity"
+            android:name=".ui.Main.pet.CreatePetActivity"
             android:exported="false" />
         <activity
             android:name=".ui.welcome.WelcomeActivity"

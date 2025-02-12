@@ -1,5 +1,5 @@
-package com.unimib.petsphere.ui.user;
-
+package com.unimib.petsphere.ui.Main.user;
+//Author: Alessia Mazzeo
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
