@@ -11,7 +11,7 @@
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_margin="@dimen/margin_small">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
         <ImageView
             android:id="@+id/pet_image"
             android:layout_width="match_parent"
-            android:layout_height="194dp"
+            android:layout_height="@dimen/image_h"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/paw_icon"
             android:contentDescription="@string/foto_pet"/>
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="@dimen/margin_medium">
 
 
             <TextView android:text="@string/nome_pet"
@@ -43,102 +43,102 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:paddingTop="0dp"
-                android:textSize="18sp"/>
+                android:textSize="@dimen/text_title_small"/>
             <EditText
                 android:id="@+id/edit_nome"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/edittext_h"
                 android:hint="@string/inserisci_nome"
                 android:inputType="text"
                 android:paddingTop="0dp"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp"
+                android:textSize="@dimen/text_value"
+                android:layout_marginBottom="@dimen/margin_text_bottom"
                 android:layout_marginTop="0dp" />
 
 
             <TextView android:text="@string/soprannome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_value"
                 android:textStyle="bold"/>
             <EditText
                 android:id="@+id/edit_soprannome"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/edittext_h"
                 android:hint="@string/inserisci_soprannome"
                 android:inputType="text"
                 android:paddingTop="0dp"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp"
+                android:textSize="@dimen/text_value"
+                android:layout_marginBottom="@dimen/margin_text_bottom"
                 android:layout_marginTop="0dp" />
 
 
             <TextView android:text="@string/numero_di_microchip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_value"
                 android:textStyle="bold"/>
             <EditText
                 android:id="@+id/edit_microchip"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/edittext_h"
                 android:hint="@string/inserisci_microchip"
                 android:inputType="number"
                 android:paddingTop="0dp"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp"
+                android:textSize="@dimen/text_value"
+                android:layout_marginBottom="@dimen/margin_text_bottom"
                 android:layout_marginTop="0dp" />
 
 
             <TextView android:text="@string/et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_value"
                 android:textStyle="bold"/>
             <EditText
                 android:id="@+id/edit_eta"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/edittext_h"
                 android:hint="@string/inserisci_eta"
                 android:inputType="text"
                 android:paddingTop="0dp"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp"
+                android:textSize="@dimen/text_value"
+                android:layout_marginBottom="@dimen/margin_text_bottom"
                 android:layout_marginTop="0dp" />
 
 
             <TextView android:text="@string/compleanno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_value"
                 android:textStyle="bold"/>
             <EditText
                 android:id="@+id/edit_compleanno"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/edittext_h"
                 android:hint="@string/inserisci_data_di_nascita"
                 android:inputType="text"
                 android:paddingTop="0dp"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="5dp" />
+                android:textSize="@dimen/text_value"
+                android:layout_marginBottom="@dimen/margin_text_bottom"
+                android:layout_marginTop="@dimen/margin_text_top" />
 
 
             <TextView android:text="@string/peso_in_kg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_value"
                 android:textStyle="bold"/>
             <EditText
                 android:id="@+id/edit_peso"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/edittext_h"
                 android:hint="@string/inserisci_peso"
                 android:inputType="numberDecimal"
                 android:text="@string/_0_0"
                 android:paddingTop="0dp"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp"
+                android:textSize="@dimen/text_value"
+                android:layout_marginBottom="@dimen/margin_text_bottom"
                 android:layout_marginTop="0dp" />
 
 
@@ -146,7 +146,7 @@
             <TextView android:text="@string/tipo_di_animale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_value"
                 android:textStyle="bold"/>
             <Spinner
                 android:id="@+id/spinnerTipo"
@@ -154,29 +154,29 @@
                 android:layout_height="wrap_content"
                 android:entries="@array/tipi_animali"
                 android:paddingTop="0dp"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="5dp" />
+                android:textSize="@dimen/text_value"
+                android:layout_marginBottom="@dimen/margin_text_bottom"
+                android:layout_marginTop="@dimen/margin_text_top" />
 
             <TextView android:text="@string/razza"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_value"
                 android:textStyle="bold"/>
             <EditText
                 android:id="@+id/edit_razza"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/edittext_h"
                 android:hint="@string/inserisci_la_razza"
                 android:paddingTop="0dp"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp"
+                android:textSize="@dimen/text_value"
+                android:layout_marginBottom="@dimen/margin_text_bottom"
                 android:layout_marginTop="0dp" />
 
             <TextView android:text="@string/colore_scheda_pet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_value"
                 android:textStyle="bold"/>
             <Spinner
                 android:id="@+id/spinnerColore"
@@ -184,15 +184,15 @@
                 android:layout_height="wrap_content"
                 android:entries="@array/colori_pet"
                 android:paddingTop="0dp"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="5dp" />
+                android:textSize="@dimen/text_value"
+                android:layout_marginBottom="@dimen/margin_text_bottom"
+                android:layout_marginTop="@dimen/margin_text_top" />
 
 
             <TextView android:text="@string/allergie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_value"
                 android:textStyle="bold"/>
             <EditText
                 android:id="@+id/edit_allergie"
@@ -201,14 +201,14 @@
                 android:inputType="text"
                 android:hint="@string/inserisci_allergie"
                 android:paddingTop="0dp"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="5dp" />
+                android:textSize="@dimen/text_value"
+                android:layout_marginBottom="@dimen/margin_text_bottom"
+                android:layout_marginTop="@dimen/margin_text_top" />
 
             <TextView android:text="@string/note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_value"
                 android:textStyle="bold"/>
             <EditText
                 android:id="@+id/edit_note"
@@ -218,9 +218,9 @@
                 android:minLines="2"
                 android:inputType="text"
                 android:paddingTop="0dp"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="5dp" />
+                android:textSize="@dimen/text_value"
+                android:layout_marginBottom="@dimen/margin_text_bottom"
+                android:layout_marginTop="@dimen/margin_text_top" />
 
 
             <com.google.android.material.button.MaterialButton
