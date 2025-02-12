@@ -1,5 +1,8 @@
 package com.unimib.petsphere.ui.Main.user;
 
+import static java.lang.Character.isDigit;
+import static java.lang.Character.isUpperCase;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.unimib.petsphere.R;
 import com.unimib.petsphere.data.repository.PetRepository;
 import com.unimib.petsphere.data.repository.UserRepository;
@@ -65,19 +69,18 @@ public class UserFragment extends Fragment {
         buttonChangePassword.setOnClickListener(v -> {
             String newPassword = editTextNewPassword.getText().toString().trim();
             editTextNewPassword.setVisibility(View.VISIBLE);
-            if (newPassword.length() < 6) {
-                editTextNewPassword.setError(getString(R.string.error_password_too_short));
-                return;
+            if (isPasswordOk(newPassword)) {
+                userViewModel.changePw(newPassword);
+                userViewModel.getChangePasswordResult().observe(getViewLifecycleOwner(), result -> {
+                    if (result instanceof Result.UserSuccess) {
+                        Toast.makeText(getContext(), "Password cambiata con successo!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Errore nel cambio password.", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
-            userViewModel.changePw(newPassword);
-            userViewModel.getChangePasswordResult().observe(getViewLifecycleOwner(), result -> {
-                if (result instanceof Result.UserSuccess) {
-                    Toast.makeText(getContext(), "Password cambiata con successo!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), "Errore nel cambio password.", Toast.LENGTH_SHORT).show();
-                }
-            });
+
         });
 
         buttonLogout.setOnClickListener(v -> {
@@ -93,5 +96,40 @@ public class UserFragment extends Fragment {
         });
 
         return view;
+    }
+    private boolean isPasswordOk(String password) {
+        boolean lunghezza = false;
+        boolean maiuscola = false;
+        boolean numero = false;
+        if (password.length() >= 8) {
+            lunghezza = true;
+        }
+
+        for (int i = 0; i<password.length(); i++) {
+            if (isDigit(password.charAt(i))) {
+                numero = true;
+            }
+            if (isUpperCase(password.charAt(i))) {
+                maiuscola = true;
+            }
+        }
+
+        if(lunghezza && maiuscola && numero){
+            return true;
+        }else{
+            if(!lunghezza){
+                editTextNewPassword.setError(getString(R.string.error_length));
+                return false;
+            }
+            if(!maiuscola){
+                editTextNewPassword.setError(getString(R.string.error_maiusc));
+                return false;
+            }
+            if(!numero){
+                editTextNewPassword.setError(getString(R.string.error_num));
+                return false;
+            }
+            return false;
+        }
     }
 }

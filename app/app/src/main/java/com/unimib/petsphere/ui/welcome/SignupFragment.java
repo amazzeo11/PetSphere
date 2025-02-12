@@ -3,6 +3,9 @@ package com.unimib.petsphere.ui.welcome;
 import static com.unimib.petsphere.util.constants.USER_COLLISION_ERROR;
 import static com.unimib.petsphere.util.constants.WEAK_PASSWORD_ERROR;
 
+import static java.lang.Character.isDigit;
+import static java.lang.Character.isUpperCase;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -28,6 +31,8 @@ import com.unimib.petsphere.ui.Main.MainActivity;
 import com.unimib.petsphere.util.ServiceLocator;
 import com.unimib.petsphere.viewModel.UserViewModel;
 import com.unimib.petsphere.viewModel.UserViewModelFactory;
+
+import org.apache.commons.validator.routines.EmailValidator;
 
 public class SignupFragment extends Fragment {
 
@@ -69,7 +74,9 @@ public class SignupFragment extends Fragment {
         signupButton.setOnClickListener(v -> {
             String email = textInputEmail.getText().toString().trim();
             String password = textInputPassword.getText().toString().trim();
-            userViewModel.signUp(email, password);
+            if (isEmailOk(email) & isPasswordOk(password)) {
+                userViewModel.signUp(email, password);
+            }
         });
 
         backlog.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_signupFragment_to_loginFragment));
@@ -77,24 +84,57 @@ public class SignupFragment extends Fragment {
         return view;
     }
 
-    private String getErrorMessage(String message) {
-        switch (message) {
-            case WEAK_PASSWORD_ERROR:
-                return requireActivity().getString(R.string.error_pw);
-            case USER_COLLISION_ERROR:
-                return requireActivity().getString(R.string.error_collision_user);
-            default:
-                return requireActivity().getString(R.string.error_unexpected);
-        }
-    }
-
-    private void showSnackbar(String message) {
-        Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show();
-    }
 
     private void goToNextPage() {
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+    private boolean isEmailOk(String email) {
+
+        if (!EmailValidator.getInstance().isValid((email))) {
+            textInputEmail.setError(getString(R.string.error_email_login));
+            return false;
+        } else {
+            textInputEmail.setError(null);
+            return true;
+        }
+    }
+
+
+    private boolean isPasswordOk(String password) {
+        boolean lunghezza = false;
+        boolean maiuscola = false;
+        boolean numero = false;
+        if (password.length() >= 8) {
+            lunghezza = true;
+        }
+
+        for (int i = 0; i<password.length(); i++) {
+            if (isDigit(password.charAt(i))) {
+                numero = true;
+            }
+            if (isUpperCase(password.charAt(i))) {
+                maiuscola = true;
+            }
+        }
+
+        if(lunghezza && maiuscola && numero){
+            return true;
+        }else{
+            if(!lunghezza){
+                textInputPassword.setError(getString(R.string.error_length));
+                return false;
+            }
+            if(!maiuscola){
+                textInputPassword.setError(getString(R.string.error_maiusc));
+                return false;
+            }
+            if(!numero){
+                textInputPassword.setError(getString(R.string.error_num));
+                return false;
+            }
+            return false;
+        }
     }
 }
