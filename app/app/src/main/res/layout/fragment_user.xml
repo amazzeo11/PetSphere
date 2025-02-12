@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Author: Alessia Mazzeo !-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="@dimen/margin_medium"
   >
 
 
@@ -11,7 +12,7 @@
         android:id="@+id/pagina_utente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/margin_medium"
         android:text="@string/pagina_utente"
         android:layout_gravity="center"
         android:textAlignment="center"
@@ -21,27 +22,27 @@
         android:id="@+id/line"
         android:layout_width="200dp"
         android:layout_height="2dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/margin_medium"
         android:layout_gravity="center"
         android:background="#555"
-        android:layout_marginBottom="32dp"/>
+        android:layout_marginBottom="@dimen/margin_verylarge"/>
 
     <TextView
         android:id="@+id/logged_as"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="@dimen/margin_small"
         android:text="@string/sei_loggato_come"
-        android:textSize="18sp"
+        android:textSize="@dimen/text_title_small"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textViewEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:paddingStart="8dp"
-        android:textSize="18sp" />
+        android:layout_marginBottom="@dimen/margin_verylarge"
+        android:paddingStart="@dimen/margin_small"
+        android:textSize="@dimen/text_title_small" />
 
     <EditText
         android:id="@+id/editTextNewPassword"
@@ -49,21 +50,21 @@
         android:layout_height="wrap_content"
         android:hint="@string/nuova_password"
         android:inputType="textPassword"
-        android:padding="8dp"/>
+        android:padding="@dimen/margin_small"/>
 
     <Button
         android:id="@+id/buttonChangePassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/cambia_password"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="@dimen/margin_small"/>
 
     <Button
         android:id="@+id/buttonLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/logout"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/margin_medium"
         android:backgroundTint="@android:color/holo_red_dark" />
 
 </LinearLayout>

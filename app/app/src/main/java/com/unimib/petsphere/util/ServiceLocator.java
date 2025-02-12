@@ -4,18 +4,15 @@ package com.unimib.petsphere.util;
 import android.app.Application;
 
 
-import com.unimib.petsphere.data.BasePetDataSource;
-import com.unimib.petsphere.data.PetDataSource;
+import com.unimib.petsphere.data.source.BasePetDataSource;
+import com.unimib.petsphere.data.source.PetDataSource;
 import com.unimib.petsphere.data.database.PetRoomDatabase;
 import com.unimib.petsphere.data.repository.CatFactRepository;
 import com.unimib.petsphere.data.repository.DogFactRepository;
-import com.unimib.petsphere.data.repository.IUserRepository;
 import com.unimib.petsphere.data.repository.PetRepository;
 import com.unimib.petsphere.data.repository.UserRepository;
 import com.unimib.petsphere.data.source.BaseUserAuthenticationRemoteDataSource;
-import com.unimib.petsphere.data.source.BaseUserDataRemoteDataSource;
 import com.unimib.petsphere.data.source.UserAuthenticationFirebaseDataSource;
-import com.unimib.petsphere.data.source.UserFirebaseDataSource;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -72,17 +69,12 @@ public class ServiceLocator {
     public CatFactRepository getCatFactRepository(Application application, boolean debugMode) {
         return new CatFactRepository();
     }
-    public IUserRepository getUserRepository(Application application) {
-        SharedPreferencesUtils sharedPreferencesUtil = new SharedPreferencesUtils(application);
+    public UserRepository getUserRepository(Application application) {
 
         BaseUserAuthenticationRemoteDataSource userRemoteAuthenticationDataSource =
                 new UserAuthenticationFirebaseDataSource();
 
-        BaseUserDataRemoteDataSource userDataRemoteDataSource =
-                new UserFirebaseDataSource(sharedPreferencesUtil);
 
-
-        return new UserRepository(userRemoteAuthenticationDataSource,
-                userDataRemoteDataSource);
+        return new UserRepository(userRemoteAuthenticationDataSource);
     }
 }

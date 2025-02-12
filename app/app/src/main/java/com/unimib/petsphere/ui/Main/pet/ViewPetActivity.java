@@ -1,4 +1,4 @@
-package com.unimib.petsphere.ui.pet;
+package com.unimib.petsphere.ui.Main.pet;
 //Author: Alessia Mazzeo
 import static androidx.core.app.PendingIntentCompat.getActivity;
 

@@ -6,16 +6,18 @@ import androidx.lifecycle.MutableLiveData;
 import com.unimib.petsphere.data.model.Result;
 import com.unimib.petsphere.data.model.User;
 
-import java.util.Set;
+
+
+import androidx.lifecycle.LiveData;
 
 public interface IUserRepository {
-    MutableLiveData<Result> getUser(String email, String password, boolean isUserRegistered);
-    MutableLiveData<Result> getGoogleUser(String idToken);
-    MutableLiveData<Result> getUserPreferences(String idToken);
-    MutableLiveData<Result> logout();
+    LiveData<Result> signUp(String email, String password);
+    LiveData<Result> signIn(String email, String password);
+    LiveData<Result> signInWithGoogle(String token);
+    LiveData<Result> changePassword(String email);
+    LiveData<Result> logout();
     User getLoggedUser();
-    void signUp(String email, String password);
-    void signIn(String email, String password);
-    void signInWithGoogle(String token);
-    void saveUserPreferences(String favoriteCountry, Set<String> favoriteTopics, String idToken);
+    void fetchLoggedUser();
+    void clearLoggedUser();
+    void getUser(String email, String password, boolean isUserRegistered);
 }

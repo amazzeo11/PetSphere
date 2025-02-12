@@ -2,7 +2,7 @@ package com.unimib.petsphere.data.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.unimib.petsphere.data.BasePetDataSource;
+import com.unimib.petsphere.data.source.BasePetDataSource;
 import com.unimib.petsphere.data.model.PetModel;
 import com.unimib.petsphere.data.model.PetResponseModel;
 import com.unimib.petsphere.data.model.Result;
@@ -34,10 +34,6 @@ public class PetRepository implements PetResponseCallback , IPetRepository{
         return allPetsMutableLiveData;
     }
 
-    public MutableLiveData<Result> getPets() {
-        petDataSource.getPets();
-        return petsMutableLiveData;
-    }
 
     public void updatePet(PetModel pet) {
         petDataSource.updatePet(pet);

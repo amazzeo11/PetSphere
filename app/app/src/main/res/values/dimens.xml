@@ -11,6 +11,14 @@
     <dimen name="margin_verylarge">32dp</dimen>
     <dimen name="margin_large">24dp</dimen>
     <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_text_bottom">10dp</dimen>
+    <dimen name="margin_text_top">5dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_tiny">4dp</dimen>
+    <dimen name="text_value">16sp</dimen>
+    <dimen name="text_title_small">18sp</dimen>
+    <dimen name="image_h">195dp</dimen>
+    <dimen name="edittext_h">48dp</dimen>
+    <dimen name="clicker_btn">100dp</dimen>
+    <dimen name="click_text">34sp</dimen>
 </resources>

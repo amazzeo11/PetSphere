@@ -29,13 +29,24 @@ public abstract class Result {
             return message;
         }
     }
+    public static final class Success extends Result {
+        private final Object data;
+
+        public Success(Object data) {
+            this.data = data;
+        }
+
+        public Object getData() {
+            return data;
+        }
+    }
 
     public static final class UserSuccess extends Result {
         private final User user;
         public UserSuccess(User user) {
             this.user = user;
         }
-        public User getData() {
+        public User getUser() {
             return user;
         }
     }

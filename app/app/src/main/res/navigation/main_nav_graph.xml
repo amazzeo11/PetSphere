@@ -19,7 +19,7 @@ app:startDestination="@id/petslistfragment">
 </fragment>
 <fragment
     android:id="@+id/user"
-    android:name="com.unimib.petsphere.ui.user.UserFragment"
+    android:name="com.unimib.petsphere.ui.Main.user.UserFragment"
     android:label="@string/profilo_utente"
     tools:layout="@layout/fragment_user" />
 </navigation>
