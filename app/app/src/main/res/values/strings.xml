@@ -106,5 +106,10 @@
     <string name="password_reset_email_sent">Mail di reset password inviata</string>
     <string name="error_sending_password_reset">errore nell\'invio della mail di reset password</string>
     <string name="eliminato_success">Pet eliminato con successo</string>
+    <string name="errore_eliminazione_non_riuscita">Errore: eliminazione non riuscita</string>
+    <string name="nessun_fatto_disponibile">Nessun fatto disponibile</string>
+    <string name="password_cambiata_con_successo">Password cambiata con successo!</string>
+    <string name="errore_nel_cambio_password">Errore nel cambio password.</string>
+    <string name="errore_durante_il_logout">Errore durante il logout.</string>
 
 </resources>

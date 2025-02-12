@@ -73,9 +73,9 @@ public class UserFragment extends Fragment {
                 userViewModel.changePw(newPassword);
                 userViewModel.getChangePasswordResult().observe(getViewLifecycleOwner(), result -> {
                     if (result instanceof Result.UserSuccess) {
-                        Toast.makeText(getContext(), "Password cambiata con successo!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getContext().getResources().getString(R.string.password_cambiata_con_successo), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getContext(), "Errore nel cambio password.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getContext().getResources().getString(R.string.errore_nel_cambio_password), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -90,7 +90,7 @@ public class UserFragment extends Fragment {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getContext(), "Errore durante il logout.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getContext().getResources().getString(R.string.errore_durante_il_logout), Toast.LENGTH_SHORT).show();
                 }
             });
         });
