@@ -49,6 +49,10 @@ public class UserRepository implements IUserRepository, AuthCallback{
         authDataSource.changePassword(email, this);
         return userLiveData;
     }
+    public MutableLiveData<Result> changePw(String password) {
+        authDataSource.changePw(password, this);
+        return userLiveData;
+    }
 
     public MutableLiveData<Result> logout() {
         authDataSource.logout(this);

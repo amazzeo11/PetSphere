@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.unimib.petsphere.data.model.User;
 import com.unimib.petsphere.data.repository.AuthCallback;
+import com.unimib.petsphere.data.repository.UserRepository;
 
 public class UserAuthenticationFirebaseDataSource extends BaseUserAuthenticationRemoteDataSource {
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -87,6 +88,21 @@ public class UserAuthenticationFirebaseDataSource extends BaseUserAuthentication
         } else {
             callback.onFailure("No logged-in user");
         }
+    }
+
+
+
+    @Override
+    public void changePw(String password, AuthCallback callback) {
+        FirebaseUser firebaseUser = auth.getCurrentUser();
+        firebaseUser.updatePassword(password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        callback.onSuccess(null);
+                    } else {
+                        callback.onFailure(task.getException().getMessage());
+                    }
+                });
     }
 
     public void clearLoggedUser() {

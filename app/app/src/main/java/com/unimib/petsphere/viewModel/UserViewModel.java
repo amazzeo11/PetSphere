@@ -77,6 +77,28 @@ public class UserViewModel extends ViewModel {
             }
         });
     }
+    public MutableLiveData<Result> logout() {
+        if (userMutableLiveData == null) {
+            userMutableLiveData = userRepository.logout();
+        } else {
+            userRepository.logout();
+        }
+
+        userRepository.clearLoggedUser();
+        loggedUserLiveData.postValue(null);
+
+        return userMutableLiveData;
+    }
+
+
+    public LiveData<Result> getChangePasswordResult() {
+        return changePasswordResultMutableLiveData;
+    }
+    public void changePw(String password) {
+        userRepository.changePw(password).observeForever(result -> {
+            changePasswordResultMutableLiveData.postValue(result);
+        });
+    }
 
     public LiveData<Result> getSignInWithGoogleResult() {
         return signInWithGoogleResult;
