@@ -26,7 +26,7 @@ public class PetRepository implements PetResponseCallback , IPetRepository{
         petsMutableLiveData = new MutableLiveData<>();
         deleteMsg = new MutableLiveData<>();
         this.petDataSource = petDataSource;
-        this.petDataSource.setArticleCallback(this);
+        this.petDataSource.setPetCallback(this);
     }
 
     public MutableLiveData<Result> fetchPets() {

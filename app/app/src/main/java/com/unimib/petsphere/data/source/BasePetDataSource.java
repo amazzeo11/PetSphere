@@ -9,7 +9,7 @@ import java.util.List;
 public abstract class BasePetDataSource {
     protected PetResponseCallback petCallback;
 
-    public void setArticleCallback(PetResponseCallback petCallback) {
+    public void setPetCallback(PetResponseCallback petCallback) {
         this.petCallback = petCallback;
     }
 
