@@ -41,6 +41,7 @@ import com.unimib.petsphere.data.model.PetModel;
 import com.unimib.petsphere.data.repository.CatFactRepository;
 import com.unimib.petsphere.data.repository.DogFactRepository;
 import com.unimib.petsphere.data.repository.PetRepository;
+import com.unimib.petsphere.data.repository.UserRepository;
 import com.unimib.petsphere.util.ServiceLocator;
 import com.unimib.petsphere.viewModel.CatFactViewModel;
 import com.unimib.petsphere.viewModel.CatFactViewModelFactory;
@@ -98,29 +99,16 @@ public class ViewPetActivity extends AppCompatActivity {
         }
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
-        PetRepository petRepository =
-                ServiceLocator.getInstance().getPetsRepository(
-                        this.getApplication(),
-                        this.getApplication().getResources().getBoolean(R.bool.debug_mode)
-                );
-        DogFactRepository dogFactRepository =  ServiceLocator.getInstance().getDogFactRepository(
-                this.getApplication(),
-                this.getApplication().getResources().getBoolean(R.bool.debug_mode)
-        );
-        CatFactRepository catFactRepository =  ServiceLocator.getInstance().getCatFactRepository(
-                this.getApplication(),
-                this.getApplication().getResources().getBoolean(R.bool.debug_mode)
-        );
 
         petViewModel = new ViewModelProvider(
                 this,
-                new PetViewModelFactory(petRepository)).get(PetViewModel.class);
+                new PetViewModelFactory(this.getApplication())).get(PetViewModel.class);
         dogFactViewModel = new ViewModelProvider(
                 this,
-                new DogFactViewModelFactory(dogFactRepository)).get(DogFactViewModel.class);
+                new DogFactViewModelFactory(this.getApplication())).get(DogFactViewModel.class);
         catFactViewModel = new ViewModelProvider(
                 this,
-                new CatFactViewModelFactory(catFactRepository)).get(CatFactViewModel.class);
+                new CatFactViewModelFactory(this.getApplication())).get(CatFactViewModel.class);
 
         nome = findViewById(R.id.text_nome);
         soprannome = findViewById(R.id.text_soprannome);

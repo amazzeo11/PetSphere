@@ -1,10 +1,11 @@
 package com.unimib.petsphere.data.repository;
-//Author: Alessia Mazzeo
+//Author: Alessia Maze
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.unimib.petsphere.data.model.CatFact;
 import com.unimib.petsphere.service.CatApiService;
+import com.unimib.petsphere.viewModel.UserViewModelFactory;
 
 
 import retrofit2.Call;

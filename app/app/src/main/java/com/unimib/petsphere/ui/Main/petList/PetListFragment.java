@@ -42,19 +42,11 @@ public class PetListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        PetRepository petRepository =
-                ServiceLocator.getInstance().getPetsRepository(
-                        requireActivity().getApplication(),
-                        requireActivity().getApplication().getResources().getBoolean(R.bool.debug_mode)
-                );
-
-
         petViewModel = new ViewModelProvider(
                 requireActivity(),
-                new PetViewModelFactory(petRepository)).get(PetViewModel.class);
+                new PetViewModelFactory(this.getActivity().getApplication())).get(PetViewModel.class);
 
-       petList = new ArrayList<>();
+        petList = new ArrayList<>();
     }
 
 

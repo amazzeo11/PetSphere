@@ -1,20 +1,23 @@
 package com.unimib.petsphere.viewModel;
 //Author: Alessia Mazzeo
 
+import android.app.Application;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.unimib.petsphere.data.repository.IUserRepository;
 import com.unimib.petsphere.data.repository.UserRepository;
+import com.unimib.petsphere.util.ServiceLocator;
 
 
 public class UserViewModelFactory implements ViewModelProvider.Factory {
 
     private final UserRepository userRepository;
 
-    public UserViewModelFactory(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserViewModelFactory(Application app) {
+        this.userRepository = ServiceLocator.getInstance().getUserRepository(app);
     }
 
     @NonNull

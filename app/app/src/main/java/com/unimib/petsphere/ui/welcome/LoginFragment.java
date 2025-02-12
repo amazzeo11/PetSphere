@@ -52,8 +52,7 @@ public class LoginFragment extends Fragment {
 
         userViewModel = new ViewModelProvider(
                 requireActivity(),
-                new UserViewModelFactory(ServiceLocator.getInstance().getUserRepository(requireActivity().getApplication()))
-        ).get(UserViewModel.class);
+                new UserViewModelFactory(this.getActivity().getApplication())).get(UserViewModel.class);
 
 
         oneTapClient = Identity.getSignInClient(requireActivity());

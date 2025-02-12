@@ -13,6 +13,7 @@ import com.unimib.petsphere.data.repository.PetRepository;
 import com.unimib.petsphere.data.repository.UserRepository;
 import com.unimib.petsphere.data.source.BaseUserAuthenticationRemoteDataSource;
 import com.unimib.petsphere.data.source.UserAuthenticationFirebaseDataSource;
+import com.unimib.petsphere.viewModel.UserViewModelFactory;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -48,25 +49,25 @@ public class ServiceLocator {
 
 
 
-    public PetRoomDatabase getNewsDao(Application application) {
+    public PetRoomDatabase getPetDao(Application application) {
         return PetRoomDatabase.getDatabase(application);
     }
 
 
-    public PetRepository getPetsRepository(Application application, boolean debugMode) {
+    public PetRepository getPetsRepository(Application application) {
         BasePetDataSource petsDataSource;
 
-        petsDataSource = new PetDataSource(getNewsDao(application));
+        petsDataSource = new PetDataSource(getPetDao(application));
 
         return new PetRepository(petsDataSource);
     }
 
 
-    public DogFactRepository getDogFactRepository(Application application, boolean debugMode) {
+    public DogFactRepository getDogFactRepository(Application application) {
         return new DogFactRepository();
     }
 
-    public CatFactRepository getCatFactRepository(Application application, boolean debugMode) {
+    public CatFactRepository getCatFactRepository(Application app) {
         return new CatFactRepository();
     }
     public UserRepository getUserRepository(Application application) {

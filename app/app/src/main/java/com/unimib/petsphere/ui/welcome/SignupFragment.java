@@ -47,9 +47,11 @@ public class SignupFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UserRepository userRepository = ServiceLocator.getInstance().getUserRepository(requireActivity().getApplication());
 
-        userViewModel = new ViewModelProvider(requireActivity(), new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+        userViewModel = new ViewModelProvider(
+                requireActivity(),
+                new UserViewModelFactory(this.getActivity().getApplication())).get(UserViewModel.class);
+
         userViewModel.setAuthenticationError(false);
     }
 

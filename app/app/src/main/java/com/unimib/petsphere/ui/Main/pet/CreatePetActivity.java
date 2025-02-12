@@ -47,10 +47,9 @@ public class CreatePetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_pet);
 
         PetRepository petRepository = ServiceLocator.getInstance().getPetsRepository(
-                this.getApplication(),
-                this.getApplication().getResources().getBoolean(R.bool.debug_mode)
+                this.getApplication()
         );
-        petViewModel = new ViewModelProvider(this, new PetViewModelFactory(petRepository)).get(PetViewModel.class);
+        petViewModel = new ViewModelProvider(this, new PetViewModelFactory(this.getApplication())).get(PetViewModel.class);
 
         nome = findViewById(R.id.edit_nome);
         soprannome = findViewById(R.id.edit_soprannome);
