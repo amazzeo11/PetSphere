@@ -115,7 +115,7 @@ public class LoginFragment extends Fragment {
             if (isEmailOk(email) && isPasswordOk(password)) {
                 userViewModel.signIn(email, password);
                 userViewModel.getSignInResult().observe(getViewLifecycleOwner(), result -> {
-                    if (result instanceof Result.UserSuccess) {
+                    if (result instanceof Result.UserSuccess && ((Result.UserSuccess) result).getUser() != null) {
                         goToNextPage();
                     } else if (result instanceof Result.Error) {
                         Snackbar.make(view, ((Result.Error) result).getMessage(), Snackbar.LENGTH_SHORT).show();
