@@ -1,7 +1,5 @@
 package com.unimib.petsphere.ui.welcome;
 //Author: Alessia Mazzeo
-import static com.unimib.petsphere.util.constants.USER_COLLISION_ERROR;
-import static com.unimib.petsphere.util.constants.WEAK_PASSWORD_ERROR;
 
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isUpperCase;
@@ -11,26 +9,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.unimib.petsphere.R;
-import com.unimib.petsphere.data.model.Result;
-import com.unimib.petsphere.data.repository.IUserRepository;
-import com.unimib.petsphere.data.repository.UserRepository;
 import com.unimib.petsphere.ui.Main.MainActivity;
-import com.unimib.petsphere.util.ServiceLocator;
-import com.unimib.petsphere.viewModel.UserViewModel;
-import com.unimib.petsphere.viewModel.UserViewModelFactory;
+import com.unimib.petsphere.ui.viewModel.UserViewModel;
+import com.unimib.petsphere.ui.viewModel.UserViewModelFactory;
 
 import org.apache.commons.validator.routines.EmailValidator;
 

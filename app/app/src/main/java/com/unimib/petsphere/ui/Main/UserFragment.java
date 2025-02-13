@@ -1,4 +1,4 @@
-package com.unimib.petsphere.ui.Main.user;
+package com.unimib.petsphere.ui.Main;
 
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isUpperCase;
@@ -18,17 +18,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.unimib.petsphere.R;
-import com.unimib.petsphere.data.repository.PetRepository;
-import com.unimib.petsphere.data.repository.UserRepository;
 import com.unimib.petsphere.ui.welcome.WelcomeActivity;
-import com.unimib.petsphere.util.ServiceLocator;
-import com.unimib.petsphere.viewModel.PetViewModel;
-import com.unimib.petsphere.viewModel.PetViewModelFactory;
-import com.unimib.petsphere.viewModel.UserViewModel;
+import com.unimib.petsphere.ui.viewModel.UserViewModel;
 import com.unimib.petsphere.data.model.Result;
-import com.unimib.petsphere.viewModel.UserViewModelFactory;
+import com.unimib.petsphere.ui.viewModel.UserViewModelFactory;
 
 public class UserFragment extends Fragment {
 

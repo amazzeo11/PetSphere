@@ -13,7 +13,6 @@ import com.unimib.petsphere.data.repository.PetRepository;
 import com.unimib.petsphere.data.repository.UserRepository;
 import com.unimib.petsphere.data.source.BaseUserAuthenticationRemoteDataSource;
 import com.unimib.petsphere.data.source.UserAuthenticationFirebaseDataSource;
-import com.unimib.petsphere.viewModel.UserViewModelFactory;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

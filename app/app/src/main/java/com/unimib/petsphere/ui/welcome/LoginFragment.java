@@ -28,9 +28,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.unimib.petsphere.R;
 import com.unimib.petsphere.data.model.Result;
 import com.unimib.petsphere.ui.Main.MainActivity;
-import com.unimib.petsphere.util.ServiceLocator;
-import com.unimib.petsphere.viewModel.UserViewModel;
-import com.unimib.petsphere.viewModel.UserViewModelFactory;
+import com.unimib.petsphere.ui.viewModel.UserViewModel;
+import com.unimib.petsphere.ui.viewModel.UserViewModelFactory;
 
 import org.apache.commons.validator.routines.EmailValidator;
 

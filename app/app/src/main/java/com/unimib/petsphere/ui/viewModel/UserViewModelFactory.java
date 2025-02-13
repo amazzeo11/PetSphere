@@ -1,4 +1,4 @@
-package com.unimib.petsphere.viewModel;
+package com.unimib.petsphere.ui.viewModel;
 //Author: Alessia Mazzeo
 
 import android.app.Application;
@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.unimib.petsphere.data.repository.IUserRepository;
 import com.unimib.petsphere.data.repository.UserRepository;
 import com.unimib.petsphere.util.ServiceLocator;
 

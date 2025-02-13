@@ -17,12 +17,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.unimib.petsphere.R;
 import com.unimib.petsphere.data.model.PetModel;
 import com.unimib.petsphere.data.model.Result;
-import com.unimib.petsphere.data.repository.PetRepository;
-import com.unimib.petsphere.ui.Main.pet.CreatePetActivity;
-import com.unimib.petsphere.ui.Main.pet.ViewPetActivity;
-import com.unimib.petsphere.util.ServiceLocator;
-import com.unimib.petsphere.viewModel.PetViewModel;
-import com.unimib.petsphere.viewModel.PetViewModelFactory;
+import com.unimib.petsphere.ui.Main.petList.pet.CreatePetActivity;
+import com.unimib.petsphere.ui.Main.petList.pet.ViewPetActivity;
+import com.unimib.petsphere.ui.viewModel.PetViewModel;
+import com.unimib.petsphere.ui.viewModel.PetViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;

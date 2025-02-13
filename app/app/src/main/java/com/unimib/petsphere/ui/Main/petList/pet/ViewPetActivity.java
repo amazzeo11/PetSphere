@@ -1,11 +1,9 @@
-package com.unimib.petsphere.ui.Main.pet;
+package com.unimib.petsphere.ui.Main.petList.pet;
 //Author: Alessia Mazzeo
 import static androidx.core.app.PendingIntentCompat.getActivity;
 
 import android.app.Activity;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,9 +11,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,28 +27,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.unimib.petsphere.R;
 import com.unimib.petsphere.data.model.PetModel;
-import com.unimib.petsphere.data.repository.CatFactRepository;
-import com.unimib.petsphere.data.repository.DogFactRepository;
-import com.unimib.petsphere.data.repository.PetRepository;
-import com.unimib.petsphere.data.repository.UserRepository;
-import com.unimib.petsphere.util.ServiceLocator;
-import com.unimib.petsphere.viewModel.CatFactViewModel;
-import com.unimib.petsphere.viewModel.CatFactViewModelFactory;
-import com.unimib.petsphere.viewModel.DogFactViewModel;
-import com.unimib.petsphere.viewModel.DogFactViewModelFactory;
-import com.unimib.petsphere.viewModel.PetViewModel;
-import com.unimib.petsphere.viewModel.PetViewModelFactory;
+import com.unimib.petsphere.ui.viewModel.CatFactViewModel;
+import com.unimib.petsphere.ui.viewModel.CatFactViewModelFactory;
+import com.unimib.petsphere.ui.viewModel.DogFactViewModel;
+import com.unimib.petsphere.ui.viewModel.DogFactViewModelFactory;
+import com.unimib.petsphere.ui.viewModel.PetViewModel;
+import com.unimib.petsphere.ui.viewModel.PetViewModelFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

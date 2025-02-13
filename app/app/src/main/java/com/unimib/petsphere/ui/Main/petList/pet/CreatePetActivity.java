@@ -1,15 +1,11 @@
-package com.unimib.petsphere.ui.Main.pet;
+package com.unimib.petsphere.ui.Main.petList.pet;
 //Author: Alessia Mazzeo
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,10 +20,9 @@ import com.unimib.petsphere.R;
 import com.unimib.petsphere.data.model.PetModel;
 import com.unimib.petsphere.data.repository.PetRepository;
 import com.unimib.petsphere.util.ServiceLocator;
-import com.unimib.petsphere.viewModel.PetViewModel;
-import com.unimib.petsphere.viewModel.PetViewModelFactory;
+import com.unimib.petsphere.ui.viewModel.PetViewModel;
+import com.unimib.petsphere.ui.viewModel.PetViewModelFactory;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

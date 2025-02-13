@@ -1,4 +1,4 @@
-package com.unimib.petsphere.viewModel;
+package com.unimib.petsphere.ui.viewModel;
 //Author: Alessia Mazzeo
 
 import androidx.lifecycle.LiveData;

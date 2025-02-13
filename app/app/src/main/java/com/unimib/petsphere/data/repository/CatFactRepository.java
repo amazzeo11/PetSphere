@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.unimib.petsphere.data.model.CatFact;
 import com.unimib.petsphere.service.CatApiService;
-import com.unimib.petsphere.viewModel.UserViewModelFactory;
 
 
 import retrofit2.Call;
