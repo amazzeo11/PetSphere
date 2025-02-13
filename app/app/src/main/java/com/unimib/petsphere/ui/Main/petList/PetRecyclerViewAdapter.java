@@ -105,6 +105,7 @@ public class PetRecyclerViewAdapter extends RecyclerView.Adapter<PetRecyclerView
         public final TextView textViewNome;
         public final TextView textViewTipoAnimale;
         public final ImageView imageView;
+        public final CardView cardView;
 
         public ViewHolder(View view) {
             super(view);
@@ -113,18 +114,23 @@ public class PetRecyclerViewAdapter extends RecyclerView.Adapter<PetRecyclerView
             imageView = view.findViewById(R.id.imagePet);
             cardView = view.findViewById(R.id.cardView);
         }
+
         public TextView getTextViewNome() {
             return textViewNome;
         }
+
         public TextView getTextViewTipoAnimale() {
             return textViewTipoAnimale;
         }
+
         public ImageView getImageView() {
             return imageView;
         }
+
         public CardView getCardView() {
             return cardView;
         }
     }
 
 }
+
