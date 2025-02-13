@@ -86,7 +86,7 @@ public class UserAuthenticationFirebaseDataSource extends BaseUserAuthentication
         if (firebaseUser != null) {
             callback.onSuccess(new User(firebaseUser.getUid(), firebaseUser.getEmail()));
         } else {
-            callback.onFailure("No logged-in user");
+            //callback.onFailure("No logged-in user");
         }
     }
 

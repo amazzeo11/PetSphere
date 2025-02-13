@@ -71,9 +71,9 @@ public class PetDataSource extends BasePetDataSource {
                         petList.set(petList.indexOf(pet), pet);
                     }
                 }
-                List<Long> insertedNewsIds = petDAO.insertPetList(petList);
+                List<Long> insertedPetsIds = petDAO.insertPetList(petList);
                 for (int i = 0; i < petList.size(); i++) {
-                    petList.get(i).setUid(insertedNewsIds.get(i));
+                    petList.get(i).setUid(insertedPetsIds.get(i));
                 }
                 petCallback.onSuccess(petList);
             }
